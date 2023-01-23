@@ -1,6 +1,6 @@
 # Utility-App
-Design Document 
- Brayden Cummins, Will Blaker, Jose Chacon Ascue, Wilmer Esquivel, Annamalai Subramanian
+Design Document  
+Brayden Cummins, Will Blaker, Jose Chacon Ascue, Wilmer Esquivel, Annamalai Subramanian
 
 ## Introduction
 
