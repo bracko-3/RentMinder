@@ -1,2 +1,9 @@
 # Utility-App
-Utility App repo for IT3048 Mobile Device Programming
+Design Document - Brayden Cummins, Will Blaker, Jose Chacon Ascue, Wilmer Esquivel, Annamalai Subramanian
+## Introduction
+
+## Storyboard
+
+## Functional Requirements
+
+## Class Diagram
