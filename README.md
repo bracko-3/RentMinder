@@ -66,7 +66,7 @@ Each household member has an active phone plan.
   
 Each household member created an account
   
-Examples
+#### Examples
 2.1
   
 Given the water/sewer bill for the current month has been inputted.
