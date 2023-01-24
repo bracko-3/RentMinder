@@ -53,7 +53,7 @@ When I input the wifi bill cost.
   
 Then I can save the wifi bill cost.
 
-Requirement 2: Send Reminders
+### Requirement 2: Send Reminders
 
 #### Scenario
 As a user inputting house expenses, each time I save an expense, all household members will receive a reminder to pay their share of that certain bill.
