@@ -17,7 +17,7 @@ Use your Android device to create and manage your own household. Keep timestamps
 ## Functional Requirements
 
 ### Requirement 1: Record Monthly House Expenses
-####Scenario
+#### Scenario
 As a user living with multiple roommates, I want to be able to record our monthly house expenses.
   
 #### Dependencies
