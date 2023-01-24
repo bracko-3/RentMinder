@@ -24,7 +24,7 @@ As a user living with multiple roommates, I want to be able to record our monthl
 Monthly house expenses are fulfilled.
   
 #### Assumptions
-House expenses are all in United States Dollar (USD).
+House expenses are all in United States Dollars (USD).
   
 Monthly expenses consist of rent, electric/gas, water/sewer, wifi, and other.
   
@@ -35,6 +35,6 @@ Given the water bill for the current month has been billed.
   
 When I input the water bill data.
   
-Then the water bill data should be saved.
+Then I can save the water bill data.
 
 ## Class Diagram
