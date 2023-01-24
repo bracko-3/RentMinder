@@ -53,5 +53,43 @@ When I input the wifi bill cost.
   
 Then I can save the wifi bill cost.
 
+Requirement 2: Send Reminders
+
+#### Scenario
+As a user inputting house expenses, each time I save an expense, all household members will receive a reminder to pay their share of that certain bill.
+  
+#### Dependencies
+House expense has been saved to the app. 
+  
+#### Assumptions
+Each household member has an active phone plan.
+  
+Each household member created an account
+  
+Examples
+2.1
+  
+Given the water/sewer bill for the current month has been inputted.
+  
+When I click the save button.
+  
+Then all household members will get a water/sewer bill reminder sent to their phone.
+  
+2.2 
+  
+Given the electric/gas bill for the current month has been inputted.
+  
+When I click the save button.
+  
+Then all household members will get an electric/gas bill reminder sent to their phone.
+  
+2.3 
+  
+Given the wifi bill for the current month has been inputted.
+  
+When I click the save button.
+  
+Then all household members will get a wifi bill reminder sent to their phone.
+
 
 ## Class Diagram
