@@ -31,10 +31,10 @@ Monthly expenses consist of rent, electric/gas, water/sewer, wifi, and other.
 #### Examples
 1.1
   
-Given the water bill for the current month has been billed.
+Given the water/sewer bill for the current month has been billed.
   
-When I input the water bill data.
+When I input the water/sewer bill data.
   
-Then I can save the water bill data.
+Then I can save the water/sewer bill data.
 
 ## Class Diagram
