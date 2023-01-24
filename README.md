@@ -8,7 +8,7 @@ Have you ever had to split rent and utilities between 6 different people? Have y
   
 * Manage and keep track of utilities and rent.
 * Send reminders to the household to pay rent/utilities.
-* Look back at previous months totals
+* Look back at previous months totals.
 * Automatically split the expenses among roommates.
   
 Use your Android device to create and manage your own household. Keep timestamps of when each roommate paid their share. Send reminders to those roommates that tend to forget. Keep track of every month's expenses.
