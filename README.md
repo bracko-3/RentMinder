@@ -31,15 +31,15 @@ Monthly expenses consist of rent, electric/gas, water/sewer, wifi, and other.
 #### Examples
 1.1
   
-**Given** the water/sewer bill for the current month has been billed.
-**When** I input the water/sewer bill data.
-**Then** I can save the water/sewer bill data.
+Given the water/sewer bill for the current month has been billed.  
+When I input the water/sewer bill data.  
+Then I can save the water/sewer bill data.  
   
 1.2
   
-**Given** the rent has been billed for the current month.
-**When** I input the rent cost.
-**Then* I can save the rent data.
+Given the rent has been billed for the current month.
+When I input the rent cost.
+Then I can save the rent data.
   
 1.3
   
