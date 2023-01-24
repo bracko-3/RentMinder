@@ -98,3 +98,6 @@ Then all household members will get a wifi bill reminder sent to their phone.
 * DevOps/Product Owner/Scrum Master: Brayden Cummins
 * Frontend Developer: Jose and Will
 * Integration Developer: Wilmer and Annamalai
+
+## Weekly Meeting
+Wednesday at 7PM. Microsoft Teams Group
