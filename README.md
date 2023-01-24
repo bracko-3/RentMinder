@@ -1,4 +1,4 @@
-# Utility-App
+# RentMinder
 Design Document  
   
 Brayden Cummins, Will Blaker, Jose Chacon Ascue, Wilmer Esquivel, and Annamalai Subramanian
@@ -11,7 +11,7 @@ Have you ever had to split rent and utilities between 6 different people? Have y
 * Look back at previous months totals
 * Automatically split the expenses among roommates.
   
-Use your Android device to create and manage your own household. Keep timestamps of when each roommate paid their share. Send reminders to those roommates that like to forget to pay. Keep track of every month's expenses.
+Use your Android device to create and manage your own household. Keep timestamps of when each roommate paid their share. Send reminders to those roommates that tend to forget. Keep track of every month's expenses.
 ## Storyboard
 
 ## Functional Requirements
