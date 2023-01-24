@@ -16,4 +16,25 @@ Use your Android device to create and manage your own household. Keep timestamps
 
 ## Functional Requirements
 
+### Requirement 1: Record Monthly House Expenses
+####Scenario
+As a user living with multiple roommates, I want to be able to record our monthly house expenses.
+  
+#### Dependencies
+Monthly house expenses are fulfilled.
+  
+#### Assumptions
+House expenses are all in United States Dollar (USD).
+  
+Monthly expenses consist of rent, electric/gas, water/sewer, wifi, and other.
+  
+#### Examples
+1.1
+  
+Given the water bill for the current month has been billed.
+  
+When I input the water bill data.
+  
+Then the water bill data should be saved.
+
 ## Class Diagram
