@@ -93,3 +93,8 @@ Then all household members will get a wifi bill reminder sent to their phone.
 
 
 ## Class Diagram
+
+## Scrum Roles
+* DevOps/Product Owner/Scrum Master: Brayden Cummins
+* Frontend Developer: Jose and Will
+* Integration Developer: Wilmer and Annamalai
