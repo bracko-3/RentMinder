@@ -45,6 +45,13 @@ When I input the rent cost.
   
 Then I can save the rent data.
   
+1.3
+  
+Given the wifi bill for the current month has been billed.
+  
+When I input the wifi bill cost.
+  
+Then I can save the wifi bill cost.
 
 
 ## Class Diagram
