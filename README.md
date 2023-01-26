@@ -71,21 +71,21 @@ Each household member created an account
 #### Examples
 2.1
   
-Given the water/sewer bill for the current month has been inputted.  
+Given the water/sewer bill , $75.80 , for the current month has been inputted.  
 When I click the save button.  
-Then all household members will get a water/sewer bill reminder sent to their phone.
+Then all household members will get a water/sewer bill reminder of $75.80 sent to their phone.
   
 2.2 
   
-Given the electric/gas bill for the current month has been inputted.  
+Given the electric/gas bill ,  $230 , for the current month has been inputted.  
 When I click the save button.  
-Then all household members will get an electric/gas bill reminder sent to their phone.
+Then all household members will get an electric/gas bill reminder of $230 sent to their phone.
   
 2.3 
   
-Given the wifi bill for the current month has been inputted.  
+Given the wifi bill , $60 , for the current month has been inputted.  
 When I click the save button.  
-Then all household members will get a wifi bill reminder sent to their phone.
+Then all household members will get a wifi bill reminder of $60 sent to their phone.
   
 ## Class Diagram
 
@@ -97,8 +97,6 @@ Then all household members will get a wifi bill reminder sent to their phone.
 ## Weekly Meeting
 Wednesday at 7PM. Microsoft Teams Group
 
-Questions:  
-What all do we need in our class diagram?  
-How detailed does our product catalog/scrum (projects tab on the repo) board need to be?
+
 
 
