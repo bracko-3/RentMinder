@@ -33,22 +33,28 @@ Monthly expenses consist of rent, electric/gas, water/sewer, wifi, and other.
 #### Examples
 1.1
   
-Given the water/sewer bill for the current month has been billed.  
-When I input the water/sewer bill data.  
-Then I can save the water/sewer bill data.  
+Given the water/sewer bill for the current month is $75.80.  
+When I input $75.80 in the water/sewer bill box.  
+Then I can save the water/sewer bill to the app.
   
 1.2
   
-Given the rent has been billed for the current month.  
-When I input the rent cost.  
-Then I can save the rent data.  
+Given rent is $3000 for the current month.  
+When I input $3000 in the rent box.  
+Then I can save the rent cost.  
   
 1.3
   
-Given the wifi bill for the current month has been billed.  
-When I input the wifi bill cost.  
+Given the wifi bill for the current month is $60.  
+When I input $60 in the wifi bill box.  
 Then I can save the wifi bill cost.  
-
+  
+1.4
+  
+Given the electric/gas bill for the current month is $230.  
+When I input $230 in the electric/gas bill box.  
+Then I can save the electric/gas bill cost.
+  
 ### Requirement 2: Send Reminders
 
 #### Scenario
@@ -65,29 +71,22 @@ Each household member created an account
 #### Examples
 2.1
   
-Given the water/sewer bill for the current month has been inputted.
-  
-When I click the save button.
-  
+Given the water/sewer bill for the current month has been inputted.  
+When I click the save button.  
 Then all household members will get a water/sewer bill reminder sent to their phone.
   
 2.2 
   
-Given the electric/gas bill for the current month has been inputted.
-  
-When I click the save button.
-  
+Given the electric/gas bill for the current month has been inputted.  
+When I click the save button.  
 Then all household members will get an electric/gas bill reminder sent to their phone.
   
 2.3 
   
-Given the wifi bill for the current month has been inputted.
-  
-When I click the save button.
-  
+Given the wifi bill for the current month has been inputted.  
+When I click the save button.  
 Then all household members will get a wifi bill reminder sent to their phone.
-
-
+  
 ## Class Diagram
 
 ## Scrum Roles
