@@ -14,6 +14,8 @@ Have you ever had to split rent and utilities between 6 different people? Have y
 Use your Android device to create and manage your own household. Keep timestamps of when each roommate paid their share. Send reminders to those roommates that tend to forget. Keep track of every month's expenses.
 ## Storyboard
 
+![RentMinder](https://user-images.githubusercontent.com/112514952/214733059-0a0e8303-5f76-4973-9c1f-d5545adeb427.png)
+
 ## Functional Requirements
 
 ### Requirement 1: Record Monthly House Expenses
