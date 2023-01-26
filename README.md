@@ -41,19 +41,19 @@ Then I can save the water/sewer bill to the app.
   
 Given rent is $3000 for the current month.  
 When I input $3000 in the rent box.  
-Then I can save the rent cost.  
+Then I can save the rent bill to the app.  
   
 1.3
   
 Given the wifi bill for the current month is $60.  
 When I input $60 in the wifi bill box.  
-Then I can save the wifi bill cost.  
+Then I can save the wifi bill to the app.  
   
 1.4
   
 Given the electric/gas bill for the current month is $230.  
 When I input $230 in the electric/gas bill box.  
-Then I can save the electric/gas bill cost.
+Then I can save the electric/gas bill to the app.
   
 ### Requirement 2: Send Reminders
 
