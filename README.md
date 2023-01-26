@@ -88,7 +88,9 @@ When I click the save button.
 Then all household members will get a wifi bill reminder of $60 sent to their phone.
   
 ## Class Diagram
-
+  
+![MicrosoftTeams-image](https://user-images.githubusercontent.com/112514952/214878074-7032179e-9e77-41a6-a2a8-211a16cd1ba9.png)
+  
 ## Scrum Roles
 * DevOps/Product Owner/Scrum Master: Brayden Cummins
 * Frontend Developer: Jose and Will
