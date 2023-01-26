@@ -98,4 +98,8 @@ Then all household members will get a wifi bill reminder sent to their phone.
 ## Weekly Meeting
 Wednesday at 7PM. Microsoft Teams Group
 
+Questions:  
+What all do we need in our class diagram?  
+How detailed does our product catalog/scrum (projects tab on the repo) board need to be?
+
 
