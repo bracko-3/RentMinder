@@ -54,7 +54,13 @@ Then I can save the wifi bill to the app.
 Given the electric/gas bill for the current month is $230.  
 When I input $230 in the electric/gas bill box.  
 Then I can save the electric/gas bill to the app.
-  
+ 
+1.5
+
+Given the other expenses is $100 for the month.
+When I input adsadfsdsfad in the other bill box.
+Then i will not be able to save the other expense bill to the app and will get a error toast message of other bill box not inputted correctly.
+
 ### Requirement 2: Send Reminders
 
 #### Scenario
@@ -90,7 +96,10 @@ Then all household members will get a wifi bill reminder of $60 sent to their ph
 ## Class Diagram
   
 ![MicrosoftTeams-image](https://user-images.githubusercontent.com/112514952/214878074-7032179e-9e77-41a6-a2a8-211a16cd1ba9.png)
-  
+ 
+ ## Class Diagram Description
+ 
+ 
 ## Scrum Roles
 * DevOps/Product Owner/Scrum Master: Brayden Cummins
 * Frontend Developer: Jose and Will
@@ -98,7 +107,8 @@ Then all household members will get a wifi bill reminder of $60 sent to their ph
 
 ## Weekly Meeting
 Wednesday at 7PM. Microsoft Teams Group
-
+Teams Meeting Link:
+https://teams.microsoft.com/_?lm=deeplink&lmsrc=NeutralHomePageWeb&cmpid=WebSignIn&culture=en-us&country=us#/conversations/19:edab28cd362646849e935d5670cf5e45@thread.v2?ctx=chat
 
 
 
