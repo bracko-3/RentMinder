@@ -137,11 +137,11 @@ Each household member created an account
   
  **Payment:** Noun class that represents a payment.
  
-**IHouseholdDAO:**
+**IHouseholdDAO:** Hold household data.
 
-**IMemberDAO:**
+**IMemberDAO:** Hold member data.
 
-**IPaymentDAO:**
+**IPaymentDAO:** Holds payment data.
 
 ## Scrum Roles
 
