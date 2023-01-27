@@ -127,13 +127,30 @@ Each household member created an account
  
  ## Class Diagram Description
  
+ **MainActivity:** The first screen that the user will see when the app loads. This screen will allow the option to enter costs/expenses.
  
+ **RetrofitInstance** Bootstrap class required for Retrofit
+ 
+ **HouseHold:** Noun class that represents a household.
+ 
+ **Member:** Noun class that represents a member.
+  
+ **Payment:** Noun class that represents a payment.
+ 
+**IHouseholdDAO:**
+
+**IMemberDAO:**
+
+**IPaymentDAO:**
+
 ## Scrum Roles
+
 * DevOps/Product Owner/Scrum Master: Brayden Cummins
 * Frontend Developer: Jose and Will
 * Integration Developer: Wilmer and Annamalai
 
 ## Weekly Meeting
+
 Wednesday at 7PM. Microsoft Teams Group
 
 Teams Meeting Link:
