@@ -44,7 +44,7 @@ Monthly expenses consist of rent, electric/gas, water/sewer, wifi, and other.
 
 **When** I input $75.80 in the water/sewer bill box.  
 
-**Then** I can save the water/sewer bill to the app.
+**Then** I can save the $75.80 water/sewer bill to the app.
   
 1.2
   
@@ -52,7 +52,7 @@ Monthly expenses consist of rent, electric/gas, water/sewer, wifi, and other.
 
 **When** I input $3000 in the rent box.  
 
-**Then** I can save the rent bill to the app.  
+**Then** I can save the $3000 rent bill to the app.  
   
 1.3
   
@@ -60,7 +60,7 @@ Monthly expenses consist of rent, electric/gas, water/sewer, wifi, and other.
 
 **When** I input $60 in the wifi bill box.  
 
-**Then** I can save the wifi bill to the app.  
+**Then** I can save the $60 wifi bill to the app.  
   
 1.4
   
@@ -68,7 +68,7 @@ Monthly expenses consist of rent, electric/gas, water/sewer, wifi, and other.
 
 **When** I input $230 in the electric/gas bill box.  
 
-**Then** I can save the electric/gas bill to the app.
+**Then** I can save the $230 electric/gas bill to the app.
  
 1.5
 
