@@ -4,4 +4,5 @@
     <string name="save_and_remind">Save and Remind</string>
     <string name="electric_gas_bill_total_text">Electric/Gas Bill Total</string>
     <string name="electric_gas_bill_total_textView">Electric/Gas Bill Total:</string>
+    <string name="save_and_remind_Btn">SAVE AND REMIND</string>
 </resources>
