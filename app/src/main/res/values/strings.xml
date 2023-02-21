@@ -2,4 +2,6 @@
     <string name="app_name">RentMinder</string>
     <string name="other_bill_s_total">Other Bill(s) Total</string>
     <string name="save_and_remind">Save and Remind</string>
+    <string name="electric_gas_bill_total_text">Electric/Gas Bill Total</string>
+    <string name="electric_gas_bill_total_textView">Electric/Gas Bill Total:</string>
 </resources>
