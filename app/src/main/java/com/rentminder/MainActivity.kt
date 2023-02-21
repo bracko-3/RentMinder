@@ -15,14 +15,15 @@ import com.rentminder.ui.theme.RentMinderTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            RentMinderTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
-        }
+        setContentView(R.layout.activity_main)
+//        setContent {
+//            RentMinderTheme {
+//                // A surface container using the 'background' color from the theme
+//                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+//                    Greeting("Android")
+//                }
+//            }
+//        }
     }
 }
 
