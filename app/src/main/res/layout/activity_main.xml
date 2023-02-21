@@ -46,32 +46,32 @@
 
     <EditText
         android:id="@+id/electricGasBillText"
-        android:layout_width="190dp"
-        android:layout_height="58dp"
+        android:layout_width="221dp"
+        android:layout_height="57dp"
         android:ems="10"
+        android:hint="@string/electric_gas_bill_total_text"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:hint="@string/electric_gas_bill_total_text"
-        android:importantForAutofill="no"
-        app:layout_constraintVertical_bias="0.146" />
+        app:layout_constraintVertical_bias="0.143" />
 
     <TextView
         android:id="@+id/electricGasBillTextView"
-        android:layout_width="165dp"
+        android:layout_width="128dp"
         android:layout_height="26dp"
         android:text="@string/electric_gas_bill_total_textView"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.096" />
+        app:layout_constraintVertical_bias="0.094" />
 
     <Button
         android:id="@+id/saveElectric_Gas_BillBtn"
@@ -80,9 +80,9 @@
         android:text="@string/save_and_remind_Btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintHorizontal_bias="0.874"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143" />
+        app:layout_constraintVertical_bias="0.141" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
