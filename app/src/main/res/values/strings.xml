@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">RentMinder</string>
-    <string name="other_bill_s_total">Other Bill(s) Total</string>
-    <string name="save_and_remind">Save and Remind</string>
 </resources>
