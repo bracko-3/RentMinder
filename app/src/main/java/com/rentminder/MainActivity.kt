@@ -131,6 +131,10 @@ fun EditBillAmounts() {
             }
             Spacer(modifier = Modifier.height(10.dp))
         }
+
+        //Electric/Gas bill text and input box
+        Text(text = "Electric/Gas Bill:", fontSize = (18.sp))
+
         Text(text = "Water/Sewer Bill", fontSize = (18.sp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
