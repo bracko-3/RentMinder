@@ -45,6 +45,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainMenu() {
+    //Getting current month for Main Menu
     val cal: Calendar = Calendar.getInstance()
     val monthDate = SimpleDateFormat("MMMM")
     val monthName: String = monthDate.format(cal.time)
@@ -53,14 +54,13 @@ fun MainMenu() {
         TopToolBar()
         //Second column to center the body of the page
         Column(
-            modifier = Modifier
-                .padding(horizontal = 12.dp)
-                .padding(vertical = 15.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
         ) {
             Text(
                 text = monthName,
-                fontSize = 24.sp,
+                fontSize = 25.sp,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 fontWeight = FontWeight.Bold
             )
@@ -69,17 +69,19 @@ fun MainMenu() {
     }
 }
 
+//Navigation bar at the top of app
 @Composable
 fun TopToolBar() {
     Column() {
         TopAppBar(
             title = {
-                Text(text = "RentMinder")
+                Text(text = "RentMinder", fontSize = 25.sp)
             }
         )
     }
 }
 
+//Bill input boxes, buttons, and text fields
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EditBillAmounts() {
@@ -96,11 +98,10 @@ fun EditBillAmounts() {
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier.padding(horizontal = 31.dp, vertical = 5.dp),
+        modifier = Modifier.padding(horizontal = 31.dp, vertical = 0.dp),
         verticalArrangement = Arrangement.spacedBy(1.dp)
     ) {
-
-        //Rent bill text and input box
+        //Rent bill text, text box, and button
         Text(text = "Rent Bill:", fontSize = (18.sp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
@@ -120,7 +121,7 @@ fun EditBillAmounts() {
                 modifier = Modifier.width(180.dp),
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
-            Spacer(modifier = Modifier.width(40.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             Button(
                 onClick = {
                     Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
@@ -132,9 +133,8 @@ fun EditBillAmounts() {
             Spacer(modifier = Modifier.height(10.dp))
         }
 
-        //Electric/Gas bill text and input box
+        //Electric-Gas bill text, text box, and button
         Text(text = "Electric/Gas Bill:", fontSize = (18.sp))
-
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = electricBill,
@@ -153,7 +153,7 @@ fun EditBillAmounts() {
                 modifier = Modifier.width(180.dp),
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
-            Spacer(modifier = Modifier.width(40.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             Button(
                 onClick = {
                     Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
@@ -165,8 +165,8 @@ fun EditBillAmounts() {
             Spacer(modifier = Modifier.height(10.dp))
         }
 
-
-        Text(text = "Water/Sewer Bill", fontSize = (18.sp))
+        //Water-Sewer bill text, text box, and button
+        Text(text = "Water/Sewer Bill:", fontSize = (18.sp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = waterBill,
@@ -185,10 +185,10 @@ fun EditBillAmounts() {
                 modifier = Modifier.width(180.dp),
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
-            Spacer(modifier = Modifier.width(40.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             Button(
                 onClick = {
-                    Toast.makeText(context, "Water Bill Saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.width(88.dp)
             ) {
@@ -197,7 +197,8 @@ fun EditBillAmounts() {
             Spacer(modifier = Modifier.height(10.dp))
         }
 
-        Text(text = "WiFi Bill", fontSize = (18.sp))
+        //Wi-Fi bill text, text box, and button
+        Text(text = "WiFi Bill:", fontSize = (18.sp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = wifiBill,
@@ -216,10 +217,10 @@ fun EditBillAmounts() {
                 modifier = Modifier.width(180.dp),
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
-            Spacer(modifier = Modifier.width(40.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             Button(
                 onClick = {
-                    Toast.makeText(context, "WiFi Bill Saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.width(88.dp)
             ) {
@@ -228,7 +229,9 @@ fun EditBillAmounts() {
             Spacer(modifier = Modifier.height(10.dp))
 
         }
-        Text(text = "Other Bills:", fontSize = (18.sp))
+
+        //Other bill text, text box, and button
+        Text(text = "Other Bill(s):", fontSize = (18.sp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = otherBill,
@@ -247,7 +250,7 @@ fun EditBillAmounts() {
                 modifier = Modifier.width(180.dp),
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
-            Spacer(modifier = Modifier.width(40.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             Button(
                 onClick = {
                     Toast.makeText(context, "Other Bills Saved!", Toast.LENGTH_SHORT).show()
