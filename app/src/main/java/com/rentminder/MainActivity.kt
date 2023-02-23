@@ -120,6 +120,9 @@ fun EditBillAmounts() {
             }
             Spacer(modifier = Modifier.height(10.dp))
 
+            //Electric and Gas bill text and input box
+
+            Text(text = "Electric/Gas Bill:", fontSize = (18.sp))
         }
     }
 }
