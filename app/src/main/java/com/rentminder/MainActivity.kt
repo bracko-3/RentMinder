@@ -84,6 +84,7 @@ fun MainMenu() {
 fun TopToolBar() {
     Column() {
         TopAppBar(
+            modifier = Modifier.height(65.dp),
             title = {
                 Icon(
                     painterResource(
