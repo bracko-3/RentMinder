@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.sharp.Home
@@ -19,9 +20,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -82,11 +85,38 @@ fun TopToolBar() {
     Column() {
         TopAppBar(
             title = {
-                Text(text = "RentMinder", fontSize = 25.sp)
+                Icon(
+                    painterResource(
+                        id = R.drawable.outline_notifications_active_24
+                    ),
+                    contentDescription = "Notification Icon",
+                    modifier = Modifier
+                        .size(45.dp)
+                        .padding(
+                            end = 5.dp
+                        )
+                )
+                Text(
+                    text = "RentMinder",
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            actions = {
+                IconButton (onClick = {}){
+                    Icon(
+                        imageVector = Icons.Filled.Menu,
+                        contentDescription = "Navigation Bar",
+                        modifier = Modifier
+                            .size(35.dp),
+                        tint = Color.Black
+                    )
+                }
             }
         )
     }
 }
+
 
 //Bill input boxes, buttons, and text fields
 @OptIn(ExperimentalComposeUiApi::class)
@@ -103,7 +133,10 @@ fun EditBillAmounts() {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
-    Column(modifier = Modifier.padding(horizontal = 10.dp), verticalArrangement = Arrangement.Center) {
+    Column(
+        modifier = Modifier.padding(horizontal = 10.dp),
+        verticalArrangement = Arrangement.Center
+    ) {
         //Rent bill text, text box, and button
         Row(verticalAlignment = Alignment.CenterVertically) {
             RentIconText()
