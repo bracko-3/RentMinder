@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rentminder.ui.theme.RentMinderTheme
@@ -65,7 +66,7 @@ fun MainMenu() {
             .padding(
                 top = 5.dp,
                 bottom = 10.dp
-                )
+            )
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
@@ -273,6 +274,11 @@ fun EditBillAmounts() {
                 SaveRemindButton()
             }
         }
+
+        //Line Dividing utility rows and totals
+        Divider(color = Color.Black, thickness = Dp.Hairline)
+
+
     }
 }
 
