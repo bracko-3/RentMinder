@@ -119,8 +119,8 @@ fun EditBillAmounts() {
                 Text(text = "Save & Remind")
             }
             Spacer(modifier = Modifier.height(10.dp))
-
         }
+        Text(text = "Water/Sewer Bill", fontSize = (18.sp))
     }
 }
 
