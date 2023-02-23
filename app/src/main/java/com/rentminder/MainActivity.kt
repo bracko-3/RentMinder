@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -17,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -25,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.rentminder.ui.theme.LavenderBlue
 import com.rentminder.ui.theme.RentMinderTheme
 
 class MainActivity : ComponentActivity() {
@@ -56,7 +60,9 @@ fun MainMenu() {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp)
         ) {
             Text(
                 text = monthName,
@@ -72,10 +78,29 @@ fun MainMenu() {
 //Navigation bar at the top of app
 @Composable
 fun TopToolBar() {
+    val contextForToast = LocalContext.current.applicationContext
+
     Column() {
         TopAppBar(
+            modifier = Modifier.height(70.dp),
+            backgroundColor = LavenderBlue,
             title = {
                 Text(text = "RentMinder", fontSize = 25.sp)
+            },
+            actions = {
+                IconButton(
+                    onClick = {
+                        Toast.makeText(
+                            contextForToast,
+                            "Navigation Icon Click",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }) {
+                    Icon(
+                        imageVector = Icons.Filled.Menu,
+                        contentDescription = "Menu Icon"
+                    )
+                }
             }
         )
     }
