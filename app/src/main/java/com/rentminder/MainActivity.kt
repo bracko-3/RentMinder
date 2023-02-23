@@ -46,7 +46,7 @@ fun MainMenu() {
     Column() {
         TopToolBar()
         //Second column to center the body of the page
-        Column(modifier = Modifier.padding(horizontal = 20.dp).padding(vertical = 15.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(modifier = Modifier.padding(horizontal = 12.dp).padding(vertical = 15.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
                 text = stringResource(id = R.string.current_month),
                 fontSize = 24.sp,
