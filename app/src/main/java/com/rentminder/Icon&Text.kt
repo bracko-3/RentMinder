@@ -37,21 +37,20 @@ fun RentIconText() {
 @Composable
 fun ElectricIconText() {
     Row(verticalAlignment = Alignment.CenterVertically){
-        Icon(
-            imageVector = androidx.compose.material.material-symbols-outlined {
-                font-variation-settings:
-                'FILL' 0,
-                'wght' 400,
-                'GRAD' 0,
-                'opsz' 48
-            },
-            contentDescription = "Electric Icon",
-            modifier = Modifier
-                .padding(
-                    end = 3.dp
-                )
-                .size(30.dp)
-        )
+        //Icon(
+        //    imageVector = androidx.compose.material.material-symbols-outlined {
+        //        font-variation-settings:
+        //        'FILL' 0,
+        //        'wght' 400,
+        //        'GRAD' 0,
+        //        'opsz' 48
+        //    },
+        //    contentDescription = "Electric Icon",
+        //    modifier = Modifier
+        //        .padding(
+        //            end = 3.dp)
+        //        .size(30.dp)
+        //)
         Text(
             text = "Electric/Gas",
             fontSize = (26.sp),
