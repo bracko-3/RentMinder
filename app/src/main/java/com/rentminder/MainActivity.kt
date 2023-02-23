@@ -188,7 +188,35 @@ fun EditBillAmounts() {
 
         }
         Text(text = "Other Bills:", fontSize = (18.sp))
-
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TextField(
+                value = otherBill,
+                onValueChange = { otherBill = it },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
+                ),
+                modifier = Modifier.width(180.dp),
+                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+            )
+            Spacer(modifier = Modifier.width(40.dp))
+            Button(
+                onClick = {
+                    Toast.makeText(context, "Other Bills Saved!", Toast.LENGTH_SHORT).show()
+                },
+                modifier = Modifier.width(88.dp)
+            ) {
+                Text(text = "Save & Remind")
+            }
+        }
+        Spacer(modifier = Modifier.height(10.dp))
     }
 }
 
