@@ -15,21 +15,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun SaveRemindButton() {
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     var count by remember { mutableStateOf(0) }
 
     OutlinedButton(
@@ -37,13 +36,11 @@ fun SaveRemindButton() {
             if(count > 0) {Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()}
             else {Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()}
             count++
+            focusManager.clearFocus()
                   },
         modifier = Modifier
-            .padding(
-                start = 0.dp,
-                end = 0.dp,
-                top = 0.dp,
-                bottom = 0.dp
+            .offset(
+                x = -10.dp
             ),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
         shape = RoundedCornerShape(100),
@@ -55,18 +52,18 @@ fun SaveRemindButton() {
         ) {
             if (count > 0) {
                 Icon(
-                    imageVector = Icons.Filled.Edit,
-                    contentDescription = "Edit Icon",
-                    tint = Color.Gray,
-                    modifier = Modifier.size(38.dp)
+                    imageVector = Icons.Filled.CheckCircle,
+                    contentDescription = "Saved Icon",
+                    tint = Color.Green,
+                    modifier = Modifier.size(50.dp)
                 )
             }
             else {
                 Icon(
-                    imageVector = Icons.Filled.CheckCircle,
-                    contentDescription = "Check Icon",
-                    tint = Color.Green,
-                    modifier = Modifier.size(38.dp)
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add Icon",
+                    tint = Color.Black,
+                    modifier = Modifier.size(50.dp)
                 )
             }
         }
