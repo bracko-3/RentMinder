@@ -122,10 +122,9 @@ fun EditBillAmounts() {
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
             Spacer(modifier = Modifier.width(20.dp))
+
             Button(
-                onClick = {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
-                },
+                onClick = {  },
                 modifier = Modifier.width(88.dp)
             ) {
                 Text(text = "Save & Remind")
