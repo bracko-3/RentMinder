@@ -106,7 +106,7 @@ fun EditBillAmounts() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = rentBill,
-                onValueChange = { rentBill = it },
+                onValueChange = { newRentBill -> rentBill = newRentBill },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
@@ -138,7 +138,7 @@ fun EditBillAmounts() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = electricBill,
-                onValueChange = { electricBill = it },
+                onValueChange = { newElectricBill -> electricBill = newElectricBill },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
@@ -170,7 +170,7 @@ fun EditBillAmounts() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = waterBill,
-                onValueChange = { waterBill = it },
+                onValueChange = { newWaterBill -> waterBill = newWaterBill },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
@@ -202,7 +202,7 @@ fun EditBillAmounts() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = wifiBill,
-                onValueChange = { wifiBill = it },
+                onValueChange = { newWifiBill -> wifiBill = newWifiBill },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
@@ -235,7 +235,7 @@ fun EditBillAmounts() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
                 value = otherBill,
-                onValueChange = { otherBill = it },
+                onValueChange = { newOtherBill -> otherBill = newOtherBill },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
