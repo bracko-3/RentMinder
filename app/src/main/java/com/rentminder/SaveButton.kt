@@ -33,11 +33,14 @@ fun SaveRemindButton() {
 
     OutlinedButton(
         onClick = {
-            if(count > 0) {Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()}
-            else {Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()}
+            if (count > 0) {
+                Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+            }
             count++
             focusManager.clearFocus()
-                  },
+        },
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
         border = BorderStroke(0.dp, Color.Transparent)
     ) {
@@ -57,8 +60,7 @@ fun SaveRemindButton() {
                             border = BorderStroke(2.dp, Color.Transparent)
                         )
                 )
-            }
-            else {
+            } else {
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = "Add Icon",
@@ -67,13 +69,14 @@ fun SaveRemindButton() {
                         .size(40.dp)
                         .border(
                             shape = RoundedCornerShape(50),
-                            border = BorderStroke(3.dp, Color.Black)
+                            border = BorderStroke(4.dp, Color.Black)
                         )
                 )
             }
         }
     }
 }
+
 @ExperimentalMaterialApi
 @Composable
 @Preview
