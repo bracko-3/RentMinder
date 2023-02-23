@@ -132,6 +132,7 @@ fun EditBillAmounts() {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
+    //Column for all bill rows
     Column(modifier = Modifier
         .padding(
             horizontal = 15.dp
@@ -139,7 +140,7 @@ fun EditBillAmounts() {
     ) {
 
         //Rent bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
             RentIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
@@ -166,7 +167,7 @@ fun EditBillAmounts() {
         }
 
         //Electric-Gas bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
             ElectricIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
@@ -193,7 +194,7 @@ fun EditBillAmounts() {
         }
 
         //Water-Sewer bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
             WaterIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
@@ -220,7 +221,7 @@ fun EditBillAmounts() {
         }
 
         //Wi-Fi bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
             WiFiIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
@@ -247,7 +248,7 @@ fun EditBillAmounts() {
         }
 
         //Other bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
             OtherIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
