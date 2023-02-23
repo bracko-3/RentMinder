@@ -135,6 +135,36 @@ fun EditBillAmounts() {
         //Electric/Gas bill text and input box
         Text(text = "Electric/Gas Bill:", fontSize = (18.sp))
 
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TextField(
+                value = electricBill,
+                onValueChange = { electricBill = it },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
+                ),
+                modifier = Modifier.width(180.dp),
+                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+            )
+            Spacer(modifier = Modifier.width(40.dp))
+            Button(
+                onClick = {
+                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+                },
+                modifier = Modifier.width(88.dp)
+            ) {
+                Text(text = "Save & Remind")
+            }
+        }
+
+
         Text(text = "Water/Sewer Bill", fontSize = (18.sp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextField(
