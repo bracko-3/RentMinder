@@ -121,6 +121,25 @@ fun EditBillAmounts() {
             Spacer(modifier = Modifier.height(10.dp))
         }
         Text(text = "Water/Sewer Bill", fontSize = (18.sp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TextField(
+                value = waterBill,
+                onValueChange = { waterBill = it },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
+                ),
+                modifier = Modifier.width(180.dp),
+                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+            )
+        }
     }
 }
 
