@@ -103,14 +103,10 @@ fun EditBillAmounts() {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
-    Column(
-        modifier = Modifier.padding(horizontal = 31.dp, vertical = 0.dp),
-        verticalArrangement = Arrangement.spacedBy(1.dp)
-    ) {
+    Column(modifier = Modifier.padding(horizontal = 10.dp), verticalArrangement = Arrangement.Center) {
         //Rent bill text, text box, and button
         Row(verticalAlignment = Alignment.CenterVertically) {
             RentIconText()
-            Spacer(modifier = Modifier.padding(horizontal = 35.dp))
             OutlinedTextField(
                 value = rentBill,
                 onValueChange = { newRentBill -> rentBill = newRentBill },
@@ -125,7 +121,9 @@ fun EditBillAmounts() {
                         focusManager.clearFocus()
                     }
                 ),
-                modifier = Modifier.width(100.dp).height(55.dp),
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(55.dp),
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
             SaveRemindButton()
@@ -133,8 +131,8 @@ fun EditBillAmounts() {
     }
 
     //Electric-Gas bill text, text box, and button
-    Text(text = "Electric/Gas Bill:", fontSize = (18.sp))
     Row(verticalAlignment = Alignment.CenterVertically) {
+        ElectricIconText()
         OutlinedTextField(
             value = electricBill,
             onValueChange = { newElectricBill -> electricBill = newElectricBill },
@@ -149,15 +147,17 @@ fun EditBillAmounts() {
                     focusManager.clearFocus()
                 }
             ),
-            modifier = Modifier.width(180.dp),
+            modifier = Modifier
+                .width(100.dp)
+                .height(55.dp),
             textStyle = TextStyle.Default.copy(fontSize = 18.sp)
         )
         SaveRemindButton()
     }
 
     //Water-Sewer bill text, text box, and button
-    Text(text = "Water/Sewer Bill:", fontSize = (18.sp))
     Row(verticalAlignment = Alignment.CenterVertically) {
+        WaterIconText()
         OutlinedTextField(
             value = waterBill,
             onValueChange = { newWaterBill -> waterBill = newWaterBill },
@@ -172,15 +172,17 @@ fun EditBillAmounts() {
                     focusManager.clearFocus()
                 }
             ),
-            modifier = Modifier.width(180.dp),
+            modifier = Modifier
+                .width(100.dp)
+                .height(55.dp),
             textStyle = TextStyle.Default.copy(fontSize = 18.sp)
         )
         SaveRemindButton()
     }
 
     //Wi-Fi bill text, text box, and button
-    Text(text = "WiFi Bill:", fontSize = (18.sp))
     Row(verticalAlignment = Alignment.CenterVertically) {
+        WiFiIconText()
         OutlinedTextField(
             value = wifiBill,
             onValueChange = { newWifiBill -> wifiBill = newWifiBill },
@@ -195,15 +197,17 @@ fun EditBillAmounts() {
                     focusManager.clearFocus()
                 }
             ),
-            modifier = Modifier.width(180.dp),
+            modifier = Modifier
+                .width(100.dp)
+                .height(55.dp),
             textStyle = TextStyle.Default.copy(fontSize = 18.sp)
         )
         SaveRemindButton()
     }
 
     //Other bill text, text box, and button
-    Text(text = "Other Bill(s):", fontSize = (18.sp))
     Row(verticalAlignment = Alignment.CenterVertically) {
+        OtherIconText()
         OutlinedTextField(
             value = otherBill,
             onValueChange = { newOtherBill -> otherBill = newOtherBill },
@@ -218,13 +222,14 @@ fun EditBillAmounts() {
                     focusManager.clearFocus()
                 }
             ),
-            modifier = Modifier.width(180.dp),
+            modifier = Modifier
+                .width(100.dp)
+                .height(55.dp),
             textStyle = TextStyle.Default.copy(fontSize = 18.sp)
         )
         SaveRemindButton()
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
