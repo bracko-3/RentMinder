@@ -1,5 +1,7 @@
 package com.rentminder
 
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -43,6 +45,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainMenu() {
+    val cal: Calendar = Calendar.getInstance()
+    val monthDate = SimpleDateFormat("MMMM")
+    val monthName: String = monthDate.format(cal.time)
+
     Column() {
         TopToolBar()
         //Second column to center the body of the page
@@ -53,7 +59,7 @@ fun MainMenu() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.current_month),
+                text = monthName,
                 fontSize = 24.sp,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 fontWeight = FontWeight.Bold
@@ -68,7 +74,7 @@ fun TopToolBar() {
     Column() {
         TopAppBar(
             title = {
-                Text(text = "Rentminder")
+                Text(text = "RentMinder")
             }
         )
     }
