@@ -122,13 +122,7 @@ fun EditBillAmounts() {
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
             Spacer(modifier = Modifier.width(20.dp))
-
-            Button(
-                onClick = {  },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
-            }
+            SaveRemindButton()
             Spacer(modifier = Modifier.height(10.dp))
         }
 
@@ -153,15 +147,7 @@ fun EditBillAmounts() {
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
             Spacer(modifier = Modifier.width(20.dp))
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
-            }
-            Spacer(modifier = Modifier.height(10.dp))
+            SaveRemindButton()
         }
 
         //Water-Sewer bill text, text box, and button
@@ -185,15 +171,7 @@ fun EditBillAmounts() {
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
             Spacer(modifier = Modifier.width(20.dp))
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
-            }
-            Spacer(modifier = Modifier.height(10.dp))
+            SaveRemindButton()
         }
 
         //Wi-Fi bill text, text box, and button
@@ -217,16 +195,7 @@ fun EditBillAmounts() {
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
             Spacer(modifier = Modifier.width(20.dp))
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
+            SaveRemindButton()
         }
 
         //Other bill text, text box, and button
@@ -250,16 +219,8 @@ fun EditBillAmounts() {
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
             Spacer(modifier = Modifier.width(20.dp))
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Other Bills Saved!", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
-            }
+            SaveRemindButton()
         }
-        Spacer(modifier = Modifier.height(10.dp))
     }
 }
 
