@@ -38,12 +38,7 @@ fun SaveRemindButton() {
             count++
             focusManager.clearFocus()
                   },
-        modifier = Modifier
-            .offset(
-                x = -10.dp
-            ),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
-        shape = RoundedCornerShape(100),
         border = BorderStroke(0.dp, Color.Transparent)
     ) {
         Row(
@@ -52,10 +47,15 @@ fun SaveRemindButton() {
         ) {
             if (count > 0) {
                 Icon(
-                    imageVector = Icons.Filled.CheckCircle,
+                    imageVector = Icons.Filled.Check,
                     contentDescription = "Saved Icon",
                     tint = Color.Green,
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier
+                        .size(40.dp)
+                        .border(
+                            shape = RoundedCornerShape(50),
+                            border = BorderStroke(2.dp, Color.Transparent)
+                        )
                 )
             }
             else {
@@ -63,7 +63,12 @@ fun SaveRemindButton() {
                     imageVector = Icons.Filled.Add,
                     contentDescription = "Add Icon",
                     tint = Color.Black,
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier
+                        .size(40.dp)
+                        .border(
+                            shape = RoundedCornerShape(50),
+                            border = BorderStroke(3.dp, Color.Black)
+                        )
                 )
             }
         }
