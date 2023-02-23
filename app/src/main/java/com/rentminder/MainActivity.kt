@@ -139,6 +139,16 @@ fun EditBillAmounts() {
                 modifier = Modifier.width(180.dp),
                 textStyle = TextStyle.Default.copy(fontSize = 18.sp)
             )
+            Spacer(modifier = Modifier.width(40.dp))
+            Button(
+                onClick = {
+                    Toast.makeText(context, "Water Bill Saved!", Toast.LENGTH_SHORT).show()
+                },
+                modifier = Modifier.width(88.dp)
+            ) {
+                Text(text = "Save & Remind")
+            }
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
