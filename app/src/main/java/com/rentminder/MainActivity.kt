@@ -46,7 +46,7 @@ fun MainMenu() {
     Column() {
         TopToolBar()
         //Second column to center the body of the page
-        Column(modifier = Modifier.padding(horizontal = 20.dp).padding(vertical = 15.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(modifier = Modifier.padding(horizontal = 12.dp).padding(vertical = 15.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
                 text = stringResource(id = R.string.current_month),
                 fontSize = 24.sp,
@@ -119,7 +119,36 @@ fun EditBillAmounts() {
                 Text(text = "Save & Remind")
             }
             Spacer(modifier = Modifier.height(10.dp))
-
+        }
+        Text(text = "Water/Sewer Bill", fontSize = (18.sp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TextField(
+                value = waterBill,
+                onValueChange = { waterBill = it },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
+                ),
+                modifier = Modifier.width(180.dp),
+                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+            )
+            Spacer(modifier = Modifier.width(40.dp))
+            Button(
+                onClick = {
+                    Toast.makeText(context, "Water Bill Saved!", Toast.LENGTH_SHORT).show()
+                },
+                modifier = Modifier.width(88.dp)
+            ) {
+                Text(text = "Save & Remind")
+            }
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
