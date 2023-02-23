@@ -179,6 +179,7 @@ fun EditBillAmounts() {
                 ) {
                     Text(text = "Save & Remind")
                 }
+                Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
