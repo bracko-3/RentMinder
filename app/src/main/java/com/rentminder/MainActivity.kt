@@ -46,7 +46,12 @@ fun MainMenu() {
     Column() {
         TopToolBar()
         //Second column to center the body of the page
-        Column(modifier = Modifier.padding(horizontal = 12.dp).padding(vertical = 15.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 12.dp)
+                .padding(vertical = 15.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Text(
                 text = stringResource(id = R.string.current_month),
                 fontSize = 24.sp,
@@ -151,36 +156,67 @@ fun EditBillAmounts() {
             Spacer(modifier = Modifier.height(10.dp))
         }
 
-            Text(text = "WiFi Bill", fontSize = (18.sp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                TextField(
-                    value = wifiBill,
-                    onValueChange = { wifiBill = it },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    singleLine = true,
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus()
-                        }
-                    ),
-                    modifier = Modifier.width(180.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
-                )
-                Spacer(modifier = Modifier.width(40.dp))
-                Button(
-                    onClick = {
-                        Toast.makeText(context, "WiFi Bill Saved!", Toast.LENGTH_SHORT).show()
-                    },
-                    modifier = Modifier.width(88.dp)
-                ) {
-                    Text(text = "Save & Remind")
-                }
-                Spacer(modifier = Modifier.height(10.dp))
+        Text(text = "WiFi Bill", fontSize = (18.sp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TextField(
+                value = wifiBill,
+                onValueChange = { wifiBill = it },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
+                ),
+                modifier = Modifier.width(180.dp),
+                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+            )
+            Spacer(modifier = Modifier.width(40.dp))
+            Button(
+                onClick = {
+                    Toast.makeText(context, "WiFi Bill Saved!", Toast.LENGTH_SHORT).show()
+                },
+                modifier = Modifier.width(88.dp)
+            ) {
+                Text(text = "Save & Remind")
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+
         }
+        Text(text = "Other Bills:", fontSize = (18.sp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TextField(
+                value = otherBill,
+                onValueChange = { otherBill = it },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
+                ),
+                modifier = Modifier.width(180.dp),
+                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+            )
+            Spacer(modifier = Modifier.width(40.dp))
+            Button(
+                onClick = {
+                    Toast.makeText(context, "Other Bills Saved!", Toast.LENGTH_SHORT).show()
+                },
+                modifier = Modifier.width(88.dp)
+            ) {
+                Text(text = "Save & Remind")
+            }
+        }
+        Spacer(modifier = Modifier.height(10.dp))
     }
 }
 
