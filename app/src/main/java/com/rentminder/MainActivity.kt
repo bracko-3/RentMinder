@@ -83,7 +83,7 @@ fun MainMenu() {
 //Navigation bar at the top of app
 @Composable
 fun TopToolBar() {
-    Column() {
+    Column {
         TopAppBar(
             title = {
                 Icon(
