@@ -17,6 +17,8 @@ forget. Keep track of every month's expenses.
 ## Storyboard
 
 ![RentMinder](https://user-images.githubusercontent.com/112514952/214733059-0a0e8303-5f76-4973-9c1f-d5545adeb427.png)
+![RentMinderM](https://user-images.githubusercontent.com/112514952/221339203-5acefb93-560e-46a9-9ea4-8a95ceec3c6e.png)
+![RentMinderm2](https://user-images.githubusercontent.com/112514952/221339207-d63b1c5b-7daa-4b38-877a-de3d2f0a526f.png)
 
 ## Functional Requirements
 
