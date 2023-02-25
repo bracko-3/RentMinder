@@ -2,6 +2,7 @@ package com.rentminder
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.inputmethodservice.Keyboard.Row
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -10,19 +11,28 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.sharp.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rentminder.ui.theme.RentMinderTheme
@@ -52,30 +62,57 @@ fun MainMenu() {
 
     Column() {
         TopToolBar()
-        //Second column to center the body of the page
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
+        Row(modifier = Modifier
+            .padding(
+                top = 5.dp,
+                bottom = 10.dp
+            )
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
         ) {
             Text(
                 text = monthName,
-                fontSize = 25.sp,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold
             )
-            EditBillAmounts()
         }
+        EditBillAmounts()
     }
 }
 
 //Navigation bar at the top of app
 @Composable
 fun TopToolBar() {
-    Column() {
+    Column {
         TopAppBar(
             title = {
-                Text(text = "RentMinder", fontSize = 25.sp)
+                Icon(
+                    painterResource(
+                        id = R.drawable.outline_notifications_active_24
+                    ),
+                    contentDescription = "Notification Icon",
+                    modifier = Modifier
+                        .size(45.dp)
+                        .padding(
+                            end = 5.dp
+                        )
+                )
+                Text(
+                    text = "RentMinder",
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            actions = {
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Filled.Menu,
+                        contentDescription = "Navigation Bar",
+                        modifier = Modifier
+                            .size(35.dp),
+                        tint = Color.Black
+                    )
+                }
             }
         )
     }
@@ -92,175 +129,156 @@ fun EditBillAmounts() {
     var otherBill by remember { mutableStateOf("") }
     var totalBill by remember { mutableStateOf("") }
     var dividedBill by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
-    Column(
-        modifier = Modifier.padding(horizontal = 31.dp, vertical = 0.dp),
-        verticalArrangement = Arrangement.spacedBy(1.dp)
+    //Column for all bill rows
+    Column(modifier = Modifier
+        .padding(
+            horizontal = 15.dp
+        )
     ) {
+
         //Rent bill text, text box, and button
-        Text(text = "Rent Bill:", fontSize = (18.sp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextField(
-                value = rentBill,
-                onValueChange = { newRentBill -> rentBill = newRentBill },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                singleLine = true,
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
-                    }
-                ),
-                modifier = Modifier.width(180.dp),
-                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
-            )
-            Spacer(modifier = Modifier.width(20.dp))
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+            RentIconText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                OutlinedTextField(
+                    value = rentBill,
+                    onValueChange = { newRentBill -> rentBill = newRentBill },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
+                SaveRemindButton()
             }
-            Spacer(modifier = Modifier.height(10.dp))
         }
 
         //Electric-Gas bill text, text box, and button
-        Text(text = "Electric/Gas Bill:", fontSize = (18.sp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextField(
-                value = electricBill,
-                onValueChange = { newElectricBill -> electricBill = newElectricBill },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                singleLine = true,
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
-                    }
-                ),
-                modifier = Modifier.width(180.dp),
-                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
-            )
-            Spacer(modifier = Modifier.width(20.dp))
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+            ElectricIconText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                OutlinedTextField(
+                    value = electricBill,
+                    onValueChange = { newElectricBill -> electricBill = newElectricBill },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
+                SaveRemindButton()
             }
-            Spacer(modifier = Modifier.height(10.dp))
         }
 
         //Water-Sewer bill text, text box, and button
-        Text(text = "Water/Sewer Bill:", fontSize = (18.sp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextField(
-                value = waterBill,
-                onValueChange = { newWaterBill -> waterBill = newWaterBill },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                singleLine = true,
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
-                    }
-                ),
-                modifier = Modifier.width(180.dp),
-                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
-            )
-            Spacer(modifier = Modifier.width(20.dp))
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+            WaterIconText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                OutlinedTextField(
+                    value = waterBill,
+                    onValueChange = { newWaterBill -> waterBill = newWaterBill },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
+                SaveRemindButton()
             }
-            Spacer(modifier = Modifier.height(10.dp))
         }
 
         //Wi-Fi bill text, text box, and button
-        Text(text = "WiFi Bill:", fontSize = (18.sp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextField(
-                value = wifiBill,
-                onValueChange = { newWifiBill -> wifiBill = newWifiBill },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                singleLine = true,
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
-                    }
-                ),
-                modifier = Modifier.width(180.dp),
-                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
-            )
-            Spacer(modifier = Modifier.width(20.dp))
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+            WiFiIconText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                OutlinedTextField(
+                    value = wifiBill,
+                    onValueChange = { newWifiBill -> wifiBill = newWifiBill },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
+                SaveRemindButton()
             }
-            Spacer(modifier = Modifier.height(10.dp))
-
         }
 
         //Other bill text, text box, and button
-        Text(text = "Other Bill(s):", fontSize = (18.sp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextField(
-                value = otherBill,
-                onValueChange = { newOtherBill -> otherBill = newOtherBill },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                singleLine = true,
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
-                    }
-                ),
-                modifier = Modifier.width(180.dp),
-                textStyle = TextStyle.Default.copy(fontSize = 18.sp)
-            )
-            Spacer(modifier = Modifier.width(20.dp))
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Other Bills Saved!", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.width(88.dp)
-            ) {
-                Text(text = "Save & Remind")
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+            OtherIconText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                OutlinedTextField(
+                    value = otherBill,
+                    onValueChange = { newOtherBill -> otherBill = newOtherBill },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
+                SaveRemindButton()
             }
         }
-        Spacer(modifier = Modifier.height(10.dp))
+
+        //Line Dividing utility rows and totals
+        Divider(color = Color.Black, thickness = Dp.Hairline)
+
+
     }
 }
 
