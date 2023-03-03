@@ -1,25 +1,18 @@
 package com.rentminder
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextDecoration
 
 @Composable
-fun RentIconText() {
+fun setupRentTextProperties() {
     Row(verticalAlignment = Alignment.CenterVertically){
         Icon(painterResource(
             id = R.drawable.outline_house_24
@@ -36,7 +29,7 @@ fun RentIconText() {
 }
 
 @Composable
-fun ElectricIconText() {
+fun setupElectricTextProperties() {
     Row(verticalAlignment = Alignment.CenterVertically){
         Icon(painterResource(
             id = R.drawable.outline_lightbulb_24
@@ -53,7 +46,7 @@ fun ElectricIconText() {
 }
 
 @Composable
-fun WaterIconText() {
+fun setupWaterTextProperties() {
     Row(verticalAlignment = Alignment.CenterVertically){
         Icon(painterResource(
             id = R.drawable.outline_water_drop_24
@@ -70,7 +63,7 @@ fun WaterIconText() {
 }
 
 @Composable
-fun WiFiIconText() {
+fun setupWifiTextProperties() {
     Row(verticalAlignment = Alignment.CenterVertically){
         Icon(painterResource(
             id = R.drawable.outline_wifi_24
@@ -87,7 +80,7 @@ fun WiFiIconText() {
 }
 
 @Composable
-fun OtherIconText() {
+fun setupMiscellaneousTextProperties() {
     Row(verticalAlignment = Alignment.CenterVertically){
         Icon(painterResource(
             id = R.drawable.baseline_add_shopping_cart_24
