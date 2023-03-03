@@ -159,7 +159,7 @@ fun EditBillAmounts() {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = electricBill,
-                    onValueChange = { newElectricBill -> electricBill = newElectricBill },
+                    onValueChange = { electricBill = it },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done,
@@ -184,7 +184,7 @@ fun EditBillAmounts() {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = waterBill,
-                    onValueChange = { newWaterBill -> waterBill = newWaterBill },
+                    onValueChange = { waterBill = it },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done,
@@ -209,7 +209,7 @@ fun EditBillAmounts() {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = wifiBill,
-                    onValueChange = { newWifiBill -> wifiBill = newWifiBill },
+                    onValueChange = { wifiBill = it },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done,
@@ -234,7 +234,7 @@ fun EditBillAmounts() {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = otherBill,
-                    onValueChange = { newOtherBill -> otherBill = newOtherBill },
+                    onValueChange = { otherBill = it },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done,
