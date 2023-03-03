@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
             RentMinderTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.background,
                 ) {
                     MainMenu()
                 }
@@ -64,12 +64,12 @@ fun MainMenu() {
         TopToolBar()
         Row(
             modifier = Modifier.padding(top = 5.dp, bottom = 10.dp).fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             Text(
                 text = monthName,
                 fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
         }
         EditBillAmounts()
@@ -85,12 +85,12 @@ fun TopToolBar() {
                 Icon(
                     painterResource(id = R.drawable.outline_notifications_active_24),
                     contentDescription = "Notification Icon",
-                    modifier = Modifier.size(45.dp).padding(end = 5.dp)
+                    modifier = Modifier.size(45.dp).padding(end = 5.dp),
                 )
                 Text(
                     text = "RentMinder",
                     fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
             },
             actions = {
@@ -99,7 +99,7 @@ fun TopToolBar() {
                         imageVector = Icons.Filled.Menu,
                         contentDescription = "Navigation Bar",
                         modifier = Modifier.size(35.dp),
-                        tint = Color.Black
+                        tint = Color.Black,
                     )
                 }
             }
@@ -147,7 +147,7 @@ fun EditBillAmounts() {
                         }
                     ),
                     modifier = Modifier.width(100.dp).height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp),
                 )
                 SaveRemindButton()
             }
@@ -162,7 +162,7 @@ fun EditBillAmounts() {
                     onValueChange = { newElectricBill -> electricBill = newElectricBill },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
+                        imeAction = ImeAction.Done,
                     ),
                     singleLine = true,
                     keyboardActions = KeyboardActions(
@@ -172,7 +172,7 @@ fun EditBillAmounts() {
                         }
                     ),
                     modifier = Modifier.width(100.dp).height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp),
                 )
                 SaveRemindButton()
             }
@@ -187,7 +187,7 @@ fun EditBillAmounts() {
                     onValueChange = { newWaterBill -> waterBill = newWaterBill },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
+                        imeAction = ImeAction.Done,
                     ),
                     singleLine = true,
                     keyboardActions = KeyboardActions(
@@ -197,7 +197,7 @@ fun EditBillAmounts() {
                         }
                     ),
                     modifier = Modifier.width(100.dp).height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp),
                 )
                 SaveRemindButton()
             }
@@ -212,7 +212,7 @@ fun EditBillAmounts() {
                     onValueChange = { newWifiBill -> wifiBill = newWifiBill },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
+                        imeAction = ImeAction.Done,
                     ),
                     singleLine = true,
                     keyboardActions = KeyboardActions(
@@ -222,7 +222,7 @@ fun EditBillAmounts() {
                         }
                     ),
                     modifier = Modifier.width(100.dp).height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp),
                 )
                 SaveRemindButton()
             }
@@ -237,7 +237,7 @@ fun EditBillAmounts() {
                     onValueChange = { newOtherBill -> otherBill = newOtherBill },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
+                        imeAction = ImeAction.Done,
                     ),
                     singleLine = true,
                     keyboardActions = KeyboardActions(
@@ -247,7 +247,7 @@ fun EditBillAmounts() {
                         }
                     ),
                     modifier = Modifier.width(100.dp).height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp),
                 )
                 SaveRemindButton()
             }
