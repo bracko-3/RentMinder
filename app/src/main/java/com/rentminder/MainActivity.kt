@@ -41,17 +41,23 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             RentMinderTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    modifier = Modifier
+                        .size(2800.dp)
+                        .padding(end = 5.dp),
+                    color = MaterialTheme.colors.background,
                 ) {
                     MainMenu()
                 }
+
+
             }
         }
+        }
     }
-}
+
 
 @Composable
 fun MainMenu() {
@@ -65,7 +71,7 @@ fun MainMenu() {
         Row(modifier = Modifier
             .padding(
                 top = 5.dp,
-                bottom = 10.dp
+                bottom = 10.dp,
             )
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
@@ -76,7 +82,9 @@ fun MainMenu() {
                 fontWeight = FontWeight.Bold
             )
         }
-        EditBillAmounts()
+        EditBillAmounts(
+
+        )
     }
 }
 
