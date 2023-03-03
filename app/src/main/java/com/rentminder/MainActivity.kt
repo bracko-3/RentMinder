@@ -146,7 +146,7 @@ fun EditBillAmounts() {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = rentBill,
-                    onValueChange = { newRentBill -> rentBill = newRentBill },
+                    onValueChange = { rentBill = it },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done
