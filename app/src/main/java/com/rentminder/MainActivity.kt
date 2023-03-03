@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -55,34 +56,20 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainMenu() {
-    //Getting current month for Main Menu
-    val cal: Calendar = Calendar.getInstance()
-    val monthDate = SimpleDateFormat("MMMM")
-    val monthName: String = monthDate.format(cal.time)
 
-    Column() {
-        TopToolBar()
-        Row(modifier = Modifier
-            .padding(
-                top = 5.dp,
-                bottom = 10.dp
-            )
-            .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = monthName,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-        EditBillAmounts()
+    Column {
+        TopNavBarColumn()
+        CalendarNameColumn()
+        RentBillColumn()
     }
 }
 
-//Navigation bar at the top of app
+/**
+ * 1. Column (TopNav)
+ * Creates navigation bar at the top of the app.
+ */
 @Composable
-fun TopToolBar() {
+fun TopNavBarColumn() {
     Column {
         TopAppBar(
             title = {
@@ -118,10 +105,57 @@ fun TopToolBar() {
     }
 }
 
-//Bill input boxes, buttons, and text fields
+/**
+ * 2. Column (Calendar Display Name)
+ * Displays current calendar in a month-only format
+ */
+@Composable
+fun CalendarNameColumn()
+{
+    //Getting current month for Main Menu
+    val calendar: Calendar = Calendar.getInstance()
+    val monthDate = SimpleDateFormat("MMMM")
+    val monthName: String = monthDate.format(calendar.time)
+
+    Row(modifier = Modifier
+        .padding(
+            top = 5.dp,
+            bottom = 10.dp
+        )
+        .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = monthName,
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+/**
+ * 3. Column (All type of bills)
+ * Bill input boxes, buttons, and text fields.
+ *
+ * 1. Row (Rent)
+ * Properties:
+ *
+ * 2. Row (Electric)
+ * Properties: 
+ *
+ * 3. Row (Water)
+ * Properties:
+ *
+ * 4. Row (Wifi)
+ * Properties:
+ *
+ * 5. Row (Miscellaneous)
+ * Properties:
+ *
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun EditBillAmounts() {
+fun RentBillColumn() {
     var rentBill by remember { mutableStateOf("") }
     var electricBill by remember { mutableStateOf("") }
     var waterBill by remember { mutableStateOf("") }
@@ -139,10 +173,9 @@ fun EditBillAmounts() {
             horizontal = 15.dp
         )
     ) {
-
-        //Rent bill text, text box, and button
+        //1. Row (Rent)
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
-            RentIconText()
+            setupRentTextProperties()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = rentBill,
@@ -167,9 +200,9 @@ fun EditBillAmounts() {
             }
         }
 
-        //Electric-Gas bill text, text box, and button
+        //2. Row (Electric)
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
-            ElectricIconText()
+            setupElectricTextProperties()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = electricBill,
@@ -194,9 +227,9 @@ fun EditBillAmounts() {
             }
         }
 
-        //Water-Sewer bill text, text box, and button
+        //3. Row (Water)
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
-            WaterIconText()
+            setupWaterTextProperties()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = waterBill,
@@ -221,9 +254,9 @@ fun EditBillAmounts() {
             }
         }
 
-        //Wi-Fi bill text, text box, and button
+        //4. Row (Wifi)
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
-            WiFiIconText()
+            setupWifiTextProperties()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = wifiBill,
@@ -248,9 +281,9 @@ fun EditBillAmounts() {
             }
         }
 
-        //Other bill text, text box, and button
+        //5. Row (Miscellaneous)
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
-            OtherIconText()
+            setupMiscellaneousTextProperties()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
                     value = otherBill,
@@ -280,6 +313,57 @@ fun EditBillAmounts() {
 
 
     }
+}
+@Composable
+fun SaveRemindButton() {
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
+    val shape = RoundedCornerShape(size = 16.dp)
+    var count by remember { mutableStateOf(0) }
+
+    IconButton(
+        onClick = {
+            if (count > 0) {
+                Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+            }
+            count++
+            focusManager.clearFocus()
+        },
+
+
+        ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            if (count > 0) {
+                Icon(
+                    painterResource(id = R.drawable.outline_check_circle_outline_24),
+                    contentDescription = "Saved Icon",
+                    tint = Color.Green,
+                    modifier = Modifier
+                        .size(50.dp)
+                )
+            } else {
+                Icon(
+                    painterResource(id = R.drawable.outline_data_saver_on_24),
+                    contentDescription = "Add Icon",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .size(50.dp)
+                )
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+@Preview
+private fun SaveRemindButtonPreview() {
+    SaveRemindButton()
 }
 
 @Preview(showBackground = true)
