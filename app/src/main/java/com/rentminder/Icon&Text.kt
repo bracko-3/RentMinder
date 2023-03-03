@@ -21,7 +21,7 @@ fun RentIconText() {
         )
         Text(
             text = "Rent",
-            fontSize = 26.sp
+            fontSize = 26.sp,
         )
     }
 }
@@ -36,7 +36,7 @@ fun ElectricIconText() {
         )
         Text(
             text = "Electric/Gas",
-            fontSize = 26.sp
+            fontSize = 26.sp,
         )
     }
 }
