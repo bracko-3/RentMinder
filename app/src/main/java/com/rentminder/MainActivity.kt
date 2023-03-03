@@ -62,12 +62,8 @@ fun MainMenu() {
 
     Column() {
         TopToolBar()
-        Row(modifier = Modifier
-            .padding(
-                top = 5.dp,
-                bottom = 10.dp
-            )
-            .fillMaxWidth(),
+        Row(
+            modifier = Modifier.padding(top = 5.dp, bottom = 10.dp).fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
@@ -87,15 +83,9 @@ fun TopToolBar() {
         TopAppBar(
             title = {
                 Icon(
-                    painterResource(
-                        id = R.drawable.outline_notifications_active_24
-                    ),
+                    painterResource(id = R.drawable.outline_notifications_active_24),
                     contentDescription = "Notification Icon",
-                    modifier = Modifier
-                        .size(45.dp)
-                        .padding(
-                            end = 5.dp
-                        )
+                    modifier = Modifier.size(45.dp).padding(end = 5.dp)
                 )
                 Text(
                     text = "RentMinder",
@@ -108,8 +98,7 @@ fun TopToolBar() {
                     Icon(
                         imageVector = Icons.Filled.Menu,
                         contentDescription = "Navigation Bar",
-                        modifier = Modifier
-                            .size(35.dp),
+                        modifier = Modifier.size(35.dp),
                         tint = Color.Black
                     )
                 }
@@ -147,20 +136,17 @@ fun EditBillAmounts() {
                 OutlinedTextField(
                     value = rentBill,
                     onValueChange = { rentBill = it },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
+                    keyboardOptions = KeyboardOptions(keyboardType =
+                        KeyboardType.Number,
                         imeAction = ImeAction.Done
                     ),
                     singleLine = true,
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus()
+                    keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
@@ -185,9 +171,7 @@ fun EditBillAmounts() {
                             focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
@@ -212,9 +196,7 @@ fun EditBillAmounts() {
                             focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
@@ -239,9 +221,7 @@ fun EditBillAmounts() {
                             focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
@@ -266,9 +246,7 @@ fun EditBillAmounts() {
                             focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
