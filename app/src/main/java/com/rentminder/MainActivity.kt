@@ -2,9 +2,7 @@ package com.rentminder
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.inputmethodservice.Keyboard.Row
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -13,20 +11,14 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.sharp.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -44,9 +36,7 @@ class MainActivity : ComponentActivity() {
 
             RentMinderTheme {
                 Surface(
-                    modifier = Modifier
-                        .size(2800.dp)
-                        .padding(end = 5.dp),
+                    modifier = Modifier.size(2800.dp).padding(end = 5.dp),
                     color = MaterialTheme.colors.background,
                 ) {
                     MainMenu()
@@ -66,13 +56,10 @@ fun MainMenu() {
     val monthDate = SimpleDateFormat("MMMM")
     val monthName: String = monthDate.format(cal.time)
 
-    Column() {
+    Column {
         TopToolBar()
         Row(modifier = Modifier
-            .padding(
-                top = 5.dp,
-                bottom = 10.dp,
-            )
+            .padding(top = 5.dp, bottom = 10.dp)
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
@@ -194,9 +181,7 @@ fun EditBillAmounts() {
                             focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
@@ -215,14 +200,11 @@ fun EditBillAmounts() {
                     ),
                     singleLine = true,
                     keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
+                        onDone = { keyboardController?.hide()
                             focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
@@ -246,9 +228,7 @@ fun EditBillAmounts() {
                             focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
@@ -273,9 +253,7 @@ fun EditBillAmounts() {
                             focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
@@ -300,9 +278,7 @@ fun EditBillAmounts() {
                             focusManager.clearFocus()
                         }
                     ),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
+                    modifier = Modifier.width(100.dp).height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()
@@ -312,12 +288,8 @@ fun EditBillAmounts() {
         //Line Dividing utility rows and totals
         Divider(color = Color.Black, thickness = Dp.Hairline)
 
-
     }
 }
-
-
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
