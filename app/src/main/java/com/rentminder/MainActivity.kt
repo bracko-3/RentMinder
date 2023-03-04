@@ -132,6 +132,7 @@ fun TopToolBar() {
 fun EditBillAmounts() {
     var rentBill by remember { mutableStateOf("") }
     var electricBill by remember { mutableStateOf("") }
+    var gasBill by remember { mutableStateOf("") }
     var waterBill by remember { mutableStateOf("") }
     var wifiBill by remember { mutableStateOf("") }
     var otherBill by remember { mutableStateOf("") }
@@ -175,7 +176,7 @@ fun EditBillAmounts() {
             }
         }
 
-        //Electric-Gas bill text, text box, and button
+        //Electric bill text, text box, and button
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
             ElectricIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
@@ -201,7 +202,32 @@ fun EditBillAmounts() {
                 SaveRemindButton()
             }
         }
-
+//ga bill text, text box, and button
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+            GasIconText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                OutlinedTextField(
+                    value = gasBill,
+                    onValueChange = { newGasBill -> gasBill = newGasBill },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
+                SaveRemindButton()
+            }
+        }
         //Water-Sewer bill text, text box, and button
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
             WaterIconText()
@@ -289,6 +315,8 @@ fun EditBillAmounts() {
 
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
