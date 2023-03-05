@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
 fun MainMenu() {
     //Getting current month for Main Menu
     val cal: Calendar = Calendar.getInstance()
-    val monthDate = SimpleDateFormat("MMMM")
+    val monthDate = SimpleDateFormat("MMMM Y")
     val monthName: String = monthDate.format(cal.time)
 
     Column() {
