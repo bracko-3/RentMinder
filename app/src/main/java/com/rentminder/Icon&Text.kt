@@ -26,7 +26,7 @@ fun RentIconText() {
         ),
             contentDescription = "Rent Icon",
             modifier = Modifier
-                .size(30.dp)
+                .size(44.dp)
         )
         Text(
             text = "Rent",
@@ -43,7 +43,7 @@ fun ElectricIconText() {
         ),
             contentDescription = "Light Bulb Icon",
             modifier = Modifier
-                .size(30.dp)
+                .size(44.dp)
         )
         Text(
             text = "Electric/Gas",
@@ -60,7 +60,7 @@ fun WaterIconText() {
         ),
             contentDescription = "Water Icon",
             modifier = Modifier
-                .size(30.dp)
+                .size(44.dp)
         )
         Text(
             text = "Water/Sewer",
@@ -77,7 +77,7 @@ fun WiFiIconText() {
         ),
             contentDescription = "WiFi Icon",
             modifier = Modifier
-                .size(30.dp)
+                .size(44.dp)
         )
         Text(
             text = "Wi-Fi",
@@ -94,7 +94,7 @@ fun OtherIconText() {
         ),
             contentDescription = "Other Icon",
             modifier = Modifier
-                .size(30.dp)
+                .size(44.dp)
         )
         Text(
             text = "Other",
