@@ -54,6 +54,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+        /**
+         * Gets the current month and year and displays it above billing
+         */
 fun MainMenu() {
     //Getting current month for Main Menu
     val cal: Calendar = Calendar.getInstance()
@@ -65,7 +68,7 @@ fun MainMenu() {
         Row(modifier = Modifier
             .padding(
                 top = 5.dp,
-                bottom = 10.dp
+                bottom = 25.dp
             )
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
@@ -121,6 +124,9 @@ fun TopToolBar() {
 //Bill input boxes, buttons, and text fields
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
+        /**
+         * Creates billing categories rows as well as input fields.
+         */
 fun EditBillAmounts() {
     var rentBill by remember { mutableStateOf("") }
     var electricBill by remember { mutableStateOf("") }
