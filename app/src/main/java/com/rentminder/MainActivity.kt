@@ -59,9 +59,9 @@ class MainActivity : ComponentActivity() {
          */
 fun MainMenu() {
     //Getting current month for Main Menu
-    val cal: Calendar = Calendar.getInstance()
-    val monthDate = SimpleDateFormat("MMMM Y")
-    val monthName: String = monthDate.format(cal.time)
+    val calendar: Calendar = Calendar.getInstance()
+    val calendarFormatting = SimpleDateFormat("MMMM Y")
+    val formattedDate: String = calendarFormatting.format(calendar.time)
 
     Column() {
         TopToolBar()
@@ -74,7 +74,7 @@ fun MainMenu() {
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = monthName,
+                text = formattedDate,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold
             )
