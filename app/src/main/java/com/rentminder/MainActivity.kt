@@ -1,4 +1,4 @@
-package com.rentminder
+package com.rentMinder
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -27,7 +27,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rentminder.ui.theme.RentMinderTheme
+import com.rentMinder.*
+import com.rentMinder.ui.theme.RentMinderTheme
+import com.rentminder.R
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

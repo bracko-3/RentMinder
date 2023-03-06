@@ -1,4 +1,4 @@
-package com.rentminder
+package com.rentMinder
 
 import org.junit.Test
 

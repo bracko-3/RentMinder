@@ -1,4 +1,4 @@
-package com.rentminder
+package com.rentMinder
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.rentminder.R
 
 @Composable
 fun SaveRemindButton() {

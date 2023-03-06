@@ -1,4 +1,4 @@
-package com.rentminder.ui.theme
+package com.rentMinder.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
