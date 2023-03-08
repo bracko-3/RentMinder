@@ -80,6 +80,40 @@ fun WiFiIconText() {
 }
 
 @Composable
+fun TotalIconText() {
+    Row(verticalAlignment = Alignment.CenterVertically){
+        Icon(painterResource(
+            id = R.drawable.outline_wifi_24
+        ),
+            contentDescription = "Total Icon",
+            modifier = Modifier
+                .size(30.dp)
+        )
+        Text(
+            text = "Total",
+            fontSize = (26.sp),
+        )
+    }
+}
+
+@Composable
+fun DividedIconText() {
+    Row(verticalAlignment = Alignment.CenterVertically){
+        Icon(painterResource(
+            id = R.drawable.outline_wifi_24
+        ),
+            contentDescription = "Divided Icon",
+            modifier = Modifier
+                .size(30.dp)
+        )
+        Text(
+            text = "Divided",
+            fontSize = (26.sp),
+        )
+    }
+}
+
+@Composable
 fun OtherIconText() {
     Row(verticalAlignment = Alignment.CenterVertically){
         Icon(painterResource(

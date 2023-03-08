@@ -1,4 +1,4 @@
-package com.rentMinder
+package com.rentminder
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -27,9 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rentMinder.*
 import com.rentminder.*
-import com.rentminder.R
 import com.rentminder.ui.theme.RentMinderTheme
 
 class MainActivity : ComponentActivity() {
@@ -250,6 +248,60 @@ fun EditBillAmounts() {
                 OutlinedTextField(
                     value = otherBill,
                     onValueChange = { newOtherBill -> otherBill = newOtherBill },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
+                SaveRemindButton()
+            }
+        }
+
+        //total bill text, text box, and button
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+            TotalIconText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                OutlinedTextField(
+                    value = totalBill,
+                    onValueChange = { newTotalBill -> totalBill = newTotalBill },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
+                SaveRemindButton()
+            }
+        }
+
+        //Divided bill text, text box, and button
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+            DividedIconText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                OutlinedTextField(
+                    value = dividedBill,
+                    onValueChange = { newDividedBill -> dividedBill = newDividedBill },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done

@@ -12,7 +12,7 @@
         android:theme="@style/Theme.RentMinder"
         tools:targetApi="31">
         <activity
-            android:name="com.rentMinder.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.RentMinder">
             <intent-filter>
