@@ -1,4 +1,4 @@
-package com.rentMinder
+package com.rentminder
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
-import com.rentminder.R
 
 @Composable
 fun RentIconText() {

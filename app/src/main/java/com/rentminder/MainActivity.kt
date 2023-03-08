@@ -28,8 +28,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rentMinder.*
-import com.rentMinder.ui.theme.RentMinderTheme
+import com.rentminder.*
 import com.rentminder.R
+import com.rentminder.ui.theme.RentMinderTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

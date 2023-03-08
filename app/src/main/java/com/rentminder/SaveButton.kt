@@ -1,8 +1,7 @@
-package com.rentMinder
+package com.rentminder
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -16,13 +15,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.rentminder.R
+
 
 @Composable
 fun SaveRemindButton() {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
-    val shape = RoundedCornerShape(size = 16.dp)
     var count by remember { mutableStateOf(0) }
 
     IconButton(

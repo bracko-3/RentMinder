@@ -1,4 +1,4 @@
-package com.rentMinder.ui.theme
+package com.rentminder.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
