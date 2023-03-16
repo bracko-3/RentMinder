@@ -1,4 +1,4 @@
 package com.rentminder.dto
 
-class Household () {
+class Household {
 }
