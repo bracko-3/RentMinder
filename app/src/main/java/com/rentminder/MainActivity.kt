@@ -198,7 +198,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-//                SaveRemindButton()
+                SaveRemindButton(enabled = electricBill.isNotEmpty())
             }
         }
 
@@ -228,7 +228,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-//                SaveRemindButton()
+                SaveRemindButton(enabled = waterBill.isNotEmpty())
             }
         }
 
@@ -258,7 +258,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-//                SaveRemindButton()
+                SaveRemindButton(enabled = wifiBill.isNotEmpty())
             }
         }
 
@@ -288,7 +288,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-//                SaveRemindButton()
+                SaveRemindButton(enabled = otherBill.isNotEmpty())
             }
         }
 

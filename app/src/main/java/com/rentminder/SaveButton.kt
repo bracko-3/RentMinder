@@ -40,21 +40,24 @@ fun SaveRemindButton(enabled: Boolean) {
 
     IconButton(
         onClick = {
-            if (count > 0) {
-                Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
+            if (enabled) {
+                if (count > 0) {
+                    Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+                }
+                count++
+                focusManager.clearFocus()
             } else {
-                Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please enter a value before saving or editing", Toast.LENGTH_SHORT).show()
             }
-            count++
-            focusManager.clearFocus()
         },
-        enabled = enabled
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            if (count > 0) {
+            if (count > 0 && enabled) {
                 Icon(
                     painterResource(id = R.drawable.outline_check_circle_outline_24),
                     contentDescription = "Saved Icon",
