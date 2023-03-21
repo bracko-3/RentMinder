@@ -62,12 +62,13 @@ fun MainMenu() {
 
     Column() {
         TopToolBar()
-        Row(modifier = Modifier
-            .padding(
-                top = 5.dp,
-                bottom = 10.dp
-            )
-            .fillMaxWidth(),
+        Row(
+            modifier = Modifier
+                .padding(
+                    top = 5.dp,
+                    bottom = 10.dp
+                )
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
@@ -134,14 +135,18 @@ fun EditBillAmounts() {
     val focusManager = LocalFocusManager.current
 
     //Column for all bill rows
-    Column(modifier = Modifier
-        .padding(
-            horizontal = 15.dp
-        )
+    Column(
+        modifier = Modifier
+            .padding(
+                horizontal = 15.dp
+            )
     ) {
 
         //Rent bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 10.dp)
+        ) {
             RentIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
@@ -163,12 +168,15 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-                SaveRemindButton()
+                SaveRemindButton(enabled = rentBill.isNotEmpty())
             }
         }
 
         //Electric-Gas bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 10.dp)
+        ) {
             ElectricIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
@@ -190,12 +198,15 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-                SaveRemindButton()
+//                SaveRemindButton()
             }
         }
 
         //Water-Sewer bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 10.dp)
+        ) {
             WaterIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
@@ -217,12 +228,15 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-                SaveRemindButton()
+//                SaveRemindButton()
             }
         }
 
         //Wi-Fi bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 10.dp)
+        ) {
             WiFiIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
@@ -244,12 +258,15 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-                SaveRemindButton()
+//                SaveRemindButton()
             }
         }
 
         //Other bill text, text box, and button
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 10.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 10.dp)
+        ) {
             OtherIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 OutlinedTextField(
@@ -271,7 +288,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-                SaveRemindButton()
+//                SaveRemindButton()
             }
         }
 

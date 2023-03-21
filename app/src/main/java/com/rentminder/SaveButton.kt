@@ -32,7 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SaveRemindButton() {
+fun SaveRemindButton(enabled: Boolean) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val shape = RoundedCornerShape(size = 16.dp)
@@ -48,8 +48,7 @@ fun SaveRemindButton() {
             count++
             focusManager.clearFocus()
         },
-
-
+        enabled = enabled
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -80,5 +79,6 @@ fun SaveRemindButton() {
 @Composable
 @Preview
 private fun SaveRemindButtonPreview() {
-    SaveRemindButton()
+    val enabled = false;
+    SaveRemindButton(enabled)
 }
