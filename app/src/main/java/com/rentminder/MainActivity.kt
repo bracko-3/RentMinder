@@ -2,7 +2,9 @@ package com.rentminder
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.inputmethodservice.Keyboard.Row
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -11,14 +13,20 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.sharp.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -141,13 +149,9 @@ fun EditBillAmounts() {
         ) {
             RentIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                val countRent = remember { mutableStateOf(0) }
                 OutlinedTextField(
                     value = rentBill,
-                    onValueChange = { newRentBill ->
-                        rentBill = newRentBill
-                        countRent.value = 0
-                    },
+                    onValueChange = { newRentBill -> rentBill = newRentBill },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done
@@ -164,9 +168,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-                SaveRemindButton(enabled = rentBill.isNotEmpty(), count = countRent) {
-                    countRent.value = 0
-                }
+                SaveRemindButton(enabled = rentBill.isNotEmpty())
             }
         }
 
@@ -196,7 +198,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-//                SaveRemindButton(enabled = electricBill.isNotEmpty())
+                SaveRemindButton(enabled = electricBill.isNotEmpty())
             }
         }
 
@@ -226,7 +228,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-//                SaveRemindButton(enabled = waterBill.isNotEmpty())
+                SaveRemindButton(enabled = waterBill.isNotEmpty())
             }
         }
 
@@ -256,7 +258,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-//                SaveRemindButton(enabled = wifiBill.isNotEmpty())
+                SaveRemindButton(enabled = wifiBill.isNotEmpty())
             }
         }
 
@@ -286,7 +288,7 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
-//                SaveRemindButton(enabled = otherBill.isNotEmpty())
+                SaveRemindButton(enabled = otherBill.isNotEmpty())
             }
         }
 
