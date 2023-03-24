@@ -268,7 +268,10 @@ fun EditBillAmounts() {
                     ),
                     modifier = Modifier
                         .width(100.dp)
-                        .height(55.dp),
+                        .height(55.dp)
+                        .padding(
+                            bottom = 5.dp
+                        ),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                 )
                 SaveRemindButton()

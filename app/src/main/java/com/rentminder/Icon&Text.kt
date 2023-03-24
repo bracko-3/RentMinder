@@ -108,7 +108,11 @@ fun TotalText() {
     Text(
         text = "Total:",
         fontSize = (20.sp),
-        fontWeight = FontWeight.Bold
+        modifier = Modifier
+            .padding(
+                top = 10.dp,
+                start = 15.dp
+            )
     )
 }
 
@@ -117,6 +121,10 @@ fun TotalPerPersonText() {
     Text(
         text = "Total Per Person:",
         fontSize = (20.sp),
-        fontWeight = FontWeight.Bold
+        modifier = Modifier
+            .padding(
+                top = 5.dp,
+                start = 15.dp
+            )
     )
 }
