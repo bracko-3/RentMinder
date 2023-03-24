@@ -32,30 +32,36 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SaveRemindButton() {
+fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
-    val shape = RoundedCornerShape(size = 16.dp)
     var count by remember { mutableStateOf(0) }
 
     IconButton(
         onClick = {
-            if (count > 0) {
-                Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
+            if (enabled) {
+                if (count > 0) {
+                    Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+                }
+                count++
+                inputEdited.value = false
+                focusManager.clearFocus()
             } else {
-                Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Please enter a value before saving or editing",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            count++
-            focusManager.clearFocus()
         },
-
-
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            if (count > 0) {
+            if (count > 0 && enabled && !inputEdited.value) {
                 Icon(
                     painterResource(id = R.drawable.outline_check_circle_outline_24),
                     contentDescription = "Saved Icon",
@@ -80,5 +86,7 @@ fun SaveRemindButton() {
 @Composable
 @Preview
 private fun SaveRemindButtonPreview() {
-    SaveRemindButton()
+    val enabled = false;
+    val inputEdited = remember { mutableStateOf(false) }
+    SaveRemindButton(enabled, inputEdited)
 }
