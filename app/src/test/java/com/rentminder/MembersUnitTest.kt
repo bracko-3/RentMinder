@@ -10,7 +10,7 @@ class MembersUnitTest {
     @Test
     fun `given a members dto when membersID is 1 and memberName is Bob then membersID and membername is Bob`(){
         var members = Members(1, "Bob")
-        Assert.assertTrue(members.memberName.equals("Uptown"))
+        Assert.assertTrue(members.memberName.equals("Bob"))
     }
 
     @Test
