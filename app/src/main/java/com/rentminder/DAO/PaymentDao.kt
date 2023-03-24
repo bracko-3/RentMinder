@@ -2,13 +2,13 @@ package com.rentminder.DAO
 
 
 
-import com.rentminder.DTO.PaymentDto
+import com.rentminder.DTO.Payment
 import retrofit2.Call
 import retrofit2.http.GET
 
 interface PaymentDao {
     @GET("")
-    suspend fun  getAllPayments(): ArrayList<PaymentDto>
+    suspend fun  getAllPayments(): Call<ArrayList<Payment>>
 
 
 }
