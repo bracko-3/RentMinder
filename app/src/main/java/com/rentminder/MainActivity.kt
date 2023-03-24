@@ -278,7 +278,15 @@ fun EditBillAmounts() {
         //Line Dividing utility rows and totals
         Divider(color = Color.Black, thickness = Dp.Hairline)
 
+        //Total feature
+        Row() {
+            TotalText()
+        }
 
+        //Total Per Person Feature
+        Row() {
+
+        }
     }
 }
 

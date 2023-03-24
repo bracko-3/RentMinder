@@ -102,3 +102,12 @@ fun OtherIconText() {
         )
     }
 }
+
+@Composable
+fun TotalText() {
+    Text(
+        text = "Total:",
+        fontSize = (20.sp),
+    )
+}
+
