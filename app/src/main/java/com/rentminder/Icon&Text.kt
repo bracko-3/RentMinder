@@ -64,7 +64,7 @@ fun WaterIconText() {
         )
         Text(
             text = "Water/Sewer",
-            fontSize = (26.sp),
+            fontSize = (26.sp)
         )
     }
 }
@@ -81,7 +81,7 @@ fun WiFiIconText() {
         )
         Text(
             text = "Wi-Fi",
-            fontSize = (26.sp),
+            fontSize = (26.sp)
         )
     }
 }
@@ -98,7 +98,7 @@ fun OtherIconText() {
         )
         Text(
             text = "Other",
-            fontSize = (26.sp),
+            fontSize = (26.sp)
         )
     }
 }
@@ -108,6 +108,15 @@ fun TotalText() {
     Text(
         text = "Total:",
         fontSize = (20.sp),
+        fontWeight = FontWeight.Bold
     )
 }
 
+@Composable
+fun TotalPerPersonText() {
+    Text(
+        text = "Total Per Person:",
+        fontSize = (20.sp),
+        fontWeight = FontWeight.Bold
+    )
+}
