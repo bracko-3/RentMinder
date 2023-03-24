@@ -1,4 +1,14 @@
 package com.rentminder.DAO
 
-class PaymentDao {
+
+
+import com.rentminder.DTO.PaymentDto
+import retrofit2.Call
+import retrofit2.http.GET
+
+interface PaymentDao {
+    @GET("")
+    suspend fun  getAllPayments(): ArrayList<PaymentDto>
+
+
 }
