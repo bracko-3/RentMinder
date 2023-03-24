@@ -1,5 +1,5 @@
 package com.rentminder
-import com.rentminder.DTO.Payment
+import com.rentminder.dto.Payment
 import org.junit.Assert
 import org.junit.Test
 
@@ -10,5 +10,4 @@ class PaymentUnitTest {
         Assert.assertTrue(payment.paymentType.equals("credit"))
         Assert.assertTrue(payment.paymentNum.equals(200.0))
     }
-
 }

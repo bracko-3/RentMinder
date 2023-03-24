@@ -1,8 +1,8 @@
-package com.rentminder.DAO
+package com.rentminder.dao
 
 
 
-import com.rentminder.DTO.Payment
+import com.rentminder.dto.Payment
 import retrofit2.Call
 import retrofit2.http.GET
 
