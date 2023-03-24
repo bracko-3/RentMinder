@@ -43,8 +43,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             RentMinderTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
                     MainMenu()
                 }
@@ -65,16 +64,12 @@ fun MainMenu() {
         Row(
             modifier = Modifier
                 .padding(
-                    top = 5.dp,
-                    bottom = 10.dp
+                    top = 5.dp, bottom = 10.dp
                 )
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+                .fillMaxWidth(), horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = monthName,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
+                text = monthName, fontSize = 28.sp, fontWeight = FontWeight.Bold
             )
         }
         EditBillAmounts()
@@ -85,37 +80,31 @@ fun MainMenu() {
 @Composable
 fun TopToolBar() {
     Column {
-        TopAppBar(
-            title = {
-                Icon(
-                    painterResource(
-                        id = R.drawable.outline_notifications_active_24
-                    ),
-                    contentDescription = "Notification Icon",
-                    modifier = Modifier
-                        .size(45.dp)
-                        .padding(
-                            end = 5.dp
-                        )
-                )
-                Text(
-                    text = "RentMinder",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            },
-            actions = {
-                IconButton(onClick = {}) {
-                    Icon(
-                        imageVector = Icons.Filled.Menu,
-                        contentDescription = "Navigation Bar",
-                        modifier = Modifier
-                            .size(35.dp),
-                        tint = Color.Black
+        TopAppBar(title = {
+            Icon(
+                painterResource(
+                    id = R.drawable.outline_notifications_active_24
+                ),
+                contentDescription = "Notification Icon",
+                modifier = Modifier
+                    .size(45.dp)
+                    .padding(
+                        end = 5.dp
                     )
-                }
+            )
+            Text(
+                text = "RentMinder", fontSize = 25.sp, fontWeight = FontWeight.Bold
+            )
+        }, actions = {
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = "Navigation Bar",
+                    modifier = Modifier.size(35.dp),
+                    tint = Color.Black
+                )
             }
-        )
+        })
     }
 }
 
@@ -124,10 +113,15 @@ fun TopToolBar() {
 @Composable
 fun EditBillAmounts() {
     var rentBill by remember { mutableStateOf("") }
+    val rentBillEdited = remember { mutableStateOf(false) }
     var electricBill by remember { mutableStateOf("") }
+    val electricBillEdited = remember { mutableStateOf(false) }
     var waterBill by remember { mutableStateOf("") }
+    val waterBillEdited = remember { mutableStateOf(false) }
     var wifiBill by remember { mutableStateOf("") }
+    val wifiBillEdited = remember { mutableStateOf(false) }
     var otherBill by remember { mutableStateOf("") }
+    val otherBillEdited = remember { mutableStateOf(false) }
     var totalBill by remember { mutableStateOf("") }
     var dividedBill by remember { mutableStateOf("") }
 
@@ -136,8 +130,7 @@ fun EditBillAmounts() {
 
     //Column for all bill rows
     Column(
-        modifier = Modifier
-            .padding(
+        modifier = Modifier.padding(
                 horizontal = 15.dp
             )
     ) {
@@ -149,26 +142,24 @@ fun EditBillAmounts() {
         ) {
             RentIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(
-                    value = rentBill,
-                    onValueChange = { newRentBill -> rentBill = newRentBill },
+                OutlinedTextField(value = rentBill,
+                    onValueChange = { newRentBill ->
+                        rentBill = newRentBill
+                        rentBillEdited.value = true
+                    },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
+                        keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                     ),
                     singleLine = true,
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus()
-                        }
-                    ),
+                    keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }),
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
-                )
-                SaveRemindButton(enabled = rentBill.isNotEmpty())
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                SaveRemindButton(enabled = rentBill.isNotEmpty(), inputEdited = rentBillEdited)
             }
         }
 
@@ -179,26 +170,26 @@ fun EditBillAmounts() {
         ) {
             ElectricIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(
-                    value = electricBill,
-                    onValueChange = { newElectricBill -> electricBill = newElectricBill },
+                OutlinedTextField(value = electricBill,
+                    onValueChange = { newElectricBill ->
+                        electricBill = newElectricBill
+                        electricBillEdited.value = true
+                    },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
+                        keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                     ),
                     singleLine = true,
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus()
-                        }
-                    ),
+                    keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }),
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                SaveRemindButton(
+                    enabled = electricBill.isNotEmpty(), inputEdited = electricBillEdited
                 )
-                SaveRemindButton(enabled = electricBill.isNotEmpty())
             }
         }
 
@@ -209,26 +200,26 @@ fun EditBillAmounts() {
         ) {
             WaterIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(
-                    value = waterBill,
-                    onValueChange = { newWaterBill -> waterBill = newWaterBill },
+                OutlinedTextField(value = waterBill,
+                    onValueChange = { newWaterBill ->
+                        waterBill = newWaterBill
+                        waterBillEdited.value = true
+                    },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
+                        keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                     ),
                     singleLine = true,
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus()
-                        }
-                    ),
+                    keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }),
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                SaveRemindButton(
+                    enabled = waterBill.isNotEmpty(), inputEdited = waterBillEdited
                 )
-                SaveRemindButton(enabled = waterBill.isNotEmpty())
             }
         }
 
@@ -239,26 +230,26 @@ fun EditBillAmounts() {
         ) {
             WiFiIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(
-                    value = wifiBill,
-                    onValueChange = { newWifiBill -> wifiBill = newWifiBill },
+                OutlinedTextField(value = wifiBill,
+                    onValueChange = { newWifiBill ->
+                        wifiBill = newWifiBill
+                        wifiBillEdited.value = true
+                    },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
+                        keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                     ),
                     singleLine = true,
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus()
-                        }
-                    ),
+                    keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }),
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                SaveRemindButton(
+                    enabled = wifiBill.isNotEmpty(), inputEdited = wifiBillEdited
                 )
-                SaveRemindButton(enabled = wifiBill.isNotEmpty())
             }
         }
 
@@ -269,26 +260,26 @@ fun EditBillAmounts() {
         ) {
             OtherIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(
-                    value = otherBill,
-                    onValueChange = { newOtherBill -> otherBill = newOtherBill },
+                OutlinedTextField(value = otherBill,
+                    onValueChange = { newOtherBill ->
+                        otherBill = newOtherBill
+                        otherBillEdited.value = true
+                    },
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
+                        keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
                     ),
                     singleLine = true,
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus()
-                        }
-                    ),
+                    keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }),
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                SaveRemindButton(
+                    enabled = otherBill.isNotEmpty(), inputEdited = otherBillEdited
                 )
-                SaveRemindButton(enabled = otherBill.isNotEmpty())
             }
         }
 
