@@ -64,7 +64,7 @@ fun WaterIconText() {
         )
         Text(
             text = "Water/Sewer",
-            fontSize = (26.sp),
+            fontSize = (26.sp)
         )
     }
 }
@@ -81,7 +81,7 @@ fun WiFiIconText() {
         )
         Text(
             text = "Wi-Fi",
-            fontSize = (26.sp),
+            fontSize = (26.sp)
         )
     }
 }
@@ -98,7 +98,33 @@ fun OtherIconText() {
         )
         Text(
             text = "Other",
-            fontSize = (26.sp),
+            fontSize = (26.sp)
         )
     }
+}
+
+@Composable
+fun TotalText() {
+    Text(
+        text = "Total:",
+        fontSize = (20.sp),
+        modifier = Modifier
+            .padding(
+                top = 10.dp,
+                start = 15.dp
+            )
+    )
+}
+
+@Composable
+fun TotalPerPersonText() {
+    Text(
+        text = "Total Per Person:",
+        fontSize = (20.sp),
+        modifier = Modifier
+            .padding(
+                top = 5.dp,
+                start = 15.dp
+            )
+    )
 }
