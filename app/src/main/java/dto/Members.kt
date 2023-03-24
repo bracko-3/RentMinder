@@ -1,4 +1,0 @@
-package dto
-
-class Members {
-}
