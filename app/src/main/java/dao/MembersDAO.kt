@@ -1,4 +1,0 @@
-package dao
-
-class MembersDAO {
-}
