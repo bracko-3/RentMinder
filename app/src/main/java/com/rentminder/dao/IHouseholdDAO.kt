@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface IHouseholdDAO {
     @GET("")
-    fun getAllCountries() : Call<ArrayList<Household>>
+    fun getAllHouseholds() : Call<ArrayList<Household>>
 }

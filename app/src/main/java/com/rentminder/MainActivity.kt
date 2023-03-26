@@ -141,27 +141,29 @@ fun EditBillAmounts() {
             modifier = Modifier.padding(bottom = 10.dp)
         ) {
             RentIconText()
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = rentBill,
-                    onValueChange = { newRentBill ->
-                        rentBill = newRentBill
-                        rentBillEdited.value = true
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
-                    ),
-                    singleLine = true,
-                    keyboardActions = KeyboardActions(onDone = {
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
-                    }),
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
-                SaveRemindButton(enabled = rentBill.isNotEmpty(), inputEdited = rentBillEdited)
+            Row(modifier = Modifier
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End) {
+                    OutlinedTextField(value = rentBill,
+                        onValueChange = { newRentBill ->
+                            rentBill = newRentBill
+                            rentBillEdited.value = true
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
+                        ),
+                        singleLine = true,
+                        keyboardActions = KeyboardActions(onDone = {
+                            keyboardController?.hide()
+                            focusManager.clearFocus()
+                        }),
+                        modifier = Modifier
+                            .width(100.dp)
+                            .height(55.dp),
+                        textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    SaveRemindButton(enabled = rentBill.isNotEmpty(), inputEdited = rentBillEdited)
+                }
             }
-        }
 
         //Electric-Gas bill text, text box, and button
         Row(
