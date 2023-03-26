@@ -1,6 +1,6 @@
 package com.rentminder.dto
 
-class Members (var membersId : Int = 0, var memberName : String) {
+data class Members (val membersId : Int = 0, val memberName : String) {
     override fun toString(): String {
         return "$membersId $memberName"
     }

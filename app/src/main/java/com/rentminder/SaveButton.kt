@@ -35,17 +35,11 @@ import androidx.compose.ui.unit.dp
 fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
-    var count by remember { mutableStateOf(0) }
 
     IconButton(
         onClick = {
             if (enabled) {
-                if (count > 0) {
-                    Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
-                }
-                count++
+                Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
                 inputEdited.value = false
                 focusManager.clearFocus()
             } else {
@@ -61,7 +55,7 @@ fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            if (count > 0 && enabled && !inputEdited.value) {
+            if (enabled && !inputEdited.value) {
                 Icon(
                     painterResource(id = R.drawable.outline_check_circle_outline_24),
                     contentDescription = "Saved Icon",
@@ -86,7 +80,7 @@ fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>) {
 @Composable
 @Preview
 private fun SaveRemindButtonPreview() {
-    val enabled = false;
+    val enabled = false
     val inputEdited = remember { mutableStateOf(false) }
     SaveRemindButton(enabled, inputEdited)
 }

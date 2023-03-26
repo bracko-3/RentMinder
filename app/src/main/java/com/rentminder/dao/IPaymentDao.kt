@@ -6,9 +6,9 @@ import com.rentminder.dto.Payment
 import retrofit2.Call
 import retrofit2.http.GET
 
-interface PaymentDao {
+interface IPaymentDao {
     @GET("")
-    suspend fun  getAllPayments(): Call<ArrayList<Payment>>
+    fun getAllPayments(): Call<ArrayList<Payment>>
 
 
 }
