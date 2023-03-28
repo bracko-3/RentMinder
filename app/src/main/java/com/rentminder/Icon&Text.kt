@@ -13,88 +13,67 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
 
 @Composable
-fun RentIconText() {
-    Row(verticalAlignment = Alignment.CenterVertically){
-        Icon(painterResource(
-            id = R.drawable.outline_house_24
-        ),
-            contentDescription = "Rent Icon",
-            modifier = Modifier
-                .size(30.dp)
+fun IconText(
+    iconResId: Int,
+    contentDescription: String,
+    text: String
+){
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            painter = painterResource(id = iconResId),
+            contentDescription = contentDescription,
+            modifier = Modifier.size(30.dp)
         )
         Text(
-            text = "Rent",
-            fontSize = (26.sp)
+            text = text,
+            fontSize = 26.sp
         )
     }
+}
+
+@Composable
+fun RentIconText() {
+    IconText(
+        iconResId = R.drawable.outline_house_24,
+        contentDescription = "Rent Icon",
+        text = "Rent"
+    )
 }
 
 @Composable
 fun ElectricIconText() {
-    Row(verticalAlignment = Alignment.CenterVertically){
-        Icon(painterResource(
-            id = R.drawable.outline_lightbulb_24
-        ),
-            contentDescription = "Light Bulb Icon",
-            modifier = Modifier
-                .size(30.dp)
-        )
-        Text(
-            text = "Electric/Gas",
-            fontSize = (26.sp)
-        )
-    }
+    IconText(
+        iconResId = R.drawable.outline_lightbulb_24,
+        contentDescription = "Light Bulb Icon",
+        text = "Electric/Gas"
+    )
 }
 
 @Composable
 fun WaterIconText() {
-    Row(verticalAlignment = Alignment.CenterVertically){
-        Icon(painterResource(
-            id = R.drawable.outline_water_drop_24
-        ),
-            contentDescription = "Water Icon",
-            modifier = Modifier
-                .size(30.dp)
-        )
-        Text(
-            text = "Water/Sewer",
-            fontSize = (26.sp)
-        )
-    }
+    IconText(
+        iconResId = R.drawable.outline_water_drop_24,
+        contentDescription = "Water Icon",
+        text = "Water/Sewer"
+    )
 }
 
 @Composable
 fun WiFiIconText() {
-    Row(verticalAlignment = Alignment.CenterVertically){
-        Icon(painterResource(
-            id = R.drawable.outline_wifi_24
-        ),
-            contentDescription = "WiFi Icon",
-            modifier = Modifier
-                .size(30.dp)
-        )
-        Text(
-            text = "Wi-Fi",
-            fontSize = (26.sp)
-        )
-    }
+    IconText(
+        iconResId = R.drawable.outline_wifi_24,
+        contentDescription = "WiFi Icon",
+        text = "Wi-Fi"
+    )
 }
 
 @Composable
 fun OtherIconText() {
-    Row(verticalAlignment = Alignment.CenterVertically){
-        Icon(painterResource(
-            id = R.drawable.baseline_add_shopping_cart_24
-        ),
-            contentDescription = "Other Icon",
-            modifier = Modifier
-                .size(30.dp)
-        )
-        Text(
-            text = "Other",
-            fontSize = (26.sp)
-        )
-    }
+    IconText(
+        iconResId = R.drawable.baseline_add_shopping_cart_24,
+        contentDescription = "Other Icon",
+        text = "Other"
+    )
 }
 
 @Composable
