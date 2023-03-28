@@ -6,8 +6,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
-class PaymentService {
-    suspend fun fetchPayment(): List<Payment>? {
+
+interface IPaymentService {
+    suspend fun fetchPayment(): List<Payment>?
+}
+
+class PaymentService : IPaymentService {
+    override suspend fun fetchPayment(): List<Payment>? {
         return withContext(Dispatchers.IO) {
             val service = RetrofitClientInstance.retrofitInstance?.create(PaymentDao::class.java)
             val payments = async { service?.getAllPayments() }

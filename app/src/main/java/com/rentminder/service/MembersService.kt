@@ -8,8 +8,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
-class MembersService {
-    suspend fun fetchMembers() : List<Members>? {
+interface IMembersService {
+    suspend fun fetchMembers() : List<Members>?
+}
+
+class MembersService : IMembersService {
+    override suspend fun fetchMembers() : List<Members>? {
         return withContext(Dispatchers.IO){
             val service = RetrofitClientInstance.retrofitInstance?.create(MembersDAO::class.java)
             val members = async {service?.getAllMembers()}
