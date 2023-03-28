@@ -300,7 +300,7 @@ fun EditBillAmounts() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "test", device = "spec:width=411dp,height=891dp", showSystemUi = true)
 @Composable
 fun DefaultPreview() {
     RentMinderTheme {

@@ -2,4 +2,11 @@
     <string name="app_name">RentMinder</string>
     <string name="current_month">February</string>
     <string name="rent_amount">Rent Amount</string>
+    <string name="rent_label">Rent</string>
+    <string name="electric_label">Electric/Gas</string>
+    <string name="water_label">Water/Sewer</string>
+    <string name="wifi_label">Wi-Fi</string>
+    <string name="other_label">Other</string>
+    <string name="total_label">Total:</string>
+    <string name="total_per_person_label">Total Per Person:</string>
 </resources>
