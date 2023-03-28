@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 
@@ -29,7 +30,7 @@ fun RentIconText() {
                 .size(30.dp)
         )
         Text(
-            text = "Rent",
+            text = stringResource(R.string.rent_label),
             fontSize = (26.sp)
         )
     }
@@ -46,7 +47,7 @@ fun ElectricIconText() {
                 .size(30.dp)
         )
         Text(
-            text = "Electric/Gas",
+            text = stringResource(R.string.electric_label),
             fontSize = (26.sp)
         )
     }
@@ -63,7 +64,7 @@ fun WaterIconText() {
                 .size(30.dp)
         )
         Text(
-            text = "Water/Sewer",
+            text = stringResource(R.string.water_label),
             fontSize = (26.sp)
         )
     }
@@ -80,7 +81,7 @@ fun WiFiIconText() {
                 .size(30.dp)
         )
         Text(
-            text = "Wi-Fi",
+            text = stringResource(R.string.wifi_label),
             fontSize = (26.sp)
         )
     }
@@ -97,7 +98,7 @@ fun OtherIconText() {
                 .size(30.dp)
         )
         Text(
-            text = "Other",
+            text = stringResource(R.string.other_label),
             fontSize = (26.sp)
         )
     }
@@ -106,7 +107,7 @@ fun OtherIconText() {
 @Composable
 fun TotalText() {
     Text(
-        text = "Total:",
+        text = stringResource(R.string.total_label),
         fontSize = (20.sp),
         modifier = Modifier
             .padding(
@@ -119,7 +120,7 @@ fun TotalText() {
 @Composable
 fun TotalPerPersonText() {
     Text(
-        text = "Total Per Person:",
+        text = stringResource(R.string.total_per_person_label),
         fontSize = (20.sp),
         modifier = Modifier
             .padding(
