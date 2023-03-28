@@ -41,9 +41,9 @@ fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>) {
         onClick = {
             if (enabled) {
                 if (count > 0) {
-                    Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.edit_saved_message, Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.saved_message, Toast.LENGTH_SHORT).show()
                 }
                 count++
                 inputEdited.value = false
@@ -51,7 +51,7 @@ fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>) {
             } else {
                 Toast.makeText(
                     context,
-                    "Please enter a value before saving or editing",
+                    R.string.enter_value_message,
                     Toast.LENGTH_SHORT
                 ).show()
             }

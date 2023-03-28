@@ -93,7 +93,7 @@ fun TopToolBar() {
                     )
             )
             Text(
-                text = "RentMinder", fontSize = 25.sp, fontWeight = FontWeight.Bold
+                text = stringResource(R.string.app_name), fontSize = 25.sp, fontWeight = FontWeight.Bold
             )
         }, actions = {
             IconButton(onClick = {}) {
