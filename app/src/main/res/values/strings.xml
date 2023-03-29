@@ -2,4 +2,7 @@
     <string name="app_name">RentMinder</string>
     <string name="current_month">February</string>
     <string name="rent_amount">Rent Amount</string>
+    <string name="edit_saved_message">Edit Saved!</string>
+    <string name="saved_message">Saved!</string>
+    <string name="enter_value_message">Please enter a value before saving or editing</string>
 </resources>

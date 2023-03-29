@@ -10,11 +10,10 @@ import retrofit2.awaitResponse
 
 class MembersService {
     suspend fun fetchMembers() : List<Members>? {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val service = RetrofitClientInstance.retrofitInstance?.create(MembersDAO::class.java)
-            val members = async {service?.getAllMembers()}
-            var result =  members.await()?.awaitResponse()?.body()
-            return@withContext result
+            val members = async { service?.getAllMembers() }
+            return@withContext members.await()?.awaitResponse()?.body()
         }
 
     }
