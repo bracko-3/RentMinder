@@ -2,9 +2,7 @@ package com.rentminder
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.inputmethodservice.Keyboard.Row
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -18,15 +16,12 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.sharp.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -122,8 +117,6 @@ fun EditBillAmounts() {
     val wifiBillEdited = remember { mutableStateOf(false) }
     var otherBill by remember { mutableStateOf("") }
     val otherBillEdited = remember { mutableStateOf(false) }
-    var totalBill by remember { mutableStateOf("") }
-    var dividedBill by remember { mutableStateOf("") }
 
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
