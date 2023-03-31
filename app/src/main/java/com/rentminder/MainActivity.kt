@@ -319,7 +319,7 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp , fontWeight = FontWeight.Bold),
                 )
                 SaveRemindButton(
                     enabled = totalBill.isNotEmpty(), inputEdited = totalBillEdited
@@ -353,7 +353,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp, fontWeight = FontWeight.Bold)
+
                 )
                 SaveRemindButton(
                     enabled = totalperpersonBill.isNotEmpty(), inputEdited = totalperpersonBillEdited

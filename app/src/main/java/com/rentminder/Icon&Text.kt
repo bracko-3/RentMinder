@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun RentIconText() {
@@ -100,25 +101,28 @@ fun OtherIconText() {
 
 @Composable
 fun TotalText() {
-    Text(
+    Row(verticalAlignment = Alignment.CenterVertically){Text(
         text = "Total:",
-        fontSize = (20.sp),
+        fontWeight = FontWeight.Bold,
+        fontSize = (26.sp),
         modifier = Modifier
             .padding(
                 top = 10.dp,
                 start = 15.dp
             )
-    )
+    )}
+
 }
 
 @Composable
 fun TotalPerPersonText() {
     Text(
         text = "Total Per Person:",
-        fontSize = (20.sp),
+        fontWeight = FontWeight.Bold,
+        fontSize = (26.sp) ,
         modifier = Modifier
             .padding(
-                top = 5.dp,
+                top = 10.dp,
                 start = 15.dp,
             )
     )

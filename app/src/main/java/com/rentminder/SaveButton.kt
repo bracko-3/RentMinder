@@ -86,7 +86,7 @@ fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>) {
 @Composable
 @Preview
 private fun SaveRemindButtonPreview() {
-    val enabled = false;
+    val enabled = false
     val inputEdited = remember { mutableStateOf(false) }
     SaveRemindButton(enabled, inputEdited)
 }
