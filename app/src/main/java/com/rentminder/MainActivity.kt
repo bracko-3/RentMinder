@@ -2,9 +2,7 @@ package com.rentminder
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.inputmethodservice.Keyboard.Row
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -18,15 +16,12 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.sharp.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -123,7 +118,10 @@ fun EditBillAmounts() {
     var otherBill by remember { mutableStateOf("") }
     val otherBillEdited = remember { mutableStateOf(false) }
     var totalBill by remember { mutableStateOf("") }
-    var dividedBill by remember { mutableStateOf("") }
+    val totalBillEdited = remember { mutableStateOf(false) }
+    var totalperpersonBill by remember { mutableStateOf("") }
+    val totalperpersonBillEdited = remember { mutableStateOf(false) }
+
 
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -131,8 +129,8 @@ fun EditBillAmounts() {
     //Column for all bill rows
     Column(
         modifier = Modifier.padding(
-                horizontal = 15.dp
-            )
+            horizontal = 15.dp
+        )
     ) {
 
         //Rent bill text, text box, and button
@@ -142,7 +140,8 @@ fun EditBillAmounts() {
         ) {
             RentIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = rentBill,
+                OutlinedTextField(
+                    value = rentBill,
                     onValueChange = { newRentBill ->
                         rentBill = newRentBill
                         rentBillEdited.value = true
@@ -158,7 +157,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(enabled = rentBill.isNotEmpty(), inputEdited = rentBillEdited)
             }
         }
@@ -170,7 +170,8 @@ fun EditBillAmounts() {
         ) {
             ElectricIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = electricBill,
+                OutlinedTextField(
+                    value = electricBill,
                     onValueChange = { newElectricBill ->
                         electricBill = newElectricBill
                         electricBillEdited.value = true
@@ -186,7 +187,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(
                     enabled = electricBill.isNotEmpty(), inputEdited = electricBillEdited
                 )
@@ -200,7 +202,8 @@ fun EditBillAmounts() {
         ) {
             WaterIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = waterBill,
+                OutlinedTextField(
+                    value = waterBill,
                     onValueChange = { newWaterBill ->
                         waterBill = newWaterBill
                         waterBillEdited.value = true
@@ -216,7 +219,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(
                     enabled = waterBill.isNotEmpty(), inputEdited = waterBillEdited
                 )
@@ -230,7 +234,8 @@ fun EditBillAmounts() {
         ) {
             WiFiIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = wifiBill,
+                OutlinedTextField(
+                    value = wifiBill,
                     onValueChange = { newWifiBill ->
                         wifiBill = newWifiBill
                         wifiBillEdited.value = true
@@ -246,7 +251,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(
                     enabled = wifiBill.isNotEmpty(), inputEdited = wifiBillEdited
                 )
@@ -260,7 +266,8 @@ fun EditBillAmounts() {
         ) {
             OtherIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = otherBill,
+                OutlinedTextField(
+                    value = otherBill,
                     onValueChange = { newOtherBill ->
                         otherBill = newOtherBill
                         otherBillEdited.value = true
@@ -276,7 +283,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(
                     enabled = otherBill.isNotEmpty(), inputEdited = otherBillEdited
                 )
@@ -287,19 +295,75 @@ fun EditBillAmounts() {
         Divider(color = Color.Black, thickness = Dp.Hairline)
 
         //Total feature
-        Row() {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 10.dp)
+        ) {
             TotalText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+
+                OutlinedTextField(
+                    value = totalBill,
+                    onValueChange = { newTotalBill ->
+                        totalBill = newTotalBill
+                        totalBillEdited.value = true
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp , fontWeight = FontWeight.Bold),
+                )
+                SaveRemindButton(
+                    enabled = totalBill.isNotEmpty(), inputEdited = totalBillEdited
+                )
+            }
 
         }
 
         //Total Per Person Feature
-        Row() {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 10.dp)
+        ) {
             TotalPerPersonText()
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
 
+                OutlinedTextField(
+                    value = totalperpersonBill,
+                    onValueChange = { newtotalperpersonBill ->
+                        totalperpersonBill = newtotalperpersonBill
+                        totalBillEdited.value = true
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(onDone = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(55.dp),
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp, fontWeight = FontWeight.Bold)
+
+                )
+                SaveRemindButton(
+                    enabled = totalperpersonBill.isNotEmpty(), inputEdited = totalperpersonBillEdited
+                )
+
+            }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

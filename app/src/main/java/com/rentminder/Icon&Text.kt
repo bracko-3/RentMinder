@@ -1,22 +1,18 @@
 package com.rentminder
 
-import androidx.compose.foundation.layout.Arrangement
+
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun RentIconText() {
@@ -43,7 +39,7 @@ fun ElectricIconText() {
         ),
             contentDescription = "Light Bulb Icon",
             modifier = Modifier
-                .size(30.dp)
+                .size(30.dp),
         )
         Text(
             text = "Electric/Gas",
@@ -60,7 +56,7 @@ fun WaterIconText() {
         ),
             contentDescription = "Water Icon",
             modifier = Modifier
-                .size(30.dp)
+                .size(30.dp),
         )
         Text(
             text = "Water/Sewer",
@@ -77,11 +73,11 @@ fun WiFiIconText() {
         ),
             contentDescription = "WiFi Icon",
             modifier = Modifier
-                .size(30.dp)
+                .size(30.dp),
         )
         Text(
             text = "Wi-Fi",
-            fontSize = (26.sp)
+            fontSize = (26.sp),
         )
     }
 }
@@ -105,26 +101,29 @@ fun OtherIconText() {
 
 @Composable
 fun TotalText() {
-    Text(
+    Row(verticalAlignment = Alignment.CenterVertically){Text(
         text = "Total:",
-        fontSize = (20.sp),
+        fontWeight = FontWeight.Bold,
+        fontSize = (26.sp),
         modifier = Modifier
             .padding(
                 top = 10.dp,
                 start = 15.dp
             )
-    )
+    )}
+
 }
 
 @Composable
 fun TotalPerPersonText() {
     Text(
         text = "Total Per Person:",
-        fontSize = (20.sp),
+        fontWeight = FontWeight.Bold,
+        fontSize = (26.sp) ,
         modifier = Modifier
             .padding(
-                top = 5.dp,
-                start = 15.dp
+                top = 10.dp,
+                start = 15.dp,
             )
     )
 }
