@@ -12,8 +12,8 @@ class HouseholdService {
     suspend fun fetchHouseholds() : List<Household>?{
         return withContext(Dispatchers.IO) {
             val service = RetrofitClientInstance.retrofitInstance?.create(IHouseholdDAO::class.java)
-            val country = async { service?.getAllCountries() }
-            return@withContext country.await()?.awaitResponse<ArrayList<Household>>()?.body()
+            val houseHolds = async { service?.getAllCountries() }
+            return@withContext houseHolds.await()?.awaitResponse<ArrayList<Household>>()?.body()
         }
     }
 }
