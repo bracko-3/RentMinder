@@ -13,7 +13,8 @@ class MembersService {
         return withContext(Dispatchers.IO){
             val service = RetrofitClientInstance.retrofitInstance?.create(MembersDAO::class.java)
             val members = async {service?.getAllMembers()}
-            return@withContext members.await()?.awaitResponse()?.body()
+            var result =  members.await()?.awaitResponse()?.body()
+            return@withContext result
         }
 
     }
