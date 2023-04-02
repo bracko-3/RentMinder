@@ -159,7 +159,10 @@ fun EditBillAmounts() {
                         .width(100.dp)
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
-                SaveRemindButton(enabled = rentBill.isNotEmpty(), inputEdited = rentBillEdited)
+                SaveRemindButton(
+                    enabled = rentBill.isNotEmpty(),
+                    inputEdited = rentBillEdited
+                )
             }
         }
 
@@ -188,7 +191,8 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
                 SaveRemindButton(
-                    enabled = electricBill.isNotEmpty(), inputEdited = electricBillEdited
+                    enabled = electricBill.isNotEmpty(),
+                    inputEdited = electricBillEdited
                 )
             }
         }
@@ -218,7 +222,8 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
                 SaveRemindButton(
-                    enabled = waterBill.isNotEmpty(), inputEdited = waterBillEdited
+                    enabled = waterBill.isNotEmpty(),
+                    inputEdited = waterBillEdited
                 )
             }
         }
@@ -248,7 +253,8 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
                 SaveRemindButton(
-                    enabled = wifiBill.isNotEmpty(), inputEdited = wifiBillEdited
+                    enabled = wifiBill.isNotEmpty(),
+                    inputEdited = wifiBillEdited
                 )
             }
         }
@@ -278,7 +284,8 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
                 SaveRemindButton(
-                    enabled = otherBill.isNotEmpty(), inputEdited = otherBillEdited
+                    enabled = otherBill.isNotEmpty(),
+                    inputEdited = otherBillEdited
                 )
             }
         }
