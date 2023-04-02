@@ -8,7 +8,7 @@ import org.junit.Test
 class MembersUnitTest {
 
     @Test
-    fun `given a members dto when membersID is 1 and memberName is Bob then membersID and membername is Bob`(){
+    fun `given a members dto when membersID is 1 and memberName is Bob then membersID and member name is Bob`(){
         val members = Members(1, "Bob")
         Assert.assertTrue(members.memberName == "Bob")
     }

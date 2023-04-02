@@ -1,6 +1,10 @@
 package com.rentminder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
+/**
+ * Retrofit client instance for retrieving and uploading the JSON
+ */
 object RetrofitClientInstance {
     private var retrofit: Retrofit? = null
     private val BASE_URL = ""
