@@ -2,9 +2,7 @@ package com.rentminder
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.inputmethodservice.Keyboard.Row
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -13,20 +11,14 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.sharp.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -54,7 +46,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainMenu() {
-    //Getting current month for Main Menu
+    /**
+     * Getting current month for Main Menu
+     */
     val cal: Calendar = Calendar.getInstance()
     val monthDate = SimpleDateFormat("MMMM")
     val monthName: String = monthDate.format(cal.time)
@@ -76,7 +70,9 @@ fun MainMenu() {
     }
 }
 
-//Navigation bar at the top of app
+/**
+ * Navigation bar at the top of app
+ */
 @Composable
 fun TopToolBar() {
     Column {
@@ -108,7 +104,9 @@ fun TopToolBar() {
     }
 }
 
-//Bill input boxes, buttons, and text fields
+/**
+ * Bill input boxes, buttons, and text fields
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EditBillAmounts() {
@@ -128,14 +126,18 @@ fun EditBillAmounts() {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
-    //Column for all bill rows
+    /**
+     * Column for all bill rows
+     */
     Column(
         modifier = Modifier.padding(
                 horizontal = 15.dp
             )
     ) {
 
-        //Rent bill text, text box, and button
+        /**
+         * Rent bill text, text box, and button
+         */
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(bottom = 10.dp)
@@ -163,7 +165,9 @@ fun EditBillAmounts() {
             }
         }
 
-        //Electric-Gas bill text, text box, and button
+        /**
+         * Electric-Gas bill text, text box, and button
+         */
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(bottom = 10.dp)
@@ -193,7 +197,9 @@ fun EditBillAmounts() {
             }
         }
 
-        //Water-Sewer bill text, text box, and button
+        /**
+         * Water-Sewer bill text, text box, and button
+         */
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(bottom = 10.dp)
@@ -223,7 +229,9 @@ fun EditBillAmounts() {
             }
         }
 
-        //Wi-Fi bill text, text box, and button
+        /**
+         * Wi-Fi bill text, text box, and button
+         */
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(bottom = 10.dp)
@@ -253,7 +261,9 @@ fun EditBillAmounts() {
             }
         }
 
-        //Other bill text, text box, and button
+        /**
+         * Other bill text, text box, and button
+         */
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(bottom = 10.dp)
@@ -283,16 +293,22 @@ fun EditBillAmounts() {
             }
         }
 
-        //Line Dividing utility rows and totals
+        /**
+         * Line Dividing utility rows and totals
+         */
         Divider(color = Color.Black, thickness = Dp.Hairline)
 
-        //Total feature
+        /**
+         * Total feature
+         */
         Row() {
             TotalText()
 
         }
 
-        //Total Per Person Feature
+        /**
+         * Total Per Person Feature
+         */
         Row() {
             TotalPerPersonText()
 
