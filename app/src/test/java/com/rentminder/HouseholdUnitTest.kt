@@ -14,7 +14,7 @@ class HouseholdUnitTest {
     }
 
     @Test
-    fun `given a country dto when name is Uptown and members are 5 then output is Uptown 5 Members`() {
+    fun `given a household dto when name is Uptown and members are 5 then output is Uptown 5 Members`() {
         var household = Household(1, "Uptown", 5)
         assertTrue(household.toString().equals("Uptown 5 Members"))
     }
