@@ -10,8 +10,7 @@ class PaymentService {
         return withContext(Dispatchers.IO) {
             val service = RetrofitClientInstance.retrofitInstance?.create(PaymentDao::class.java)
             val payments = async { service?.getAllPayments() }
-            var result = payments.await()?.awaitResponse()?.body()
-            return@withContext result
+            return@withContext payments.await()?.awaitResponse()?.body()
         }
     }
 }
