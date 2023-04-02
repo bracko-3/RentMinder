@@ -159,7 +159,8 @@ fun EditBillAmounts() {
                         .width(100.dp)
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
-                SaveRemindButton(enabled = rentBill.isNotEmpty(),
+                SaveRemindButton(
+                    enabled = rentBill.isNotEmpty(),
                     inputEdited = rentBillEdited
                 )
             }
@@ -189,7 +190,8 @@ fun EditBillAmounts() {
                         .width(100.dp)
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
-                SaveRemindButton(enabled = electricBill.isNotEmpty(),
+                SaveRemindButton(
+                    enabled = electricBill.isNotEmpty(),
                     inputEdited = electricBillEdited
                 )
             }
