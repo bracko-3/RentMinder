@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
 class HouseholdService {
-    suspend fun fetchHouseholds() : List<Household>?{
+    suspend fun fetchHouseholdsList() : List<Household>?{
         return withContext(Dispatchers.IO) {
             val service = RetrofitClientInstance.retrofitInstance?.create(IHouseholdDAO::class.java)
             val houseHolds = async { service?.getAllCountries() }
