@@ -9,7 +9,7 @@ import retrofit2.awaitResponse
 class PaymentService {
 
     /**
-     * Function for fetching the payment and connecting it to our Dao
+     * Function for fetching the payment and connecting it to our corresponding Dao
      */
     suspend fun fetchPayment(): List<Payment>? {
         return withContext(Dispatchers.IO) {

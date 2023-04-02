@@ -9,6 +9,9 @@ import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
 class MembersService {
+    /**
+     * Function for fetching the members and connecting it to our corresponding DAO
+     */
     suspend fun fetchMembers() : List<Members>? {
         return withContext(Dispatchers.IO) {
             val service = RetrofitClientInstance.retrofitInstance?.create(MembersDAO::class.java)

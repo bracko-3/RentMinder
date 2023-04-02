@@ -9,6 +9,10 @@ import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
 class HouseholdService {
+
+    /**
+     * Function for fetching the Household and connecting it to our corresponding DAO
+     */
     suspend fun fetchHouseholds() : List<Household>?{
         return withContext(Dispatchers.IO) {
             val service = RetrofitClientInstance.retrofitInstance?.create(IHouseholdDAO::class.java)

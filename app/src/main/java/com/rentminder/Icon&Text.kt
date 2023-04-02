@@ -1,23 +1,20 @@
 package com.rentminder
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextDecoration
 
+/**
+ * Composable function for the Rent Icon text
+ */
 @Composable
 fun RentIconText() {
     Row(verticalAlignment = Alignment.CenterVertically){
@@ -35,6 +32,9 @@ fun RentIconText() {
     }
 }
 
+/**
+ * Composable function for the Electric Icon text
+ */
 @Composable
 fun ElectricIconText() {
     Row(verticalAlignment = Alignment.CenterVertically){
@@ -52,6 +52,9 @@ fun ElectricIconText() {
     }
 }
 
+/**
+ * Composable function for the Water Icon text
+ */
 @Composable
 fun WaterIconText() {
     Row(verticalAlignment = Alignment.CenterVertically){
@@ -69,6 +72,9 @@ fun WaterIconText() {
     }
 }
 
+/**
+ * Composable function for the Wifi Icon text
+ */
 @Composable
 fun WiFiIconText() {
     Row(verticalAlignment = Alignment.CenterVertically){
@@ -86,6 +92,9 @@ fun WiFiIconText() {
     }
 }
 
+/**
+ * Composable function for the Other Icon text
+ */
 @Composable
 fun OtherIconText() {
     Row(verticalAlignment = Alignment.CenterVertically){
@@ -103,6 +112,9 @@ fun OtherIconText() {
     }
 }
 
+/**
+ * Composable function for the Total Icon text
+ */
 @Composable
 fun TotalText() {
     Text(
@@ -116,6 +128,9 @@ fun TotalText() {
     )
 }
 
+/**
+ * Composable function for the Total per person Icon text
+ */
 @Composable
 fun TotalPerPersonText() {
     Text(
