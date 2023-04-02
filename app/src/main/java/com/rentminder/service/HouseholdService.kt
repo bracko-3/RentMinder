@@ -5,6 +5,7 @@ import com.rentminder.dao.IHouseholdDAO
 import com.rentminder.dto.Household
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
@@ -17,6 +18,7 @@ class HouseholdService {
         return withContext(Dispatchers.IO) {
             val service = RetrofitClientInstance.retrofitInstance?.create(IHouseholdDAO::class.java)
             val country = async { service?.getAllCountries() }
+            ensureActive()
             return@withContext country.await()?.awaitResponse<ArrayList<Household>>()?.body()
         }
     }
