@@ -9,11 +9,11 @@ import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
 class MembersService {
-    suspend fun fetchMembersList() : List<Members>? {
+    suspend fun fetchMembersList() : List<Members> {
         return withContext(Dispatchers.IO){
             val service = RetrofitClientInstance.retrofitInstance?.create(MembersDAO::class.java)
             val members = async {service?.getAllMembers()?.awaitResponse()?.body() }
-            return@withContext members?.await()?: emptyList()
+            return@withContext members.await()?: emptyList()
         }
     }
 }
