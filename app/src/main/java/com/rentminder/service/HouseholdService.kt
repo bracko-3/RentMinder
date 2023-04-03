@@ -9,11 +9,18 @@ import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
 class HouseholdService {
-    suspend fun fetchHouseholds() : List<Household>?{
+    private val service: IHouseholdDAO by lazy {
+        RetrofitClientInstance.retrofitInstance?.create(IHouseholdDAO::class.java)
+            ?: throw IllegalStateException("RetrofitClientInstance is null")
+    }
+
+    suspend fun fetchHouseholdsList() : List<Household>{
         return withContext(Dispatchers.IO) {
-            val service = RetrofitClientInstance.retrofitInstance?.create(IHouseholdDAO::class.java)
-            val country = async { service?.getAllCountries() }
-            return@withContext country.await()?.awaitResponse<ArrayList<Household>>()?.body()
+            try {
+                service.getAllHouseholds().awaitResponse().body() ?: emptyList()
+            } catch (e: Exception) {
+                emptyList()
+            }
         }
     }
 }
