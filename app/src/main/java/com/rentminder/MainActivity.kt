@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -35,9 +36,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
+import com.rentminder.dto.Payment
 import com.rentminder.ui.theme.RentMinderTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: MainViewModel by viewModel<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -112,18 +118,16 @@ fun TopToolBar() {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EditBillAmounts() {
-    var rentBill by remember { mutableStateOf("") }
+    var inRentBill by remember { mutableStateOf("") }
     val rentBillEdited = remember { mutableStateOf(false) }
-    var electricBill by remember { mutableStateOf("") }
+    var inElectricBill by remember { mutableStateOf("") }
     val electricBillEdited = remember { mutableStateOf(false) }
-    var waterBill by remember { mutableStateOf("") }
+    var inWaterBill by remember { mutableStateOf("") }
     val waterBillEdited = remember { mutableStateOf(false) }
-    var wifiBill by remember { mutableStateOf("") }
+    var inWifiBill by remember { mutableStateOf("") }
     val wifiBillEdited = remember { mutableStateOf(false) }
-    var otherBill by remember { mutableStateOf("") }
+    var inOtherBill by remember { mutableStateOf("") }
     val otherBillEdited = remember { mutableStateOf(false) }
-    var totalBill by remember { mutableStateOf("") }
-    var dividedBill by remember { mutableStateOf("") }
 
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -142,9 +146,9 @@ fun EditBillAmounts() {
         ) {
             RentIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = rentBill,
+                OutlinedTextField(value = inRentBill,
                     onValueChange = { newRentBill ->
-                        rentBill = newRentBill
+                        inRentBill = newRentBill
                         rentBillEdited.value = true
                     },
                     keyboardOptions = KeyboardOptions(
@@ -159,7 +163,15 @@ fun EditBillAmounts() {
                         .width(100.dp)
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
-                SaveRemindButton(enabled = rentBill.isNotEmpty(), inputEdited = rentBillEdited)
+                SaveRemindButton(
+                    enabled = inRentBill.isNotEmpty(),
+                    inputEdited = rentBillEdited,
+                    toRentBill = inRentBill.toDouble(),
+                    toElectricBill = inElectricBill.toDouble(),
+                    toWaterBill = inWaterBill.toDouble(),
+                    toWifiBill = inWifiBill.toDouble(),
+                    toOtherBill = inOtherBill.toDouble()
+                )
             }
         }
 
@@ -170,9 +182,9 @@ fun EditBillAmounts() {
         ) {
             ElectricIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = electricBill,
+                OutlinedTextField(value = inElectricBill,
                     onValueChange = { newElectricBill ->
-                        electricBill = newElectricBill
+                        inElectricBill = newElectricBill
                         electricBillEdited.value = true
                     },
                     keyboardOptions = KeyboardOptions(
@@ -188,7 +200,13 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
                 SaveRemindButton(
-                    enabled = electricBill.isNotEmpty(), inputEdited = electricBillEdited
+                    enabled = inElectricBill.isNotEmpty(),
+                    inputEdited = electricBillEdited,
+                    toRentBill = inRentBill.toDouble(),
+                    toElectricBill = inElectricBill.toDouble(),
+                    toWaterBill = inWaterBill.toDouble(),
+                    toWifiBill = inWifiBill.toDouble(),
+                    toOtherBill = inOtherBill.toDouble()
                 )
             }
         }
@@ -200,9 +218,9 @@ fun EditBillAmounts() {
         ) {
             WaterIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = waterBill,
+                OutlinedTextField(value = inWaterBill,
                     onValueChange = { newWaterBill ->
-                        waterBill = newWaterBill
+                        inWaterBill = newWaterBill
                         waterBillEdited.value = true
                     },
                     keyboardOptions = KeyboardOptions(
@@ -218,7 +236,13 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
                 SaveRemindButton(
-                    enabled = waterBill.isNotEmpty(), inputEdited = waterBillEdited
+                    enabled = inWaterBill.isNotEmpty(),
+                    inputEdited = waterBillEdited,
+                    toRentBill = inRentBill.toDouble(),
+                    toElectricBill = inElectricBill.toDouble(),
+                    toWaterBill = inWaterBill.toDouble(),
+                    toWifiBill = inWifiBill.toDouble(),
+                    toOtherBill = inOtherBill.toDouble()
                 )
             }
         }
@@ -230,9 +254,9 @@ fun EditBillAmounts() {
         ) {
             WiFiIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = wifiBill,
+                OutlinedTextField(value = inWifiBill,
                     onValueChange = { newWifiBill ->
-                        wifiBill = newWifiBill
+                        inWifiBill = newWifiBill
                         wifiBillEdited.value = true
                     },
                     keyboardOptions = KeyboardOptions(
@@ -248,7 +272,13 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
                 SaveRemindButton(
-                    enabled = wifiBill.isNotEmpty(), inputEdited = wifiBillEdited
+                    enabled = inWifiBill.isNotEmpty(),
+                    inputEdited = wifiBillEdited,
+                    toRentBill = inRentBill.toDouble(),
+                    toElectricBill = inElectricBill.toDouble(),
+                    toWaterBill = inWaterBill.toDouble(),
+                    toWifiBill = inWifiBill.toDouble(),
+                    toOtherBill = inOtherBill.toDouble()
                 )
             }
         }
@@ -260,9 +290,9 @@ fun EditBillAmounts() {
         ) {
             OtherIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = otherBill,
+                OutlinedTextField(value = inOtherBill,
                     onValueChange = { newOtherBill ->
-                        otherBill = newOtherBill
+                        inOtherBill = newOtherBill
                         otherBillEdited.value = true
                     },
                     keyboardOptions = KeyboardOptions(
@@ -278,7 +308,13 @@ fun EditBillAmounts() {
                         .height(55.dp),
                     textStyle = TextStyle.Default.copy(fontSize = 18.sp))
                 SaveRemindButton(
-                    enabled = otherBill.isNotEmpty(), inputEdited = otherBillEdited
+                    enabled = inOtherBill.isNotEmpty(),
+                    inputEdited = otherBillEdited,
+                    toRentBill = inRentBill.toDouble(),
+                    toElectricBill = inElectricBill.toDouble(),
+                    toWaterBill = inWaterBill.toDouble(),
+                    toWifiBill = inWifiBill.toDouble(),
+                    toOtherBill = inOtherBill.toDouble()
                 )
             }
         }

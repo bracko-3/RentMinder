@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "681264063757",
+    "project_id": "rentminder-4e8b7",
+    "storage_bucket": "rentminder-4e8b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681264063757:android:665a12b23b49264f0c3c44",
+        "android_client_info": {
+          "package_name": "com.rentminder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681264063757-krj9gim2agf9au6i1vk257d20hikioa4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo-3e7CPJUqaMZet009t9cbM6EsrmRXOA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681264063757-krj9gim2agf9au6i1vk257d20hikioa4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

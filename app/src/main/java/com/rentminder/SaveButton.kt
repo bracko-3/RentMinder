@@ -1,6 +1,10 @@
 package com.rentminder
 
+import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animate
@@ -30,15 +34,29 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.rentminder.dto.Payment
+import com.rentminder.ui.theme.RentMinderTheme
+import kotlin.properties.ReadOnlyProperty
 
 @Composable
-fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>) {
+fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>, toRentBill: Double, toElectricBill: Double, toWaterBill: Double, toWifiBill: Double, toOtherBill: Double) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     var count by remember { mutableStateOf(0) }
+    val viewModel =
 
     IconButton(
         onClick = {
+            var payment = Payment().apply {
+                paymentId = 0
+                month = ""
+                rentBill = toRentBill
+                electricBill = toElectricBill
+                waterBill = toWaterBill
+                wifiBill = toWifiBill
+                otherBill = toOtherBill
+            }
+            viewModel.save(payment)
             if (enabled) {
                 if (count > 0) {
                     Toast.makeText(context, "Edit Saved!", Toast.LENGTH_SHORT).show()
@@ -88,5 +106,5 @@ fun SaveRemindButton(enabled: Boolean, inputEdited: MutableState<Boolean>) {
 private fun SaveRemindButtonPreview() {
     val enabled = false;
     val inputEdited = remember { mutableStateOf(false) }
-    SaveRemindButton(enabled, inputEdited)
+    SaveRemindButton(enabled, inputEdited, toRentBill = 0.0, toElectricBill = 0.0, toWaterBill = 0.0, toWifiBill = 0.0, toOtherBill = 0.0)
 }
