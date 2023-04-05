@@ -6,7 +6,6 @@ import com.rentminder.dto.Members
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
-import retrofit2.awaitResponse
 
 class MembersService {
     suspend fun fetchMembers() : List<Members>? {
