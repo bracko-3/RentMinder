@@ -1,5 +1,6 @@
-package com.rentminder
+package com.rentminder.service
 
+import com.rentminder.RetrofitClientInstance
 import com.rentminder.dao.PaymentDao
 import com.rentminder.dto.Payment
 import kotlinx.coroutines.Dispatchers
