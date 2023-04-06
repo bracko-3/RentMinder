@@ -13,6 +13,7 @@ class RentMinderApplication : Application() {
         GlobalContext.startKoin {
             androidLogger(if(BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@RentMinderApplication)
+            modules(appModule)
         }
     }
 }
