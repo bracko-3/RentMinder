@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.rounded.Home
@@ -31,21 +32,58 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rentminder.ui.theme.RentMinderTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RentMinderTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
-                ) {
-                    MainMenu()
+                val scaffoldState = rememberScaffoldState()
+                val scope = rememberCoroutineScope()
+                Scaffold(
+                    scaffoldState = scaffoldState,
+                    topBar = {
+                        TopToolBar(onNavigationIconClick = {
+                            scope.launch {
+                                scaffoldState.drawerState.open()
+                            }
+                        })
+                    },
+                    drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+                    drawerContent = {
+                        DrawHeader()
+                        DrawerBody(items = listOf(
+                            MenuItem(
+                                id = "home",
+                                title = "Home",
+                                contentDescription = "Go to Home Screen",
+                                icon = Icons.Default.Home
+                            )
+                        ),
+                            onItemClick = {
+                                println("Clicked on it")
+                            })
+                    }
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues = innerPadding)
+                    ) {
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colors.background
+                        ) {
+                            MainMenu()
+                        }
+                    }
                 }
             }
         }
@@ -60,7 +98,6 @@ fun MainMenu() {
     val monthName: String = monthDate.format(cal.time)
 
     Column() {
-        TopToolBar()
         Row(
             modifier = Modifier
                 .padding(
@@ -78,33 +115,26 @@ fun MainMenu() {
 
 //Navigation bar at the top of app
 @Composable
-fun TopToolBar() {
-    Column {
+fun TopToolBar(
+    onNavigationIconClick: () -> Unit
+) {
+    Column() {
         TopAppBar(title = {
-            Icon(
-                painterResource(
-                    id = R.drawable.outline_notifications_active_24
-                ),
-                contentDescription = "Notification Icon",
-                modifier = Modifier
-                    .size(45.dp)
-                    .padding(
-                        end = 5.dp
-                    )
-            )
             Text(
-                text = "RentMinder", fontSize = 25.sp, fontWeight = FontWeight.Bold
+                text = "RentMinder", fontSize = 25.sp, fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
             )
-        }, actions = {
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Navigation Bar",
-                    modifier = Modifier.size(35.dp),
-                    tint = Color.Black
-                )
-            }
-        })
+        },
+            navigationIcon = {
+                IconButton(onClick = onNavigationIconClick) {
+                    Icon(
+                        imageVector = Icons.Filled.Menu,
+                        contentDescription = "Navigation Bar",
+                        modifier = Modifier.size(35.dp),
+                        tint = Color.Black
+                    )
+                }
+            })
     }
 }
 
@@ -131,8 +161,8 @@ fun EditBillAmounts() {
     //Column for all bill rows
     Column(
         modifier = Modifier.padding(
-                horizontal = 15.dp
-            )
+            horizontal = 15.dp
+        )
     ) {
 
         //Rent bill text, text box, and button
@@ -142,7 +172,8 @@ fun EditBillAmounts() {
         ) {
             RentIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = rentBill,
+                OutlinedTextField(
+                    value = rentBill,
                     onValueChange = { newRentBill ->
                         rentBill = newRentBill
                         rentBillEdited.value = true
@@ -158,7 +189,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(enabled = rentBill.isNotEmpty(), inputEdited = rentBillEdited)
             }
         }
@@ -170,7 +202,8 @@ fun EditBillAmounts() {
         ) {
             ElectricIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = electricBill,
+                OutlinedTextField(
+                    value = electricBill,
                     onValueChange = { newElectricBill ->
                         electricBill = newElectricBill
                         electricBillEdited.value = true
@@ -186,7 +219,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(
                     enabled = electricBill.isNotEmpty(), inputEdited = electricBillEdited
                 )
@@ -200,7 +234,8 @@ fun EditBillAmounts() {
         ) {
             WaterIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = waterBill,
+                OutlinedTextField(
+                    value = waterBill,
                     onValueChange = { newWaterBill ->
                         waterBill = newWaterBill
                         waterBillEdited.value = true
@@ -216,7 +251,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(
                     enabled = waterBill.isNotEmpty(), inputEdited = waterBillEdited
                 )
@@ -230,7 +266,8 @@ fun EditBillAmounts() {
         ) {
             WiFiIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = wifiBill,
+                OutlinedTextField(
+                    value = wifiBill,
                     onValueChange = { newWifiBill ->
                         wifiBill = newWifiBill
                         wifiBillEdited.value = true
@@ -246,7 +283,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(
                     enabled = wifiBill.isNotEmpty(), inputEdited = wifiBillEdited
                 )
@@ -260,7 +298,8 @@ fun EditBillAmounts() {
         ) {
             OtherIconText()
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedTextField(value = otherBill,
+                OutlinedTextField(
+                    value = otherBill,
                     onValueChange = { newOtherBill ->
                         otherBill = newOtherBill
                         otherBillEdited.value = true
@@ -276,7 +315,8 @@ fun EditBillAmounts() {
                     modifier = Modifier
                         .width(100.dp)
                         .height(55.dp),
-                    textStyle = TextStyle.Default.copy(fontSize = 18.sp))
+                    textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                )
                 SaveRemindButton(
                     enabled = otherBill.isNotEmpty(), inputEdited = otherBillEdited
                 )
