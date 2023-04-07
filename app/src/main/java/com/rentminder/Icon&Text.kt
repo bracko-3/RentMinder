@@ -104,7 +104,7 @@ fun OtherIconText() {
 }
 
 @Composable
-fun TotalText(total: Int) {
+fun TotalText(total: Double) {
     Text(
         text = "Total: $total",
         fontSize = (20.sp),
