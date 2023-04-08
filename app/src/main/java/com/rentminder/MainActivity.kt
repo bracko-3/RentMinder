@@ -15,14 +15,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.sharp.Home
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -322,7 +323,9 @@ class MainActivity : ComponentActivity() {
                 TotalPerPersonText()
             }
 
-            Column (horizontalAlignment = CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(top = 12.dp)) {
+            Column (horizontalAlignment = CenterHorizontally, modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 13.dp)) {
                 Button(
                     colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
                     onClick = {
@@ -361,6 +364,46 @@ class MainActivity : ComponentActivity() {
                         Modifier.padding(2.dp)
                     )
                     Text(text = "Save & Remind")
+                }
+
+                Row(modifier = Modifier.height(IntrinsicSize.Min).padding(top = 4.dp)) {
+                    Row{
+                        Button (
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                            elevation = null,
+                            modifier = Modifier.padding(top = 8.dp),
+                            onClick = { /*TODO*/ }
+                        ){
+                            Icon(
+                                imageVector = Icons.Outlined.People,
+                                contentDescription = "Members Button",
+                                Modifier.padding(2.dp)
+                            )
+                            Text(text = "Members")
+                        }
+                    }
+                    Divider(
+                        color = Color.Black,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(1.5.dp)
+                            .padding(top = 10.dp)
+                    )
+                    Row{
+                        Button (
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                            elevation = null,
+                            modifier = Modifier.padding(top = 8.dp),
+                            onClick = { /*TODO*/ }
+                        ){
+                            Icon(
+                                imageVector = Icons.Outlined.Timelapse,
+                                contentDescription = "Past Bills Button",
+                                Modifier.padding(2.dp)
+                            )
+                            Text(text = "Past Bills")
+                        }
+                    }
                 }
             }
         }
