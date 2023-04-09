@@ -49,10 +49,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 //Getting current month for Main Menu
 val cal: Calendar = Calendar.getInstance()
 val monthDate = SimpleDateFormat("MMMM")
-val monthName: String = monthDate.format(cal.time)
-
+val monthName: String = monthDate.format(cal.time).replaceFirstChar { it.uppercase() }
 private var selectedPayment: Bill? = null
-
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModel()
@@ -97,7 +95,7 @@ class MainActivity : ComponentActivity() {
                     painterResource(
                         id = R.drawable.outline_notifications_active_24
                     ),
-                    contentDescription = "Notification Icon",
+                    contentDescription = stringResource(R.string.notificationIconDescription),
                     modifier = Modifier
                         .size(45.dp)
                         .padding(
@@ -105,13 +103,13 @@ class MainActivity : ComponentActivity() {
                         )
                 )
                 Text(
-                    text = "RentMinder", fontSize = 25.sp, fontWeight = FontWeight.Bold
+                    text = stringResource(R.string.appTitle), fontSize = 25.sp, fontWeight = FontWeight.Bold
                 )
             }, actions = {
                 IconButton(onClick = {}) {
                     Icon(
                         imageVector = Icons.Filled.Menu,
-                        contentDescription = "Navigation Bar",
+                        contentDescription = stringResource(R.string.navigationBarDescription),
                         modifier = Modifier.size(35.dp),
                         tint = Color.Black
                     )
@@ -310,7 +308,7 @@ class MainActivity : ComponentActivity() {
 
             //Total feature
             Row() {
-                if(inTotalBill.equals("")){
+                if(inTotalBill == ""){
                     TotalText(0.0)
                 }
                 else{
@@ -329,6 +327,7 @@ class MainActivity : ComponentActivity() {
                 Button(
                     colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
                     onClick = {
+                        var message = ""
                         textFields.forEach {
                             if(it.value) {
                                 inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
@@ -346,40 +345,37 @@ class MainActivity : ComponentActivity() {
                                     total = inTotalBill.toDouble()
                                 }
                                 viewModel.save()
-                                Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+                                message = "Saved!"
                             }
                             else {
-                                Toast.makeText(
-                                    context,
-                                    "Please make sure all boxes have a value.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                message = "Please make sure all boxes have a value."
                             }
                         }
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                     })
                 {
                     Icon(
                         imageVector = Icons.Outlined.Notifications,
-                        contentDescription = "Save & Remind Button",
+                        contentDescription = stringResource(R.string.saveRemindButtonDescription),
                         Modifier.padding(2.dp)
                     )
-                    Text(text = "Save & Remind")
+                    Text(text = stringResource(R.string.saveRemindButton))
                 }
 
                 Row(modifier = Modifier.height(IntrinsicSize.Min).padding(top = 4.dp)) {
                     Row{
                         Button (
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             elevation = null,
                             modifier = Modifier.padding(top = 8.dp),
                             onClick = { /*TODO*/ }
                         ){
                             Icon(
                                 imageVector = Icons.Outlined.People,
-                                contentDescription = "Members Button",
+                                contentDescription = stringResource(R.string.membersButtonDescription),
                                 Modifier.padding(2.dp)
                             )
-                            Text(text = "Members")
+                            Text(text = stringResource(R.string.membersButton))
                         }
                     }
                     Divider(
@@ -391,17 +387,17 @@ class MainActivity : ComponentActivity() {
                     )
                     Row{
                         Button (
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             elevation = null,
                             modifier = Modifier.padding(top = 8.dp),
                             onClick = { /*TODO*/ }
                         ){
                             Icon(
                                 imageVector = Icons.Outlined.Timelapse,
-                                contentDescription = "Past Bills Button",
+                                contentDescription = stringResource(R.string.pastBillsButtonDescription),
                                 Modifier.padding(2.dp)
                             )
-                            Text(text = "Past Bills")
+                            Text(text = stringResource(R.string.pastBillsButton))
                         }
                     }
                 }

@@ -2,4 +2,13 @@
     <string name="app_name">RentMinder</string>
     <string name="current_month">February</string>
     <string name="rent_amount">Rent Amount</string>
+    <string name="pastBillsButton">Past Bills</string>
+    <string name="membersButton">Members</string>
+    <string name="notificationIconDescription">Notification Icon</string>
+    <string name="appTitle">RentMinder</string>
+    <string name="navigationBarDescription">Navigation Bar</string>
+    <string name="saveRemindButtonDescription"><![CDATA[Save & Remind Button]]></string>
+    <string name="saveRemindButton"><![CDATA[Save & Remind]]></string>
+    <string name="membersButtonDescription">Members Button</string>
+    <string name="pastBillsButtonDescription">Past Bills Button</string>
 </resources>
