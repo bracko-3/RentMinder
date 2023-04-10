@@ -2,4 +2,5 @@
     <string name="app_name">RentMinder</string>
     <string name="current_month">February</string>
     <string name="rent_amount">Rent Amount</string>
+    <string name="title_activity_members">MembersActivity</string>
 </resources>

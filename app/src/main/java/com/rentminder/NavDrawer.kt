@@ -22,7 +22,7 @@ fun DrawHeader() {
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Header", fontSize = 60.sp)
+        Text(text = "RentMinder", fontSize = 60.sp)
     }
 }
 
