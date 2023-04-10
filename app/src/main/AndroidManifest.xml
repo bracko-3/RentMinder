@@ -15,7 +15,8 @@
             android:name=".MembersActivity"
             android:exported="false"
             android:label="@string/title_activity_members"
-            android:theme="@style/Theme.RentMinder" />
+            android:theme="@style/Theme.RentMinder"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
