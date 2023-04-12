@@ -334,13 +334,11 @@ fun EditBillAmounts() {
         //Total feature
         Row() {
             TotalText()
-
         }
 
         //Total Per Person Feature
         Row() {
             TotalPerPersonText()
-
         }
     }
 }
