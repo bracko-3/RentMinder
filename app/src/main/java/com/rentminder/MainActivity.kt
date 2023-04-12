@@ -49,8 +49,13 @@ import com.rentminder.ui.theme.SoftGreen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.core.app.NotificationManagerCompat
+import kotlinx.coroutines.launch
 
 //Getting current month for Main Menu
 val cal: Calendar = Calendar.getInstance()
@@ -64,10 +69,47 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             RentMinderTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
-                ) {
-                    MainMenu()
+                val scaffoldState = rememberScaffoldState()
+                val scope = rememberCoroutineScope()
+                Scaffold(
+                    scaffoldState = scaffoldState,
+                    topBar = {
+                        TopToolBar(onNavigationIconClick = {
+                            scope.launch {
+                                scaffoldState.drawerState.open()
+                            }
+                        })
+                    },
+                    drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+                    drawerContent = {
+                        DrawHeader()
+                        DrawerBody(items = listOf(
+                            MenuItem(
+                                id = "members",
+                                title = "Members",
+                                contentDescription = "Members",
+                                icon = Icons.Outlined.People
+                            )
+                        ),
+                            onItemClick = {
+                                when(it.id) {
+                                    "members" -> startActivity(Intent(this@MainActivity, MembersActivity::class.java))
+                                }
+                            })
+                    }
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues = innerPadding)
+                    ) {
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colors.background
+                        ) {
+                            MainMenu()
+                        }
+                    }
                 }
             }
         }
@@ -76,7 +118,6 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainMenu() {
         Column() {
-            TopToolBar()
             Row(
                 modifier = Modifier
                     .padding(
@@ -94,33 +135,26 @@ class MainActivity : ComponentActivity() {
 
     //Navigation bar at the top of app
     @Composable
-    fun TopToolBar() {
-        Column {
+    fun TopToolBar(
+        onNavigationIconClick: () -> Unit
+    ) {
+        Column() {
             TopAppBar(title = {
-                Icon(
-                    painterResource(
-                        id = R.drawable.outline_notifications_active_24
-                    ),
-                    contentDescription = stringResource(R.string.notificationIconDescription),
-                    modifier = Modifier
-                        .size(45.dp)
-                        .padding(
-                            end = 5.dp
-                        )
-                )
                 Text(
-                    text = stringResource(R.string.appTitle), fontSize = 25.sp, fontWeight = FontWeight.Bold
+                    text = "RentMinder", fontSize = 25.sp, fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
                 )
-            }, actions = {
-                IconButton(onClick = {}) {
-                    Icon(
-                        imageVector = Icons.Filled.Menu,
-                        contentDescription = stringResource(R.string.navigationBarDescription),
-                        modifier = Modifier.size(35.dp),
-                        tint = Color.Black
-                    )
-                }
-            })
+            },
+                navigationIcon = {
+                    IconButton(onClick = onNavigationIconClick) {
+                        Icon(
+                            imageVector = Icons.Filled.Menu,
+                            contentDescription = "Navigation Bar",
+                            modifier = Modifier.size(35.dp),
+                            tint = Color.Black
+                        )
+                    }
+                })
         }
     }
 
