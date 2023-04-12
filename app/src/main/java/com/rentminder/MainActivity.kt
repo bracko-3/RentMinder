@@ -95,6 +95,12 @@ class MainActivity : ComponentActivity() {
                                 title = "Past Bills",
                                 contentDescription = "Past Bills",
                                 icon = Icons.Outlined.Timelapse
+                            ),
+                            MenuItem(
+                                id = "sysLogin",
+                                title = "Login/Signup",
+                                contentDescription = "System Login",
+                                icon = Icons.Outlined.Login
                             )
                         ),
                             onItemClick = {
@@ -148,7 +154,7 @@ class MainActivity : ComponentActivity() {
         Column() {
             TopAppBar(title = {
                 Text(
-                    text = "RentMinder", fontSize = 25.sp, fontWeight = FontWeight.Bold,
+                    text = stringResource(R.string.appLabelTitle), fontSize = 25.sp, fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
             },
@@ -437,7 +443,11 @@ class MainActivity : ComponentActivity() {
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             elevation = null,
                             modifier = Modifier.padding(top = 8.dp),
-                            onClick = { /*TODO*/ }
+                            onClick =
+                            {
+                                val intent = Intent(context, MembersActivity::class.java)
+                                context.startActivity(intent)
+                            }
                         ){
                             Icon(
                                 imageVector = Icons.Outlined.People,
@@ -459,7 +469,11 @@ class MainActivity : ComponentActivity() {
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             elevation = null,
                             modifier = Modifier.padding(top = 8.dp),
-                            onClick = { /*TODO*/ }
+                            onClick =
+                            {
+                                val intent = Intent(context, PastPaymentUI::class.java)
+                                context.startActivity(intent)
+                            }
                         ){
                             Icon(
                                 imageVector = Icons.Outlined.Timelapse,

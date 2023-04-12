@@ -12,4 +12,5 @@
     <string name="membersButtonDescription">Members Button</string>
     <string name="pastBillsButtonDescription">Past Bills Button</string>
     <string name="title_activity_members">MembersActivity</string>
+    <string name="appLabelTitle">RentMinder</string>
 </resources>

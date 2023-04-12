@@ -93,7 +93,7 @@ fun PaymentMenu() {
                 .fillMaxWidth(), horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = monthName + " Payment Totals", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                text = "$monthName Payment Totals", fontSize = 28.sp, fontWeight = FontWeight.Bold
             )
         }
         PaymentEditBillAmounts()
