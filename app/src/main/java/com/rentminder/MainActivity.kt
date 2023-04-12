@@ -89,11 +89,18 @@ class MainActivity : ComponentActivity() {
                                 title = "Members",
                                 contentDescription = "Members",
                                 icon = Icons.Outlined.People
+                            ),
+                            MenuItem(
+                                id = "pastBills",
+                                title = "Past Bills",
+                                contentDescription = "Past Bills",
+                                icon = Icons.Outlined.Timelapse
                             )
                         ),
                             onItemClick = {
                                 when(it.id) {
                                     "members" -> startActivity(Intent(this@MainActivity, MembersActivity::class.java))
+                                    "pastBills" -> startActivity(Intent(this@MainActivity, PastPaymentUI::class.java))
                                 }
                             })
                     }
