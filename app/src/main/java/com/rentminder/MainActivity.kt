@@ -1,5 +1,6 @@
 package com.rentminder
 
+import android.app.NotificationChannel
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.inputmethodservice.Keyboard.Row
@@ -40,11 +41,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
 import com.rentminder.dto.Payment
 import com.rentminder.dto.Bill
 import com.rentminder.ui.theme.RentMinderTheme
 import com.rentminder.ui.theme.SoftGreen
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.core.app.NotificationManagerCompat
 
 //Getting current month for Main Menu
 val cal: Calendar = Calendar.getInstance()
@@ -346,6 +352,28 @@ class MainActivity : ComponentActivity() {
                                 }
                                 viewModel.save()
                                 message = "Saved!"
+
+                                val notificationId = 1 // A unique ID for the notification
+                                val channelId = "my_channel_id" // A unique ID for the notification channel
+                                val notificationBuilder = NotificationCompat.Builder(context, channelId)
+                                    .setSmallIcon(R.drawable.outline_notifications_active_24)
+                                    .setContentTitle("RentMinder")
+                                    .setContentText("Someone sent you a bill!")
+                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    val name = "RentMinder"
+                                    val descriptionText = "Someone sent you a bill!"
+                                    val importance = NotificationManager.IMPORTANCE_DEFAULT
+                                    val channel = NotificationChannel(channelId, name, importance).apply {
+                                        description = descriptionText
+                                    }
+                                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                                    notificationManager.createNotificationChannel(channel)
+                                }
+
+                                val notificationManager = NotificationManagerCompat.from(context)
+                                notificationManager.notify(notificationId, notificationBuilder.build())
                             }
                             else {
                                 message = "Please make sure all boxes have a value."
