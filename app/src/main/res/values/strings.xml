@@ -11,4 +11,5 @@
     <string name="saveRemindButton"><![CDATA[Save & Remind]]></string>
     <string name="membersButtonDescription">Members Button</string>
     <string name="pastBillsButtonDescription">Past Bills Button</string>
+    <string name="title_activity_members">MembersActivity</string>
 </resources>

@@ -18,7 +18,7 @@
         <activity
             android:name=".MembersActivity"
             android:exported="false"
-            android:label="MembersActivity"
+            android:label="@string/title_activity_members"
             android:theme="@style/Theme.RentMinder"
             android:parentActivityName=".MainActivity"/>
         <activity
