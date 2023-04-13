@@ -215,7 +215,9 @@ class MainActivity : ComponentActivity() {
         val otherBillEdited = remember { mutableStateOf(false) }
         var inTotalBill by remember(selectedBill.month) { mutableStateOf(selectedBill.total.toString()) }
         var inDividedBill by remember(selectedBill.month) { mutableStateOf(selectedBill.totalPerson.toString()) }
-        val textFields: List<MutableState<Boolean>> = listOf(rentBillEdited, electricBillEdited, waterBillEdited, wifiBillEdited, otherBillEdited)
+        val isFormFilled = remember { mutableStateOf(false) }
+        isFormFilled.value = inRentBill.isNotEmpty() && inElectricBill.isNotEmpty() && inWaterBill.isNotEmpty() && inWifiBill.isNotEmpty() && inOtherBill.isNotEmpty()
+
         val context = LocalContext.current
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusManager = LocalFocusManager.current
@@ -414,8 +416,7 @@ class MainActivity : ComponentActivity() {
                     colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
                     onClick = {
                         var message = ""
-                        textFields.forEach {
-                            if(it.value) {
+                            if(isFormFilled.value) {
                                 inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
                                 inDividedBill = (inTotalBill.toDouble()/4).toString()
                                 selectedBill.apply {
@@ -456,7 +457,7 @@ class MainActivity : ComponentActivity() {
                             else {
                                 message = "Please make sure all boxes have a value."
                             }
-                        }
+
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                     })
                 {

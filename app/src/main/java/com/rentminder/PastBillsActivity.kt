@@ -1,8 +1,12 @@
 package com.rentminder
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -37,6 +41,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.rentminder.dto.Bill
@@ -49,6 +55,7 @@ class PastBillsActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModel()
     private var selectedBill by mutableStateOf(Bill())
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    var selectedMonth: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,6 +127,7 @@ class PastBillsActivity : ComponentActivity() {
                             expanded = false
                             billText = bill.month
                             selectedBill = bill
+                            selectedMonth = true
                         }) {
                             Text(text = bill.month)
                         }
@@ -134,19 +142,15 @@ class PastBillsActivity : ComponentActivity() {
     @Composable
     fun PaymentEditBillAmounts(bills: List<Bill> = ArrayList(), selectedBill: Bill = Bill()) {
         var inRentBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.rentBill.toString()) }
-        val rentBillEdited = remember { mutableStateOf(false) }
         var inElectricBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.energyBill.toString()) }
-        val electricBillEdited = remember { mutableStateOf(false) }
         var inWaterBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.waterBill.toString()) }
-        val waterBillEdited = remember { mutableStateOf(false) }
         var inWifiBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.wifiBill.toString()) }
-        val wifiBillEdited = remember { mutableStateOf(false) }
         var inOtherBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.otherBill.toString()) }
-        val otherBillEdited = remember { mutableStateOf(false) }
         var inTotalBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.total.toString()) }
         var inDividedBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.totalPerson.toString()) }
+        val isFormFilled = remember { mutableStateOf(false) }
+        isFormFilled.value = inRentBill.isNotEmpty() && inElectricBill.isNotEmpty() && inWaterBill.isNotEmpty() && inWifiBill.isNotEmpty() && inOtherBill.isNotEmpty()
 
-        val textFields: List<MutableState<Boolean>> = listOf(rentBillEdited, electricBillEdited, waterBillEdited, wifiBillEdited, otherBillEdited)
         val context = LocalContext.current
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusManager = LocalFocusManager.current
@@ -169,7 +173,6 @@ class PastBillsActivity : ComponentActivity() {
                         value = inRentBill,
                         onValueChange = { newRentBill ->
                             inRentBill = newRentBill
-                            rentBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
@@ -198,7 +201,6 @@ class PastBillsActivity : ComponentActivity() {
                         value = inElectricBill,
                         onValueChange = { newElectricBill ->
                             inElectricBill = newElectricBill
-                            electricBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
@@ -227,7 +229,6 @@ class PastBillsActivity : ComponentActivity() {
                         value = inWaterBill,
                         onValueChange = { newWaterBill ->
                             inWaterBill = newWaterBill
-                            waterBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
@@ -256,7 +257,6 @@ class PastBillsActivity : ComponentActivity() {
                         value = inWifiBill,
                         onValueChange = { newWifiBill ->
                             inWifiBill = newWifiBill
-                            wifiBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
@@ -285,7 +285,6 @@ class PastBillsActivity : ComponentActivity() {
                         value = inOtherBill,
                         onValueChange = { newOtherBill ->
                             inOtherBill = newOtherBill
-                            otherBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number, imeAction = ImeAction.Done
@@ -334,29 +333,27 @@ class PastBillsActivity : ComponentActivity() {
                     colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
                     onClick = {
                         var message = ""
-                        textFields.forEach {
-                            if (it.value) {
-                                inTotalBill =
-                                    (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
-                                inDividedBill = (inTotalBill.toDouble()/4).toString()
-                                selectedBill.apply {
-                                    month = selectedBill.month
-                                    rentBill = inRentBill.toInt()
-                                    energyBill = inElectricBill.toInt()
-                                    waterBill = inWaterBill.toInt()
-                                    wifiBill = inWifiBill.toInt()
-                                    otherBill = inOtherBill.toInt()
-                                    total = inTotalBill.toDouble()
-                                    totalPerson = inDividedBill.toDouble()
-                                }
-                                viewModel.saveBill(selectedBill)
-                                message = "Saved successfully!"
-                            } else {
-                                message = "Please make sure all boxes have a value."
+                        if(isFormFilled.value) {
+                            inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
+                            inDividedBill = (inTotalBill.toDouble()/4).toString()
+                            selectedBill.apply {
+                                month = monthName
+                                rentBill = inRentBill.toInt()
+                                energyBill = inElectricBill.toInt()
+                                waterBill = inWaterBill.toInt()
+                                wifiBill = inWifiBill.toInt()
+                                otherBill = inOtherBill.toInt()
+                                total = inTotalBill.toDouble()
+                                totalPerson = inDividedBill.toDouble()
                             }
+                            viewModel.saveBill(selectedBill)
+                            message = "Saved!"
+                        }
+                        else {
+                            message = "Please make sure all boxes have a value."
                         }
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                    })
+                    }, enabled = selectedMonth)
                 {
                     Icon(
                         imageVector = Icons.Outlined.Save,
