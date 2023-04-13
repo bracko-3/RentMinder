@@ -18,7 +18,7 @@ class MainViewModel() : ViewModel() {
     val monthDate = SimpleDateFormat("MMMM")
     val monthName: String = monthDate.format(cal.time)
     var bills : MutableLiveData<List<Bill>> = MutableLiveData()
-    var selectedBill by mutableStateOf(Bill())
+    //var selectedBill by mutableStateOf(Bill())
 
     private lateinit var firestore : FirebaseFirestore
 
@@ -50,7 +50,7 @@ class MainViewModel() : ViewModel() {
         }
     }
 
-    fun save() {
+    fun save(selectedBill: Bill) {
         val document =
             if (selectedBill.billId == null || selectedBill.billId.isEmpty()) {
                 firestore.collection("Payments").document()

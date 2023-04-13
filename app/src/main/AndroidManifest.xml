@@ -22,7 +22,7 @@
             android:theme="@style/Theme.RentMinder"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".PastPaymentUI"
+            android:name=".PastBillsActivity"
             android:exported="false"
             android:label="PastBills"
             android:theme="@style/Theme.RentMinder"

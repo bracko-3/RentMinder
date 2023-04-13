@@ -61,13 +61,14 @@ import kotlinx.coroutines.launch
 val cal: Calendar = Calendar.getInstance()
 val monthDate = SimpleDateFormat("MMMM")
 val monthName: String = monthDate.format(cal.time).replaceFirstChar { it.uppercase() }
-private var selectedBill: Bill? = null
+private var selectedBill by mutableStateOf(Bill())
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val bills by viewModel.bills.observeAsState(initial = emptyList())
             RentMinderTheme {
                 val scaffoldState = rememberScaffoldState()
                 val scope = rememberCoroutineScope()
@@ -120,6 +121,11 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colors.background
                         ) {
+                            bills.forEach { bill ->
+                                if (bill.month == monthName){
+                                    selectedBill = bill
+                                }
+                            }
                             MainMenu()
                         }
                     }
@@ -175,17 +181,17 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     fun EditBillAmounts() {
-        var inRentBill by remember { mutableStateOf("") }
+        var inRentBill by remember(selectedBill.month) { mutableStateOf(selectedBill.rentBill.toString()) }
         val rentBillEdited = remember { mutableStateOf(false) }
-        var inElectricBill by remember { mutableStateOf("") }
+        var inElectricBill by remember(selectedBill.month) { mutableStateOf(selectedBill.energyBill.toString()) }
         val electricBillEdited = remember { mutableStateOf(false) }
-        var inWaterBill by remember { mutableStateOf("") }
+        var inWaterBill by remember(selectedBill.month) { mutableStateOf(selectedBill.waterBill.toString()) }
         val waterBillEdited = remember { mutableStateOf(false) }
-        var inWifiBill by remember { mutableStateOf("") }
+        var inWifiBill by remember(selectedBill.month) { mutableStateOf(selectedBill.wifiBill.toString()) }
         val wifiBillEdited = remember { mutableStateOf(false) }
-        var inOtherBill by remember { mutableStateOf("") }
+        var inOtherBill by remember(selectedBill.month) { mutableStateOf(selectedBill.otherBill.toString()) }
         val otherBillEdited = remember { mutableStateOf(false) }
-        var inTotalBill by remember { mutableStateOf("") }
+        var inTotalBill by remember(selectedBill.month) { mutableStateOf(selectedBill.total.toString()) }
         var inDividedBill by remember { mutableStateOf("") }
         val textFields: List<MutableState<Boolean>> = listOf(rentBillEdited, electricBillEdited, waterBillEdited, wifiBillEdited, otherBillEdited)
         val context = LocalContext.current
@@ -384,12 +390,8 @@ class MainActivity : ComponentActivity() {
                         textFields.forEach {
                             if(it.value) {
                                 inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
-                                viewModel.selectedBill.apply {
+                                selectedBill.apply {
                                     month = monthName
-                                    paymentId = selectedBill?.let {
-                                        bill ->
-                                            bill.paymentId
-                                        } ?: -1
                                     rentBill = inRentBill.toInt()
                                     energyBill = inElectricBill.toInt()
                                     waterBill = inWaterBill.toInt()
@@ -397,7 +399,7 @@ class MainActivity : ComponentActivity() {
                                     otherBill = inOtherBill.toInt()
                                     total = inTotalBill.toDouble()
                                 }
-                                viewModel.save()
+                                viewModel.save(selectedBill)
                                 message = "Saved!"
 
                                 val notificationId = 1 // A unique ID for the notification
