@@ -1,9 +1,9 @@
 package com.rentminder
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.inputmethodservice.Keyboard.Row
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -200,6 +200,7 @@ class MainActivity : ComponentActivity() {
     }
 
     //Bill input boxes, buttons, and text fields
+    @SuppressLint("SuspiciousIndentation")
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     fun EditBillAmounts() {
@@ -416,48 +417,48 @@ class MainActivity : ComponentActivity() {
                     colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
                     onClick = {
                         var message = ""
-                            if(isFormFilled.value) {
-                                inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
-                                inDividedBill = (inTotalBill.toDouble()/4).toString()
-                                selectedBill.apply {
-                                    month = monthName
-                                    rentBill = inRentBill.toInt()
-                                    energyBill = inElectricBill.toInt()
-                                    waterBill = inWaterBill.toInt()
-                                    wifiBill = inWifiBill.toInt()
-                                    otherBill = inOtherBill.toInt()
-                                    total = inTotalBill.toDouble()
-                                    totalPerson = inDividedBill.toDouble()
-                                }
-                                viewModel.saveBill(selectedBill)
-                                message = "Saved!"
 
-                                val notificationId = 1 // A unique ID for the notification
-                                val channelId = "my_channel_id" // A unique ID for the notification channel
-                                val notificationBuilder = NotificationCompat.Builder(context, channelId)
-                                    .setSmallIcon(R.drawable.outline_notifications_active_24)
-                                    .setContentTitle("RentMinder")
-                                    .setContentText("Someone sent you a bill!")
-                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    val name = "RentMinder"
-                                    val descriptionText = "Someone sent you a bill!"
-                                    val importance = NotificationManager.IMPORTANCE_DEFAULT
-                                    val channel = NotificationChannel(channelId, name, importance).apply {
-                                        description = descriptionText
-                                    }
-                                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                                    notificationManager.createNotificationChannel(channel)
-                                }
-
-                                val notificationManager = NotificationManagerCompat.from(context)
-                                notificationManager.notify(notificationId, notificationBuilder.build())
+                        if (isFormFilled.value) {
+                            inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
+                            inDividedBill = (inTotalBill.toDouble()/4).toString()
+                            selectedBill.apply {
+                                month = monthName
+                                rentBill = inRentBill.toInt()
+                                energyBill = inElectricBill.toInt()
+                                waterBill = inWaterBill.toInt()
+                                wifiBill = inWifiBill.toInt()
+                                otherBill = inOtherBill.toInt()
+                                total = inTotalBill.toDouble()
+                                totalPerson = inDividedBill.toDouble()
                             }
-                            else {
-                                message = "Please make sure all boxes have a value."
+                            viewModel.saveBill(selectedBill)
+                            message = "Saved!"
+
+                            val notificationId = 1 // A unique ID for the notification
+                            val channelId = "my_channel_id" // A unique ID for the notification channel
+                            val notificationBuilder = NotificationCompat.Builder(context, channelId)
+                                .setSmallIcon(R.drawable.outline_notifications_active_24)
+                                .setContentTitle("RentMinder")
+                                .setContentText("Someone sent you a bill!")
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                val name = "RentMinder"
+                                val descriptionText = "Someone sent you a bill!"
+                                val importance = NotificationManager.IMPORTANCE_DEFAULT
+                                val channel = NotificationChannel(channelId, name, importance).apply {
+                                    description = descriptionText
+                                }
+                                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                                notificationManager.createNotificationChannel(channel)
                             }
 
+                            val notificationManager = NotificationManagerCompat.from(context)
+                            notificationManager.notify(notificationId, notificationBuilder.build())
+                        }
+                        else {
+                            message = "Please make sure all boxes have a value."
+                        }
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                     })
                 {
