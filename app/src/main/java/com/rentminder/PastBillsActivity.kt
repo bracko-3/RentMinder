@@ -4,6 +4,7 @@ import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -13,6 +14,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Save
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -22,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -32,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rentminder.dto.Bill
 import com.rentminder.ui.theme.RentMinderTheme
+import com.rentminder.ui.theme.SoftGreen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PastBillsActivity : ComponentActivity() {
@@ -118,19 +123,21 @@ class PastBillsActivity : ComponentActivity() {
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     fun PaymentEditBillAmounts(bills: List<Bill> = ArrayList(), selectedBill: Bill = Bill()) {
-        var rentBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.rentBill.toString()) }
-        val rentBillEdited = remember(selectedBill.billId) { mutableStateOf(false) }
-        var electricBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.energyBill.toString()) }
-        val electricBillEdited = remember(selectedBill.billId) { mutableStateOf(false) }
-        var waterBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.waterBill.toString()) }
-        val waterBillEdited = remember(selectedBill.billId) { mutableStateOf(false) }
-        var wifiBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.wifiBill.toString()) }
-        val wifiBillEdited = remember(selectedBill.billId) { mutableStateOf(false) }
-        var otherBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.otherBill.toString()) }
-        val otherBillEdited = remember(selectedBill.billId) { mutableStateOf(false) }
-        var totalBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.total.toString()) }
-        var dividedBill by remember(selectedBill.billId) { mutableStateOf("") }
+        var inRentBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.rentBill.toString()) }
+        val rentBillEdited = remember { mutableStateOf(false) }
+        var inElectricBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.energyBill.toString()) }
+        val electricBillEdited = remember { mutableStateOf(false) }
+        var inWaterBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.waterBill.toString()) }
+        val waterBillEdited = remember { mutableStateOf(false) }
+        var inWifiBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.wifiBill.toString()) }
+        val wifiBillEdited = remember { mutableStateOf(false) }
+        var inOtherBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.otherBill.toString()) }
+        val otherBillEdited = remember { mutableStateOf(false) }
+        var inTotalBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.total.toString()) }
+        var inDividedBill by remember(selectedBill.billId) { mutableStateOf("") }
 
+        val textFields: List<MutableState<Boolean>> = listOf(rentBillEdited, electricBillEdited, waterBillEdited, wifiBillEdited, otherBillEdited)
+        val context = LocalContext.current
         val keyboardController = LocalSoftwareKeyboardController.current
         val focusManager = LocalFocusManager.current
 
@@ -149,9 +156,9 @@ class PastBillsActivity : ComponentActivity() {
                 RentIconText()
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     OutlinedTextField(
-                        value = rentBill,
+                        value = inRentBill,
                         onValueChange = { newRentBill ->
-                            rentBill = newRentBill
+                            inRentBill = newRentBill
                             rentBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
@@ -179,9 +186,9 @@ class PastBillsActivity : ComponentActivity() {
                 ElectricIconText()
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     OutlinedTextField(
-                        value = electricBill,
+                        value = inElectricBill,
                         onValueChange = { newElectricBill ->
-                            electricBill = newElectricBill
+                            inElectricBill = newElectricBill
                             electricBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
@@ -211,9 +218,9 @@ class PastBillsActivity : ComponentActivity() {
                 WaterIconText()
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     OutlinedTextField(
-                        value = waterBill,
+                        value = inWaterBill,
                         onValueChange = { newWaterBill ->
-                            waterBill = newWaterBill
+                            inWaterBill = newWaterBill
                             waterBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
@@ -243,9 +250,9 @@ class PastBillsActivity : ComponentActivity() {
                 WiFiIconText()
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     OutlinedTextField(
-                        value = wifiBill,
+                        value = inWifiBill,
                         onValueChange = { newWifiBill ->
-                            wifiBill = newWifiBill
+                            inWifiBill = newWifiBill
                             wifiBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
@@ -275,9 +282,9 @@ class PastBillsActivity : ComponentActivity() {
                 OtherIconText()
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     OutlinedTextField(
-                        value = otherBill,
+                        value = inOtherBill,
                         onValueChange = { newOtherBill ->
-                            otherBill = newOtherBill
+                            inOtherBill = newOtherBill
                             otherBillEdited.value = true
                         },
                         keyboardOptions = KeyboardOptions(
@@ -302,15 +309,58 @@ class PastBillsActivity : ComponentActivity() {
             //Line Dividing utility rows and totals
             Divider(color = Color.Black, thickness = Dp.Hairline)
 
-            //Total feature
+            //Total Text
             Row() {
-                //TotalText()
-
+                if(inTotalBill == ""){
+                    TotalText(0.0)
+                }
+                else{
+                    TotalText(inTotalBill.toDouble())
+                }
             }
 
             //Total Per Person Feature
             Row() {
                 TotalPerPersonText()
+            }
+
+            //Save Button
+            Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 13.dp)) {
+                Button(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
+                    onClick = {
+                        var message = ""
+                        textFields.forEach {
+                            if (it.value) {
+                                inTotalBill =
+                                    (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
+                                selectedBill.apply {
+                                    month = selectedBill.month
+                                    rentBill = inRentBill.toInt()
+                                    energyBill = inElectricBill.toInt()
+                                    waterBill = inWaterBill.toInt()
+                                    wifiBill = inWifiBill.toInt()
+                                    otherBill = inOtherBill.toInt()
+                                    total = inTotalBill.toDouble()
+                                }
+                                viewModel.save(selectedBill)
+                                message = "Saved successfully!"
+                            } else {
+                                message = "Please make sure all boxes have a value."
+                            }
+                        }
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    })
+                {
+                    Icon(
+                        imageVector = Icons.Outlined.Save,
+                        contentDescription = stringResource(R.string.saveRemindButtonDescription),
+                        Modifier.padding(2.dp)
+                    )
+                    Text(text = "Save")
+                }
             }
         }
     }
