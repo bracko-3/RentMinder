@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.WrongLocation
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.runtime.*
@@ -56,6 +57,7 @@ class PastBillsActivity : ComponentActivity() {
     private var selectedBill by mutableStateOf(Bill())
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     var selectedMonth: Boolean = false
+    var billText by mutableStateOf("Select month")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,7 +110,6 @@ class PastBillsActivity : ComponentActivity() {
 
     @Composable
     fun PaymentMenu(bills: List<Bill>) {
-        var billText by remember { mutableStateOf("Select month") }
         var expanded by remember { mutableStateOf(false) } // state of the menu
 
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -329,40 +330,69 @@ class PastBillsActivity : ComponentActivity() {
             Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 13.dp)) {
-                Button(
-                    colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
-                    onClick = {
-                        var message = ""
-                        if(isFormFilled.value) {
-                            inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
-                            inDividedBill = (inTotalBill.toDouble()/4).toString()
-                            selectedBill.apply {
-                                month = monthName
-                                rentBill = inRentBill.toInt()
-                                energyBill = inElectricBill.toInt()
-                                waterBill = inWaterBill.toInt()
-                                wifiBill = inWifiBill.toInt()
-                                otherBill = inOtherBill.toInt()
-                                total = inTotalBill.toDouble()
-                                totalPerson = inDividedBill.toDouble()
+                Row{
+                    Button(
+                        colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
+                        onClick = {
+                            var message = ""
+                            if(isFormFilled.value) {
+                                inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
+                                inDividedBill = (inTotalBill.toDouble()/4).toString()
+                                selectedBill.apply {
+                                    month = monthName
+                                    rentBill = inRentBill.toInt()
+                                    energyBill = inElectricBill.toInt()
+                                    waterBill = inWaterBill.toInt()
+                                    wifiBill = inWifiBill.toInt()
+                                    otherBill = inOtherBill.toInt()
+                                    total = inTotalBill.toDouble()
+                                    totalPerson = inDividedBill.toDouble()
+                                }
+                                viewModel.saveBill(selectedBill)
+                                message = "Saved!"
                             }
-                            viewModel.saveBill(selectedBill)
-                            message = "Saved!"
-                        }
-                        else {
-                            message = "Please make sure all boxes have a value."
-                        }
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                    }, enabled = selectedMonth)
-                {
-                    Icon(
-                        imageVector = Icons.Outlined.Save,
-                        contentDescription = "Save Button",
-                        Modifier.padding(2.dp)
-                    )
-                    Text(text = "Save")
+                            else {
+                                message = "Please make sure all boxes have a value."
+                            }
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                        }, enabled = selectedMonth)
+                    {
+                        Icon(
+                            imageVector = Icons.Outlined.Save,
+                            contentDescription = "Save Button",
+                            Modifier.padding(2.dp)
+                        )
+                        Text(text = "Save")
+                    }
+                    Button(
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
+                        onClick = {
+                            deleteBill(selectedBill)
+                            billText = "Select month"
+                            inRentBill = ""
+                            inElectricBill = ""
+                            inWaterBill = ""
+                            inWifiBill = ""
+                            inOtherBill = ""
+                            inTotalBill = ""
+                            inDividedBill = ""
+                            selectedMonth = false
+                            Toast.makeText(context, "Bill Deleted Successfully!", Toast.LENGTH_SHORT).show()
+                        }, enabled = selectedMonth)
+                    {
+                        Icon(
+                            imageVector = Icons.Outlined.Delete,
+                            contentDescription = "Delete Button",
+                            Modifier.padding(2.dp)
+                        )
+                        Text(text = "Delete")
+                    }
                 }
             }
         }
+    }
+
+    private fun deleteBill(selectedBill: Bill) {
+        viewModel.delete(selectedBill)
     }
 }

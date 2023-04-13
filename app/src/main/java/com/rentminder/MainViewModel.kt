@@ -75,4 +75,20 @@ class MainViewModel() : ViewModel() {
             handle.addOnFailureListener { Log.e("Firebase", "Save failed $it") }
         }
     }
+
+    fun delete(bill: Bill) {
+        member?.let{
+            member ->
+            var billCollection = firestore.collection("Members").document(member.uid).collection("Payments").document(bill.billId)
+            billCollection.delete()
+                .addOnSuccessListener {
+                    // The document was successfully deleted
+                    Log.d("TAG", "DocumentSnapshot successfully deleted!")
+                }
+                .addOnFailureListener { e ->
+                    // There was an error deleting the document
+                    Log.w("TAG", "Error deleting document", e)
+                }
+        }
+    }
 }
