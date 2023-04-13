@@ -14,9 +14,6 @@ import com.rentminder.dto.Bill
 import com.rentminder.dto.Payment
 
 class MainViewModel() : ViewModel() {
-    val cal: Calendar = Calendar.getInstance()
-    val monthDate = SimpleDateFormat("MMMM")
-    val monthName: String = monthDate.format(cal.time)
     var bills : MutableLiveData<List<Bill>> = MutableLiveData()
     //var selectedBill by mutableStateOf(Bill())
 
@@ -62,5 +59,4 @@ class MainViewModel() : ViewModel() {
         handle.addOnSuccessListener { Log.d("Firebase", "Document saved") }
         handle.addOnFailureListener { Log.e("Firebase", "Save failed $it") }
     }
-
 }
