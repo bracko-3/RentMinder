@@ -307,7 +307,7 @@ class PastBillsActivity : ComponentActivity() {
             Divider(color = Color.Black, thickness = Dp.Hairline)
 
             //Total Text
-            Row() {
+            Row {
                 if(inTotalBill == ""){
                     TotalText(0.0)
                 }
@@ -317,7 +317,7 @@ class PastBillsActivity : ComponentActivity() {
             }
 
             //Total Per Person Feature
-            Row() {
+            Row {
                 if (inDividedBill == "") {
                     TotalPerPersonText(0.0)
                 }
@@ -335,11 +335,12 @@ class PastBillsActivity : ComponentActivity() {
                         colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
                         onClick = {
                             var message = ""
+
                             if(isFormFilled.value) {
                                 inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
                                 inDividedBill = (inTotalBill.toDouble()/4).toString()
                                 selectedBill.apply {
-                                    month = monthName
+                                    month = selectedBill.month
                                     rentBill = inRentBill.toInt()
                                     energyBill = inElectricBill.toInt()
                                     waterBill = inWaterBill.toInt()
