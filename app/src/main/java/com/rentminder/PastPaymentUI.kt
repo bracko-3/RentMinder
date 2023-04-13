@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -76,7 +77,76 @@ class PastPaymentUI : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
+fun PaymentMenu() {
+    val listItems = arrayOf( "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" )
+    val contextForToast = LocalContext.current.applicationContext
+
+    /*
+    val cal: Calendar = Calendar.getInstance()
+    cal.add(Calendar.MONTH, -1);
+    val monthDate = SimpleDateFormat("MMMM")
+    val monthName: String = monthDate.format(cal.time)
+    */
+
+
+    // state of the menu
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+
+    // remember the selected item
+    var selectedItem by remember {
+        mutableStateOf(listItems[0])
+    }
+
+    Column() {
+        Row(
+            modifier = Modifier
+                .padding(
+                    top = 5.dp, bottom = 10.dp
+                )
+                .fillMaxWidth(), horizontalArrangement = Arrangement.Center
+        ) {
+            ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = {
+                expanded = !expanded
+            }) {
+                // text field
+                TextField(
+                    value = selectedItem,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text(text = "Past Payments") },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(
+                            expanded = expanded
+                        )
+                    },
+                    colors = ExposedDropdownMenuDefaults.textFieldColors()
+                )
+
+                // menu
+                ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                    // this is a column scope
+                    // all the items are added vertically
+                    listItems.forEach { selectedOption ->
+                        // menu item
+                        DropdownMenuItem(onClick = {
+                            selectedItem = selectedOption
+                            expanded = false
+                        }) {
+                            Text(text = selectedOption)
+                        }
+                    }
+                }
+            }
+        }
+        PaymentEditBillAmounts()
+    }
+}
+
+/*@Composable
 fun PaymentMenu() {
     //Getting current month for Main Menu
     val cal: Calendar = Calendar.getInstance()
@@ -99,6 +169,8 @@ fun PaymentMenu() {
         PaymentEditBillAmounts()
     }
 }
+*/
+
 
 //Bill input boxes, buttons, and text fields
 @OptIn(ExperimentalComposeUiApi::class)
@@ -280,9 +352,9 @@ fun PaymentEditBillAmounts() {
 
         //Total feature
         Row() {
-            //TotalText()
-
+           // TotalText()
         }
+
 
         //Total Per Person Feature
         Row() {
