@@ -87,12 +87,10 @@ class PastBillsActivity : ComponentActivity() {
         }
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun PaymentMenu(bills: List<Bill>) {
         var billText by remember { mutableStateOf("Select month") }
         var expanded by remember { mutableStateOf(false) } // state of the menu
-        //val contextForToast = LocalContext.current.applicationContext
 
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             Row(
@@ -174,7 +172,6 @@ class PastBillsActivity : ComponentActivity() {
                             .height(55.dp),
                         textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                     )
-                    //SaveRemindButton(enabled = rentBill.isNotEmpty(), inputEdited = rentBillEdited)
                 }
             }
 
@@ -204,9 +201,6 @@ class PastBillsActivity : ComponentActivity() {
                             .height(55.dp),
                         textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                     )
-                    // SaveRemindButton(
-                    //     enabled = electricBill.isNotEmpty(), inputEdited = electricBillEdited
-                    //  )
                 }
             }
 
@@ -236,9 +230,6 @@ class PastBillsActivity : ComponentActivity() {
                             .height(55.dp),
                         textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                     )
-                    //SaveRemindButton(
-                    //     enabled = waterBill.isNotEmpty(), inputEdited = waterBillEdited
-                    //  )
                 }
             }
 
@@ -268,9 +259,6 @@ class PastBillsActivity : ComponentActivity() {
                             .height(55.dp),
                         textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                     )
-                    //SaveRemindButton(
-                    //    enabled = wifiBill.isNotEmpty(), inputEdited = wifiBillEdited
-                    // )
                 }
             }
 
@@ -300,9 +288,6 @@ class PastBillsActivity : ComponentActivity() {
                             .height(55.dp),
                         textStyle = TextStyle.Default.copy(fontSize = 18.sp)
                     )
-                    // SaveRemindButton(
-                    //      enabled = otherBill.isNotEmpty(), inputEdited = otherBillEdited
-                    //  )
                 }
             }
 
