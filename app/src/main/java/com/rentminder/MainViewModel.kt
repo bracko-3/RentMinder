@@ -17,25 +17,48 @@ class MainViewModel() : ViewModel() {
     val cal: Calendar = Calendar.getInstance()
     val monthDate = SimpleDateFormat("MMMM")
     val monthName: String = monthDate.format(cal.time)
-    var payments : MutableLiveData<List<Payment>> = MutableLiveData()
-    var selectedPayment by mutableStateOf(Bill())
+    var bills : MutableLiveData<List<Bill>> = MutableLiveData()
+    var selectedBill by mutableStateOf(Bill())
 
     private lateinit var firestore : FirebaseFirestore
 
     init {
         firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+        listenToBills()
+    }
+
+    private fun listenToBills() {
+        firestore.collection("Payments").addSnapshotListener {
+            snapshot, e ->
+            if (e != null) {
+                Log.w("Listen failed", e)
+                return@addSnapshotListener
+            }
+            snapshot?.let {
+                val allBills = ArrayList<Bill>()
+                val documents = snapshot.documents
+
+                documents.forEach {
+                    val bill = it.toObject(Bill::class.java)
+                    bill?.let {
+                        allBills.add(bill)
+                    }
+                }
+                bills.value = allBills
+            }
+        }
     }
 
     fun save() {
         val document =
-            if (selectedPayment.billId == null || selectedPayment.billId.isEmpty()) {
+            if (selectedBill.billId == null || selectedBill.billId.isEmpty()) {
                 firestore.collection("Payments").document()
             } else {
-                firestore.collection("Payments").document(selectedPayment.billId)
+                firestore.collection("Payments").document(selectedBill.billId)
             }
-        selectedPayment.billId = document.id
-        val handle = document.set(selectedPayment)
+        selectedBill.billId = document.id
+        val handle = document.set(selectedBill)
         handle.addOnSuccessListener { Log.d("Firebase", "Document saved") }
         handle.addOnFailureListener { Log.e("Firebase", "Save failed $it") }
     }

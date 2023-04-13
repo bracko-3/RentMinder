@@ -61,7 +61,7 @@ import kotlinx.coroutines.launch
 val cal: Calendar = Calendar.getInstance()
 val monthDate = SimpleDateFormat("MMMM")
 val monthName: String = monthDate.format(cal.time).replaceFirstChar { it.uppercase() }
-private var selectedPayment: Bill? = null
+private var selectedBill: Bill? = null
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModel()
@@ -106,7 +106,7 @@ class MainActivity : ComponentActivity() {
                             onItemClick = {
                                 when(it.id) {
                                     "members" -> startActivity(Intent(this@MainActivity, MembersActivity::class.java))
-                                    "pastBills" -> startActivity(Intent(this@MainActivity, PastPaymentUI::class.java))
+                                    "pastBills" -> startActivity(Intent(this@MainActivity, PastBillsActivity::class.java))
                                 }
                             })
                     }
@@ -384,9 +384,9 @@ class MainActivity : ComponentActivity() {
                         textFields.forEach {
                             if(it.value) {
                                 inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
-                                viewModel.selectedPayment.apply {
+                                viewModel.selectedBill.apply {
                                     month = monthName
-                                    paymentId = selectedPayment?.let {
+                                    paymentId = selectedBill?.let {
                                         bill ->
                                             bill.paymentId
                                         } ?: -1
@@ -471,7 +471,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(top = 8.dp),
                             onClick =
                             {
-                                val intent = Intent(context, PastPaymentUI::class.java)
+                                val intent = Intent(context, PastBillsActivity::class.java)
                                 context.startActivity(intent)
                             }
                         ){
