@@ -61,7 +61,9 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import com.rentminder.dto.Members
 
 //Getting current month for Main Menu
 val cal: Calendar = Calendar.getInstance()
@@ -70,10 +72,22 @@ val monthName: String = monthDate.format(cal.time).replaceFirstChar { it.upperca
 private var selectedBill by mutableStateOf(Bill())
 
 class MainActivity : ComponentActivity() {
-    private var user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     private val viewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val prefs = getSharedPreferences("my_prefs", MODE_PRIVATE)
+        val uid = prefs.getString("uid", null)
+        val displayName = prefs.getString("displayName", null)
+
+        if (uid != null && displayName != null) {
+            firebaseUser = FirebaseAuth.getInstance().currentUser
+            val member = Members(uid, 1, displayName)
+            viewModel.member = member
+            viewModel.listenToBills()
+        }
+
         setContent {
             val bills by viewModel.bills.observeAsState(initial = emptyList())
             RentMinderTheme {
@@ -106,7 +120,7 @@ class MainActivity : ComponentActivity() {
                             ),
                             MenuItem(
                                 id = "sysLogin",
-                                title = "Login/Signup",
+                                title = "Login/Sign-Up",
                                 contentDescription = "System Login",
                                 icon = Icons.Outlined.Login
                             )
@@ -200,7 +214,7 @@ class MainActivity : ComponentActivity() {
         var inOtherBill by remember(selectedBill.month) { mutableStateOf(selectedBill.otherBill.toString()) }
         val otherBillEdited = remember { mutableStateOf(false) }
         var inTotalBill by remember(selectedBill.month) { mutableStateOf(selectedBill.total.toString()) }
-        var inDividedBill by remember { mutableStateOf("") }
+        var inDividedBill by remember(selectedBill.month) { mutableStateOf(selectedBill.totalPerson.toString()) }
         val textFields: List<MutableState<Boolean>> = listOf(rentBillEdited, electricBillEdited, waterBillEdited, wifiBillEdited, otherBillEdited)
         val context = LocalContext.current
         val keyboardController = LocalSoftwareKeyboardController.current
@@ -385,7 +399,12 @@ class MainActivity : ComponentActivity() {
 
             //Total Per Person Feature
             Row() {
-                TotalPerPersonText()
+                if (inDividedBill == "") {
+                    TotalPerPersonText(0.0)
+                }
+                else {
+                    TotalPerPersonText(inDividedBill.toDouble())
+                }
             }
 
             Column (horizontalAlignment = CenterHorizontally, modifier = Modifier
@@ -398,6 +417,7 @@ class MainActivity : ComponentActivity() {
                         textFields.forEach {
                             if(it.value) {
                                 inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
+                                inDividedBill = (inTotalBill.toDouble()/4).toString()
                                 selectedBill.apply {
                                     month = monthName
                                     rentBill = inRentBill.toInt()
@@ -406,8 +426,9 @@ class MainActivity : ComponentActivity() {
                                     wifiBill = inWifiBill.toInt()
                                     otherBill = inOtherBill.toInt()
                                     total = inTotalBill.toDouble()
+                                    totalPerson = inDividedBill.toDouble()
                                 }
-                                viewModel.save(selectedBill)
+                                viewModel.saveBill(selectedBill)
                                 message = "Saved!"
 
                                 val notificationId = 1 // A unique ID for the notification
@@ -508,10 +529,12 @@ class MainActivity : ComponentActivity() {
 
     private fun signIn() {
         val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build()
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
         )
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
+            .setIsSmartLockEnabled(false)
             .setAvailableProviders(providers)
             .build()
 
@@ -527,7 +550,21 @@ class MainActivity : ComponentActivity() {
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult){
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
-            user = FirebaseAuth.getInstance().currentUser
+            firebaseUser = FirebaseAuth.getInstance().currentUser
+            firebaseUser?.let{
+                val member = Members(it.uid, 1, it.displayName)
+                viewModel.member = member
+                viewModel.saveMember()
+                viewModel.listenToBills()
+
+                // Store user credentials in SharedPreferences
+                val prefs = getSharedPreferences("my_prefs", MODE_PRIVATE)
+                with(prefs.edit()) {
+                    putString("uid", it.uid)
+                    putString("displayName", it.displayName)
+                    apply()
+                }
+            }
         }
         else {
             Log.e("MainActivity.kt", "Error logging in " + response?.error?.errorCode)

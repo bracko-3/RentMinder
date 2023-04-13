@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "1089456607838-mpc0kdtbiu1ah1m9q0vk3h7slli2jbif.apps.googleusercontent.com",
+          "client_id": "1089456607838-7oboft4r7uekj98g9f77ckmhno0lsmm6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rentminder",
+            "certificate_hash": "8633d81fd9e7d15f539b141ed5f3ad6a2e11b1e8"
+          }
+        },
+        {
+          "client_id": "1089456607838-gk86jd8718bs106l6sjhsid6fqhugr81.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1089456607838-mpc0kdtbiu1ah1m9q0vk3h7slli2jbif.apps.googleusercontent.com",
+              "client_id": "1089456607838-gk86jd8718bs106l6sjhsid6fqhugr81.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

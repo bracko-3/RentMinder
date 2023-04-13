@@ -14,6 +14,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.WrongLocation
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.runtime.*
@@ -25,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,18 +37,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.rentminder.dto.Bill
 import com.rentminder.ui.theme.RentMinderTheme
 import com.rentminder.ui.theme.SoftGreen
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.rentminder.dto.Members
 
 class PastBillsActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModel()
     private var selectedBill by mutableStateOf(Bill())
+    private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            firebaseUser?.let {
+                val member = Members(it.uid, 1, it.displayName)
+                viewModel.member = member
+                viewModel.listenToBills()
+            }
             val bills by viewModel.bills.observeAsState(initial = emptyList())
             RentMinderTheme {
                 Scaffold(topBar = {
@@ -132,7 +144,7 @@ class PastBillsActivity : ComponentActivity() {
         var inOtherBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.otherBill.toString()) }
         val otherBillEdited = remember { mutableStateOf(false) }
         var inTotalBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.total.toString()) }
-        var inDividedBill by remember(selectedBill.billId) { mutableStateOf("") }
+        var inDividedBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.totalPerson.toString()) }
 
         val textFields: List<MutableState<Boolean>> = listOf(rentBillEdited, electricBillEdited, waterBillEdited, wifiBillEdited, otherBillEdited)
         val context = LocalContext.current
@@ -306,7 +318,12 @@ class PastBillsActivity : ComponentActivity() {
 
             //Total Per Person Feature
             Row() {
-                TotalPerPersonText()
+                if (inDividedBill == "") {
+                    TotalPerPersonText(0.0)
+                }
+                else {
+                    TotalPerPersonText(inDividedBill.toDouble())
+                }
             }
 
             //Save Button
@@ -321,6 +338,7 @@ class PastBillsActivity : ComponentActivity() {
                             if (it.value) {
                                 inTotalBill =
                                     (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
+                                inDividedBill = (inTotalBill.toDouble()/4).toString()
                                 selectedBill.apply {
                                     month = selectedBill.month
                                     rentBill = inRentBill.toInt()
@@ -329,8 +347,9 @@ class PastBillsActivity : ComponentActivity() {
                                     wifiBill = inWifiBill.toInt()
                                     otherBill = inOtherBill.toInt()
                                     total = inTotalBill.toDouble()
+                                    totalPerson = inDividedBill.toDouble()
                                 }
-                                viewModel.save(selectedBill)
+                                viewModel.saveBill(selectedBill)
                                 message = "Saved successfully!"
                             } else {
                                 message = "Please make sure all boxes have a value."
@@ -341,20 +360,12 @@ class PastBillsActivity : ComponentActivity() {
                 {
                     Icon(
                         imageVector = Icons.Outlined.Save,
-                        contentDescription = stringResource(R.string.saveRemindButtonDescription),
+                        contentDescription = "Save Button",
                         Modifier.padding(2.dp)
                     )
                     Text(text = "Save")
                 }
             }
-        }
-    }
-
-    @Preview(showBackground = true)
-    @Composable
-    fun PaymentDefaultPreview() {
-        RentMinderTheme {
-            //PaymentMenu()
         }
     }
 }

@@ -117,9 +117,9 @@ fun TotalText(total: Double) {
 }
 
 @Composable
-fun TotalPerPersonText() {
+fun TotalPerPersonText(total: Double) {
     Text(
-        text = "Total Per Person:",
+        text = "Total Per Person: $total",
         fontSize = (20.sp),
         modifier = Modifier
             .padding(
