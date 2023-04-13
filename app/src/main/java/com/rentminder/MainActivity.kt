@@ -51,10 +51,16 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.app.NotificationManagerCompat
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
 //Getting current month for Main Menu
@@ -64,6 +70,7 @@ val monthName: String = monthDate.format(cal.time).replaceFirstChar { it.upperca
 private var selectedBill by mutableStateOf(Bill())
 
 class MainActivity : ComponentActivity() {
+    private var user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     private val viewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +115,7 @@ class MainActivity : ComponentActivity() {
                                 when(it.id) {
                                     "members" -> startActivity(Intent(this@MainActivity, MembersActivity::class.java))
                                     "pastBills" -> startActivity(Intent(this@MainActivity, PastBillsActivity::class.java))
+                                    "sysLogin" -> signIn()
                                 }
                             })
                     }
@@ -495,6 +503,34 @@ class MainActivity : ComponentActivity() {
     fun DefaultPreview() {
         RentMinderTheme {
             MainMenu()
+        }
+    }
+
+    private fun signIn() {
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build()
+        )
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .build()
+
+        signInLauncher.launch(signInIntent)
+    }
+
+    private val signInLauncher = registerForActivityResult (
+            FirebaseAuthUIActivityResultContract()
+            ) {
+                res -> this.signInResult(res)
+            }
+
+    private fun signInResult(result: FirebaseAuthUIAuthenticationResult){
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            user = FirebaseAuth.getInstance().currentUser
+        }
+        else {
+            Log.e("MainActivity.kt", "Error logging in " + response?.error?.errorCode)
         }
     }
 }
