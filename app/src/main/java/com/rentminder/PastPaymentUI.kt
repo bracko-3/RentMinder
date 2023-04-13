@@ -187,6 +187,7 @@ fun PaymentEditBillAmounts() {
     var otherBill by remember { mutableStateOf("") }
     val otherBillEdited = remember { mutableStateOf(false) }
     var totalBill by remember { mutableStateOf("") }
+    var inTotalBill by remember { mutableStateOf("") }
     var dividedBill by remember { mutableStateOf("") }
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -351,14 +352,24 @@ fun PaymentEditBillAmounts() {
         Divider(color = Color.Black, thickness = Dp.Hairline)
 
         //Total feature
+        /*
         Row() {
            // TotalText()
+        }
+*/
+        Row() {
+            if(inTotalBill == ""){
+                TotalText(0.0)
+            }
+            else{
+                TotalText(inTotalBill.toDouble())
+            }
         }
 
 
         //Total Per Person Feature
         Row() {
-            TotalPerPersonText()
+        //    TotalPerPersonText()
 
         }
     }
