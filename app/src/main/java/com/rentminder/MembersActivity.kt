@@ -45,8 +45,12 @@ class MembersActivity : ComponentActivity() {
     val cal: Calendar = Calendar.getInstance()
     val monthDate = SimpleDateFormat("MMMM")
     val monthName: String = monthDate.format(cal.time).replaceFirstChar { it.uppercase() }
+    private var currentMonth: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        currentMonth = monthName
+
         setContent {
             firebaseUser?.let {
                 val member = Members(it.uid, 1, it.displayName)
@@ -90,7 +94,7 @@ class MembersActivity : ComponentActivity() {
                             color = MaterialTheme.colors.background
                         ) {
                             bills.forEach { bill ->
-                                if (bill.month == monthName){
+                                if (bill.month == currentMonth){
                                     selectedBill = bill
                                 }
                             }
@@ -100,6 +104,11 @@ class MembersActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        currentMonth = monthName
     }
 
     @Composable
