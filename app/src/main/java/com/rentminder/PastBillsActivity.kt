@@ -341,6 +341,9 @@ class PastBillsActivity : ComponentActivity() {
                                 inDividedBill = (inTotalBill.toDouble()/4).toString()
                                 selectedBill.apply {
                                     month = selectedBill.month
+                                    memberId = firebaseUser?.let {
+                                        it.uid
+                                    } ?: ""
                                     rentBill = inRentBill.toInt()
                                     energyBill = inElectricBill.toInt()
                                     waterBill = inWaterBill.toInt()

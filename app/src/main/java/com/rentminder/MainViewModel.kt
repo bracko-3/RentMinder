@@ -3,6 +3,7 @@ package com.rentminder
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -16,6 +17,7 @@ import com.rentminder.dto.Payment
 
 class MainViewModel() : ViewModel() {
     var bills : MutableLiveData<List<Bill>> = MutableLiveData()
+    var members : MutableLiveData<List<Members>> = MutableLiveData()
     var member: Members? = null
 
     private lateinit var firestore : FirebaseFirestore
@@ -47,6 +49,27 @@ class MainViewModel() : ViewModel() {
                     }
                     bills.value = allBills
                 }
+            }
+        }
+    }
+
+    fun listenToMembers() {
+        firestore.collection("Members").addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w("Listen failed", e)
+                return@addSnapshotListener
+            }
+            snapshot?.let {
+                val allMembers = ArrayList<Members>()
+                val documents = snapshot.documents
+
+                documents.forEach {
+                    val member = it.toObject(Members::class.java)
+                    member?.let {
+                        allMembers.add(member)
+                    }
+                }
+                members.value = allMembers
             }
         }
     }

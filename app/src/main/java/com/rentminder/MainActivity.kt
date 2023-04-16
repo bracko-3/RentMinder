@@ -86,6 +86,7 @@ class MainActivity : ComponentActivity() {
             val member = Members(uid, 1, displayName)
             viewModel.member = member
             viewModel.listenToBills()
+            viewModel.listenToMembers()
         }
 
         setContent {
@@ -423,6 +424,9 @@ class MainActivity : ComponentActivity() {
                             inDividedBill = (inTotalBill.toDouble()/4).toString()
                             selectedBill.apply {
                                 month = monthName
+                                memberId = firebaseUser?.let {
+                                    it.uid
+                                } ?: ""
                                 rentBill = inRentBill.toInt()
                                 energyBill = inElectricBill.toInt()
                                 waterBill = inWaterBill.toInt()
