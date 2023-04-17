@@ -1,12 +1,6 @@
 package com.rentminder
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
-import android.icu.util.Calendar
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -18,10 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Circle
-import androidx.compose.material.icons.filled.WrongLocation
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -32,18 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.rentminder.dto.Bill
@@ -66,8 +52,10 @@ class PastBillsActivity : ComponentActivity() {
                 val member = Members(it.uid, 1, it.displayName)
                 viewModel.member = member
                 viewModel.listenToBills()
+                viewModel.listenToMembers()
             }
             val bills by viewModel.bills.observeAsState(initial = emptyList())
+            val members by viewModel.members.observeAsState(initial = emptyList())
             RentMinderTheme {
                 Scaffold(topBar = {
                     TopAppBar(
@@ -100,7 +88,7 @@ class PastBillsActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colors.background
                         ) {
-                            PaymentEditBillAmounts(bills, selectedBill)
+                            PaymentEditBillAmounts(bills, members)
                         }
                     }
                 }
@@ -141,7 +129,7 @@ class PastBillsActivity : ComponentActivity() {
     //Bill input boxes, buttons, and text fields
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
-    fun PaymentEditBillAmounts(bills: List<Bill> = ArrayList(), selectedBill: Bill = Bill()) {
+    fun PaymentEditBillAmounts(bills: List<Bill> = ArrayList(), members: List<Members>) {
         var inRentBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.rentBill.toString()) }
         var inElectricBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.energyBill.toString()) }
         var inWaterBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.waterBill.toString()) }
@@ -338,7 +326,7 @@ class PastBillsActivity : ComponentActivity() {
 
                             if(isFormFilled.value) {
                                 inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
-                                inDividedBill = (inTotalBill.toDouble()/4).toString()
+                                inDividedBill = (inTotalBill.toDouble()/members.size).toString()
                                 selectedBill.apply {
                                     month = selectedBill.month
                                     memberId = firebaseUser?.let {
@@ -371,7 +359,7 @@ class PastBillsActivity : ComponentActivity() {
                     Button(
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
                         onClick = {
-                            deleteBill(selectedBill)
+                            viewModel.delete(selectedBill)
                             billText = "Select month"
                             inRentBill = ""
                             inElectricBill = ""
@@ -394,9 +382,5 @@ class PastBillsActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    private fun deleteBill(selectedBill: Bill) {
-        viewModel.delete(selectedBill)
     }
 }

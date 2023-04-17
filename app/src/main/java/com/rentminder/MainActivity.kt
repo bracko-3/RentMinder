@@ -14,24 +14,17 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.*
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.sharp.Home
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -42,7 +35,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.NotificationCompat
-import com.rentminder.dto.Payment
 import com.rentminder.dto.Bill
 import com.rentminder.ui.theme.RentMinderTheme
 import com.rentminder.ui.theme.SoftGreen
@@ -52,8 +44,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.app.NotificationManagerCompat
 import com.firebase.ui.auth.AuthUI
@@ -61,7 +51,6 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import com.rentminder.dto.Members
 
@@ -91,6 +80,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val bills by viewModel.bills.observeAsState(initial = emptyList())
+            val members by viewModel.members.observeAsState(initial = emptyList())
             RentMinderTheme {
                 val scaffoldState = rememberScaffoldState()
                 val scope = rememberCoroutineScope()
@@ -149,7 +139,7 @@ class MainActivity : ComponentActivity() {
                                     selectedBill = bill
                                 }
                             }
-                            MainMenu()
+                            MainMenu(members)
                         }
                     }
                 }
@@ -158,7 +148,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun MainMenu() {
+    fun MainMenu(members: List<Members>) {
         Column() {
             Row(
                 modifier = Modifier
@@ -171,7 +161,7 @@ class MainActivity : ComponentActivity() {
                     text = monthName, fontSize = 28.sp, fontWeight = FontWeight.Bold
                 )
             }
-            EditBillAmounts()
+            EditBillAmounts(members)
         }
     }
 
@@ -204,7 +194,7 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("SuspiciousIndentation")
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
-    fun EditBillAmounts() {
+    fun EditBillAmounts(members: List<Members>) {
         var inRentBill by remember(selectedBill.month) { mutableStateOf(selectedBill.rentBill.toString()) }
         val rentBillEdited = remember { mutableStateOf(false) }
         var inElectricBill by remember(selectedBill.month) { mutableStateOf(selectedBill.energyBill.toString()) }
@@ -421,7 +411,7 @@ class MainActivity : ComponentActivity() {
 
                         if (isFormFilled.value) {
                             inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
-                            inDividedBill = (inTotalBill.toDouble()/4).toString()
+                            inDividedBill = (inTotalBill.toDouble()/members.size).toString()
                             selectedBill.apply {
                                 month = monthName
                                 memberId = firebaseUser?.let {
@@ -529,7 +519,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun DefaultPreview() {
         RentMinderTheme {
-            MainMenu()
+            //MainMenu()
         }
     }
 

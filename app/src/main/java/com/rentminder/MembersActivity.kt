@@ -1,33 +1,33 @@
 package com.rentminder
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.rentminder.dto.Bill
@@ -130,6 +130,7 @@ class MembersActivity : ComponentActivity() {
                         DropdownMenuItem(onClick = {
                             expanded = false
                             memberText = member.memberName.toString()
+                            selectedMember = member
                             onMemberSelected(member) // invoke callback with selected member
                         }) {
                             member.memberName?.let { Text(text = it) }
@@ -142,27 +143,19 @@ class MembersActivity : ComponentActivity() {
 
     @Composable
     fun membersPayments(members: List<Members>, bills: List<Bill>) {
-        var selectedBill by remember(selectedMember) { mutableStateOf(Bill()) }
         var inPaidRent by remember { mutableStateOf(if (selectedBill.rentPaid) "Paid" else "Not Paid") }
         var inPaidElectric by remember { mutableStateOf(if (selectedBill.electricPaid) "Paid" else "Not Paid") }
         var inPaidWater by remember { mutableStateOf(if (selectedBill.waterPaid) "Paid" else "Not Paid") }
         var inPaidWifi by remember { mutableStateOf(if (selectedBill.wifiPaid) "Paid" else "Not Paid") }
         var inPaidOther by remember { mutableStateOf(if (selectedBill.otherPaid) "Paid" else "Not Paid") }
+        val context = LocalContext.current
 
+        selectedMember?.let { member ->
+            val selectedBills =
+                bills.filter { it.memberId == member.uid && it.month == currentMonth }
+            val selectedBill = selectedBills.firstOrNull() ?: Bill()
 
-        val selectedMember = remember { mutableStateOf<Members?>(null) }
-
-        Column(
-            modifier = Modifier.padding(
-                horizontal = 15.dp
-            )
-        ) {
-            MembersMenu(members = members) { member ->
-                selectedMember.value = member
-                selectedBill = bills.find { bill -> bill.memberId == member.uid } ?: Bill()
-            }
-
-            LaunchedEffect(selectedBill.rentPaid) {
+            LaunchedEffect(selectedBills) {
                 inPaidRent = if (selectedBill.rentPaid) "Paid" else "Not Paid"
                 inPaidElectric = if (selectedBill.electricPaid) "Paid" else "Not Paid"
                 inPaidWater = if (selectedBill.waterPaid) "Paid" else "Not Paid"
@@ -170,142 +163,205 @@ class MembersActivity : ComponentActivity() {
                 inPaidOther = if (selectedBill.otherPaid) "Paid" else "Not Paid"
             }
 
-            //Rent  text and button
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(bottom = 10.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Rent", fontSize = 28.sp, fontWeight = FontWeight.Bold
+            Column(
+                modifier = Modifier.padding(
+                    horizontal = 15.dp
                 )
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Button(
-                        onClick = {
-                            selectedBill.rentPaid = !selectedBill.rentPaid
-                            viewModel.saveBill(selectedBill)
-                            inPaidRent = if (selectedBill.rentPaid) "Paid" else "Not Paid"
+            ) {
+                MembersMenu(members = members) { member ->
+                    selectedMember = member
+                }
+
+                //Rent  text and button
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Rent", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Button(
+                            onClick = {
+                                selectedBill.rentPaid = !selectedBill.rentPaid
+                                viewModel.saveBill(selectedBill)
+                                inPaidRent = if (selectedBill.rentPaid) "Paid" else "Not Paid"
                             },
-                        shape = CutCornerShape(10),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = if (inPaidRent == "Paid") SoftGreen else Color.Red
-                        )){
-                        Text(text = inPaidRent)
+                            shape = CutCornerShape(10),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = if (inPaidRent == "Paid") SoftGreen else Color.Red
+                            )
+                        ) {
+                            Text(text = inPaidRent)
+                        }
                     }
                 }
-            }
 
-            //Electric  text and button
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(bottom = 10.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Text(
-                    text = "Electric", fontSize = 28.sp, fontWeight = FontWeight.Bold
-                )
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Button(
-                        onClick = {
-                            selectedBill.electricPaid = !selectedBill.electricPaid
-                            viewModel.saveBill(selectedBill)
-                            inPaidElectric = if (selectedBill.electricPaid) "Paid" else "Not Paid"
+                //Electric  text and button
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Text(
+                        text = "Electric", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Button(
+                            onClick = {
+                                selectedBill.electricPaid = !selectedBill.electricPaid
+                                viewModel.saveBill(selectedBill)
+                                inPaidElectric =
+                                    if (selectedBill.electricPaid) "Paid" else "Not Paid"
                             },
-                        shape = CutCornerShape(10),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = if (inPaidElectric == "Paid") SoftGreen else Color.Red
-                        )){
-                        Text(text = inPaidElectric)
+                            shape = CutCornerShape(10),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = if (inPaidElectric == "Paid") SoftGreen else Color.Red
+                            )
+                        ) {
+                            Text(text = inPaidElectric)
+                        }
                     }
                 }
-            }
 
-            //Water  text and button
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(bottom = 10.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Text(
-                    text = "Water", fontSize = 28.sp, fontWeight = FontWeight.Bold
-                )
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Button(
-                        onClick = {
-                            selectedBill.waterPaid = !selectedBill.waterPaid
-                            viewModel.saveBill(selectedBill)
-                            inPaidWater = if (selectedBill.waterPaid) "Paid" else "Not Paid"
-                        },
-                        shape = CutCornerShape(10),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = if (inPaidWater == "Paid") SoftGreen else Color.Red
-                        )){
-                        Text(text = inPaidWater)
+                //Water  text and button
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Text(
+                        text = "Water", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Button(
+                            onClick = {
+                                selectedBill.waterPaid = !selectedBill.waterPaid
+                                viewModel.saveBill(selectedBill)
+                                inPaidWater = if (selectedBill.waterPaid) "Paid" else "Not Paid"
+                            },
+                            shape = CutCornerShape(10),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = if (inPaidWater == "Paid") SoftGreen else Color.Red
+                            )
+                        ) {
+                            Text(text = inPaidWater)
+                        }
                     }
                 }
-            }
 
-            //Wifi  text and button
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(bottom = 10.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Text(
-                    text = "Wifi", fontSize = 28.sp, fontWeight = FontWeight.Bold
-                )
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Button(
-                        onClick = {
-                            selectedBill.wifiPaid = !selectedBill.wifiPaid
-                            viewModel.saveBill(selectedBill)
-                            inPaidWifi = if (selectedBill.wifiPaid) "Paid" else "Not Paid"
-                        },
-                        shape = CutCornerShape(10),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = if (inPaidWifi == "Paid") SoftGreen else Color.Red
-                        )){
-                        Text(text = inPaidWifi)
+                //Wifi  text and button
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Text(
+                        text = "Wifi", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Button(
+                            onClick = {
+                                selectedBill.wifiPaid = !selectedBill.wifiPaid
+                                viewModel.saveBill(selectedBill)
+                                inPaidWifi = if (selectedBill.wifiPaid) "Paid" else "Not Paid"
+                            },
+                            shape = CutCornerShape(10),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = if (inPaidWifi == "Paid") SoftGreen else Color.Red
+                            )
+                        ) {
+                            Text(text = inPaidWifi)
+                        }
                     }
                 }
-            }
 
-            //Other  text and button
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(bottom = 10.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Text(
-                    text = "Other", fontSize = 28.sp, fontWeight = FontWeight.Bold
-                )
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Button(
-                        onClick = {
-                            selectedBill.otherPaid = !selectedBill.otherPaid
-                            viewModel.saveBill(selectedBill)
-                            inPaidOther = if (selectedBill.otherPaid) "Paid" else "Not Paid"
-                        },
-                        shape = CutCornerShape(10),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = if (inPaidOther == "Paid") SoftGreen else Color.Red
-                        )){
-                        Text(text = inPaidOther)
+                //Other  text and button
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Text(
+                        text = "Other", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Button(
+                            onClick = {
+                                selectedBill.otherPaid = !selectedBill.otherPaid
+                                viewModel.saveBill(selectedBill)
+                                inPaidOther = if (selectedBill.otherPaid) "Paid" else "Not Paid"
+                            },
+                            shape = CutCornerShape(10),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = if (inPaidOther == "Paid") SoftGreen else Color.Red
+                            )
+                        ) {
+                            Text(text = inPaidOther)
+                        }
                     }
+                }
+                Button(
+                    onClick = {
+                        val notificationId = 1 // A unique ID for the notification
+                        val channelId = "my_channel_id" // A unique ID for the notification channel
+                        val notificationBuilder = NotificationCompat.Builder(context, channelId)
+                            .setSmallIcon(R.drawable.outline_notifications_active_24)
+                            .setContentTitle("RentMinder")
+                            .setContentText("You have pending bills!")
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            val name = "RentMinder"
+                            val descriptionText = "You have pending bills!"
+                            val importance = NotificationManager.IMPORTANCE_DEFAULT
+                            val channel = NotificationChannel(channelId, name, importance).apply {
+                                description = descriptionText
+                            }
+                            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                            notificationManager.createNotificationChannel(channel)
+                        }
+
+                        val notificationManager = NotificationManagerCompat.from(context)
+                        notificationManager.notify(notificationId, notificationBuilder.build())
+                    },
+                    shape = CutCornerShape(10),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = SoftGreen
+                    )
+                ) {
+                    Text(text = "Remind")
                 }
             }
         }
     }
+
 
     @Preview(showBackground = true)
     @Composable

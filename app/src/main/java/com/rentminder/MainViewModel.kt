@@ -1,19 +1,15 @@
 package com.rentminder
 
-import android.icu.text.SimpleDateFormat
-import android.icu.util.Calendar
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.rentminder.dto.Bill
 import com.rentminder.dto.Members
-import com.rentminder.dto.Payment
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
+import kotlin.random.Random
 
 class MainViewModel() : ViewModel() {
     var bills : MutableLiveData<List<Bill>> = MutableLiveData()
