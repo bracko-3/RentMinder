@@ -59,9 +59,11 @@ val cal: Calendar = Calendar.getInstance()
 val monthDate = SimpleDateFormat("MMMM")
 val monthName: String = monthDate.format(cal.time).replaceFirstChar { it.uppercase() }
 private var selectedBill by mutableStateOf(Bill())
+private var isLoggedIn by mutableStateOf(false)
 
 class MainActivity : ComponentActivity() {
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+
     private val viewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +76,7 @@ class MainActivity : ComponentActivity() {
             firebaseUser = FirebaseAuth.getInstance().currentUser
             val member = Members(uid, 1, displayName)
             viewModel.member = member
+            isLoggedIn = firebaseUser != null
             viewModel.listenToBills()
             viewModel.listenToMembers()
         }
@@ -109,18 +112,33 @@ class MainActivity : ComponentActivity() {
                                 contentDescription = "Past Bills",
                                 icon = Icons.Outlined.Timelapse
                             ),
-                            MenuItem(
-                                id = "sysLogin",
-                                title = "Login/Sign-Up",
-                                contentDescription = "System Login",
-                                icon = Icons.Outlined.Login
-                            )
+                            if (isLoggedIn) {
+                                MenuItem(
+                                    id = "sysLogout",
+                                    title = "Logout",
+                                    contentDescription = "Logout",
+                                    icon = Icons.Outlined.Logout
+                                )
+                            } else {
+                                MenuItem(
+                                    id = "sysLogin",
+                                    title = "Login/Sign-Up",
+                                    contentDescription = "System Login",
+                                    icon = Icons.Outlined.Login
+                                )
+                            }
                         ),
                             onItemClick = {
                                 when(it.id) {
                                     "members" -> startActivity(Intent(this@MainActivity, MembersActivity::class.java))
                                     "pastBills" -> startActivity(Intent(this@MainActivity, PastBillsActivity::class.java))
-                                    "sysLogin" -> signIn()
+                                    "sysLogin" -> {
+                                        signIn()
+                                    }
+                                    "sysLogout" -> {
+                                        FirebaseAuth.getInstance().signOut()
+                                        isLoggedIn = false
+                                    }
                                 }
                             })
                     }
@@ -552,6 +570,7 @@ class MainActivity : ComponentActivity() {
                 viewModel.member = member
                 viewModel.saveMember()
                 viewModel.listenToBills()
+                isLoggedIn = true
 
                 // Store user credentials in SharedPreferences
                 val prefs = getSharedPreferences("my_prefs", MODE_PRIVATE)
