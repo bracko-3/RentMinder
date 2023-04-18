@@ -30,7 +30,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,6 +55,7 @@ import com.rentminder.dto.Members
 
 //Getting current month for Main Menu
 val cal: Calendar = Calendar.getInstance()
+@SuppressLint("SimpleDateFormat")
 val monthDate = SimpleDateFormat("MMMM")
 val monthName: String = monthDate.format(cal.time).replaceFirstChar { it.uppercase() }
 private var selectedBill by mutableStateOf(Bill())
@@ -101,29 +101,29 @@ class MainActivity : ComponentActivity() {
                         DrawHeader()
                         DrawerBody(items = listOf(
                             MenuItem(
-                                id = "members",
-                                title = "Members",
-                                contentDescription = "Members",
+                                id = getString(R.string.membersId),
+                                title = getString(R.string.membersButtonTitle),
+                                contentDescription = getString(R.string.membersBtnDescription),
                                 icon = Icons.Outlined.People
                             ),
                             MenuItem(
-                                id = "pastBills",
-                                title = "Past Bills",
-                                contentDescription = "Past Bills",
+                                id = getString(R.string.pastBillsId),
+                                title = getString(R.string.pastBillsTitle),
+                                contentDescription = getString(R.string.pastBillsBtnDescription),
                                 icon = Icons.Outlined.Timelapse
                             ),
                             if (isLoggedIn) {
                                 MenuItem(
-                                    id = "sysLogout",
-                                    title = "Logout",
-                                    contentDescription = "Logout",
+                                    id = getString(R.string.sysLogoutId),
+                                    title = getString(R.string.logoutButtonTitle),
+                                    contentDescription = getString(R.string.logoutButtonDescription),
                                     icon = Icons.Outlined.Logout
                                 )
                             } else {
                                 MenuItem(
-                                    id = "sysLogin",
-                                    title = "Login/Sign-Up",
-                                    contentDescription = "System Login",
+                                    id = getString(R.string.sysLoginId),
+                                    title = getString(R.string.loginButtonTitle),
+                                    contentDescription = getString(R.string.sysLoginDescription),
                                     icon = Icons.Outlined.Login
                                 )
                             }
@@ -132,9 +132,7 @@ class MainActivity : ComponentActivity() {
                                 when(it.id) {
                                     "members" -> startActivity(Intent(this@MainActivity, MembersActivity::class.java))
                                     "pastBills" -> startActivity(Intent(this@MainActivity, PastBillsActivity::class.java))
-                                    "sysLogin" -> {
-                                        signIn()
-                                    }
+                                    "sysLogin" -> signIn()
                                     "sysLogout" -> {
                                         FirebaseAuth.getInstance().signOut()
                                         isLoggedIn = false
@@ -167,7 +165,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun MainMenu(members: List<Members>) {
-        Column() {
+        Column {
             Row(
                 modifier = Modifier
                     .padding(
@@ -188,7 +186,7 @@ class MainActivity : ComponentActivity() {
     fun TopToolBar(
         onNavigationIconClick: () -> Unit
     ) {
-        Column() {
+        Column {
             TopAppBar(title = {
                 Text(
                     text = stringResource(R.string.appLabelTitle), fontSize = 25.sp, fontWeight = FontWeight.Bold,
@@ -199,7 +197,7 @@ class MainActivity : ComponentActivity() {
                     IconButton(onClick = onNavigationIconClick) {
                         Icon(
                             imageVector = Icons.Filled.Menu,
-                            contentDescription = "Navigation Bar",
+                            contentDescription = stringResource(R.string.navBarDescription),
                             modifier = Modifier.size(35.dp),
                             tint = Color.Black
                         )
@@ -400,7 +398,7 @@ class MainActivity : ComponentActivity() {
             Divider(color = Color.Black, thickness = Dp.Hairline)
 
             //Total feature
-            Row() {
+            Row {
                 if(inTotalBill == ""){
                     TotalText(0.0)
                 }
@@ -410,7 +408,7 @@ class MainActivity : ComponentActivity() {
             }
 
             //Total Per Person Feature
-            Row() {
+            Row {
                 if (inDividedBill == "") {
                     TotalPerPersonText(0.0)
                 }
@@ -425,7 +423,7 @@ class MainActivity : ComponentActivity() {
                 Button(
                     colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
                     onClick = {
-                        var message = ""
+                        val message: String
 
                         if (isFormFilled.value) {
                             inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
@@ -530,14 +528,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-        }
-    }
-
-    @Preview(showBackground = true)
-    @Composable
-    fun DefaultPreview() {
-        RentMinderTheme {
-            //MainMenu()
         }
     }
 

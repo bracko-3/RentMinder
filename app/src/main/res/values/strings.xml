@@ -13,4 +13,17 @@
     <string name="pastBillsButtonDescription">Past Bills Button</string>
     <string name="title_activity_members">MembersActivity</string>
     <string name="appLabelTitle">RentMinder</string>
+    <string name="navBarDescription">Navigation Bar</string>
+    <string name="sysLoginDescription">System Login</string>
+    <string name="loginButtonTitle">Login/Sign-Up</string>
+    <string name="sysLoginId">sysLogin</string>
+    <string name="logoutButtonDescription">Logout</string>
+    <string name="logoutButtonTitle">Logout</string>
+    <string name="sysLogoutId">sysLogout</string>
+    <string name="pastBillsBtnDescription">Past Bills</string>
+    <string name="pastBillsTitle">Past Bills</string>
+    <string name="pastBillsId">pastBills</string>
+    <string name="membersId">members</string>
+    <string name="membersButtonTitle">Members</string>
+    <string name="membersBtnDescription">Members</string>
 </resources>
