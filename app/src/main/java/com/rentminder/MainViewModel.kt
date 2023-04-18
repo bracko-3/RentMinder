@@ -7,10 +7,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.rentminder.dto.Bill
 import com.rentminder.dto.Members
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.RemoteMessage
-import kotlin.random.Random
-
 class MainViewModel() : ViewModel() {
     var bills : MutableLiveData<List<Bill>> = MutableLiveData()
     var members : MutableLiveData<List<Members>> = MutableLiveData()
