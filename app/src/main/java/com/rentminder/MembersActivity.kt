@@ -55,8 +55,8 @@ class MembersActivity : ComponentActivity() {
             firebaseUser?.let {
                 val member = Members(it.uid, 1, it.displayName)
                 viewModel.member = member
-                viewModel.listenToAllBills()
-                viewModel.listenToMembers()
+                viewModel.listenToAllBills() //Gets the Bills from Firebase
+                viewModel.listenToMembers() //Gets the Members from Firebase
             }
             val bills by viewModel.allBills.observeAsState(initial = emptyList())
             val members by viewModel.members.observeAsState(initial = emptyList())
@@ -98,7 +98,7 @@ class MembersActivity : ComponentActivity() {
                                     selectedBill = bill
                                 }
                             }
-                            membersPayments(members, bills)
+                            membersPayments(members, bills) //Sends the Members and Bills Lists
                         }
                     }
                 }
@@ -106,11 +106,13 @@ class MembersActivity : ComponentActivity() {
         }
     }
 
+    //Function to make sure that we get the data from the current month
     override fun onResume() {
         super.onResume()
         currentMonth = monthName
     }
 
+    //Menu to select a member
     @Composable
     fun MembersMenu(members: List<Members>, onMemberSelected: (Members) -> Unit) {
         var expanded by remember { mutableStateOf(false) } // state of the menu
@@ -150,11 +152,13 @@ class MembersActivity : ComponentActivity() {
         var inPaidOther by remember { mutableStateOf(if (selectedBill.otherPaid) "Paid" else "Not Paid") }
         val context = LocalContext.current
 
+        //Gets the bills for the selectedMember
         selectedMember?.let { member ->
             val selectedBills =
                 bills.filter { it.memberId == member.uid && it.month == currentMonth }
             val selectedBill = selectedBills.firstOrNull() ?: Bill()
 
+            //Updates the values depending on the changes of the selectedBill
             LaunchedEffect(selectedBills) {
                 inPaidRent = if (selectedBill.rentPaid) "Paid" else "Not Paid"
                 inPaidElectric = if (selectedBill.electricPaid) "Paid" else "Not Paid"
@@ -190,6 +194,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.rentPaid = !selectedBill.rentPaid
+                                //Makes sure the bill is saved to the currentMember's collection
                                 viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidRent = if (selectedBill.rentPaid) "Paid" else "Not Paid"
@@ -222,6 +227,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.electricPaid = !selectedBill.electricPaid
+                                //Makes sure the bill is saved to the currentMember's collection
                                 viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidElectric =
@@ -255,6 +261,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.waterPaid = !selectedBill.waterPaid
+                                //Makes sure the bill is saved to the currentMember's collection
                                 viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidWater = if (selectedBill.waterPaid) "Paid" else "Not Paid"
@@ -287,6 +294,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.wifiPaid = !selectedBill.wifiPaid
+                                //Makes sure the bill is saved to the currentMember's collection
                                 viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidWifi = if (selectedBill.wifiPaid) "Paid" else "Not Paid"
@@ -319,6 +327,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.otherPaid = !selectedBill.otherPaid
+                                //Makes sure the bill is saved to the currentMember's collection
                                 viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidOther = if (selectedBill.otherPaid) "Paid" else "Not Paid"
@@ -334,6 +343,7 @@ class MembersActivity : ComponentActivity() {
                 }
                 Button(
                     onClick = {
+                        //Show a reminder notification
                         val notificationId = 1 // A unique ID for the notification
                         val channelId = "my_channel_id" // A unique ID for the notification channel
                         val notificationBuilder = NotificationCompat.Builder(context, channelId)
