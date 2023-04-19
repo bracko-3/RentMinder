@@ -55,10 +55,10 @@ class MembersActivity : ComponentActivity() {
             firebaseUser?.let {
                 val member = Members(it.uid, 1, it.displayName)
                 viewModel.member = member
-                viewModel.listenToBills()
+                viewModel.listenToAllBills()
                 viewModel.listenToMembers()
             }
-            val bills by viewModel.bills.observeAsState(initial = emptyList())
+            val bills by viewModel.allBills.observeAsState(initial = emptyList())
             val members by viewModel.members.observeAsState(initial = emptyList())
 
             RentMinderTheme {
@@ -190,6 +190,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.rentPaid = !selectedBill.rentPaid
+                                viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidRent = if (selectedBill.rentPaid) "Paid" else "Not Paid"
                             },
@@ -221,6 +222,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.electricPaid = !selectedBill.electricPaid
+                                viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidElectric =
                                     if (selectedBill.electricPaid) "Paid" else "Not Paid"
@@ -253,6 +255,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.waterPaid = !selectedBill.waterPaid
+                                viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidWater = if (selectedBill.waterPaid) "Paid" else "Not Paid"
                             },
@@ -284,6 +287,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.wifiPaid = !selectedBill.wifiPaid
+                                viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidWifi = if (selectedBill.wifiPaid) "Paid" else "Not Paid"
                             },
@@ -315,6 +319,7 @@ class MembersActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 selectedBill.otherPaid = !selectedBill.otherPaid
+                                viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidOther = if (selectedBill.otherPaid) "Paid" else "Not Paid"
                             },

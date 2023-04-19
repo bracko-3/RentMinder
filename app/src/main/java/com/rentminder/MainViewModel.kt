@@ -9,6 +9,7 @@ import com.rentminder.dto.Bill
 import com.rentminder.dto.Members
 class MainViewModel() : ViewModel() {
     var bills : MutableLiveData<List<Bill>> = MutableLiveData()
+    var allBills : MutableLiveData<List<Bill>> = MutableLiveData()
     var members : MutableLiveData<List<Members>> = MutableLiveData()
     var member: Members? = null
 
@@ -45,6 +46,36 @@ class MainViewModel() : ViewModel() {
         }
     }
 
+    fun listenToAllBills() {
+        firestore.collection("Members").addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w("Listen failed", e)
+                return@addSnapshotListener
+            }
+            snapshot?.let { membersSnapshot ->
+                val bills = ArrayList<Bill>()
+                membersSnapshot.documents.forEach { memberDoc ->
+                    val paymentsRef = memberDoc.reference.collection("Payments")
+                    paymentsRef.addSnapshotListener { paymentsSnapshot, e ->
+                        if (e != null) {
+                            Log.w("Listen failed", e)
+                            return@addSnapshotListener
+                        }
+                        paymentsSnapshot?.let {
+                            it.documents.forEach { billDoc ->
+                                val bill = billDoc.toObject(Bill::class.java)
+                                bill?.let {
+                                    bills.add(bill)
+                                }
+                            }
+                            allBills.value = bills
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     fun listenToMembers() {
         firestore.collection("Members").addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -67,16 +98,15 @@ class MainViewModel() : ViewModel() {
     }
 
     fun saveBill(selectedBill: Bill) {
-        member?.let {
-            member ->
-            val document =
-                if (selectedBill.billId == null || selectedBill.billId.isEmpty()) {
-                    firestore.collection("Members").document(member.uid).collection("Payments").document()
-                } else {
-                    firestore.collection("Members").document(member.uid).collection("Payments").document(selectedBill.billId)
-                }
-            selectedBill.billId = document.id
-            val handle = document.set(selectedBill)
+        member?.let { member ->
+            val collectionRef = firestore.collection("Members").document(member.uid).collection("Payments")
+            val documentRef = if (selectedBill.billId == null || selectedBill.billId.isEmpty()) {
+                collectionRef.document()
+            } else {
+                collectionRef.document(selectedBill.billId)
+            }
+            selectedBill.billId = documentRef.id
+            val handle = documentRef.set(selectedBill)
             handle.addOnSuccessListener { Log.d("Firebase", "Document saved") }
             handle.addOnFailureListener { Log.e("Firebase", "Save failed $it") }
         }
