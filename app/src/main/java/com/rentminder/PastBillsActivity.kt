@@ -51,8 +51,8 @@ class PastBillsActivity : ComponentActivity() {
             firebaseUser?.let {
                 val member = Members(it.uid, 1, it.displayName)
                 viewModel.member = member
-                viewModel.listenToBills() //Gets the Bills from Firebase
-                viewModel.listenToMembers() //Gets the Members from Firebase
+                viewModel.listenToBills()
+                viewModel.listenToMembers()
             }
             val bills by viewModel.bills.observeAsState(initial = emptyList())
             val members by viewModel.members.observeAsState(initial = emptyList())
@@ -88,7 +88,7 @@ class PastBillsActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colors.background
                         ) {
-                            PaymentEditBillAmounts(bills, members) //Sends the Bills and Members lists
+                            PaymentEditBillAmounts(bills, members)
                         }
                     }
                 }
@@ -96,7 +96,6 @@ class PastBillsActivity : ComponentActivity() {
         }
     }
 
-    //Menu to select the Bill
     @Composable
     fun PaymentMenu(bills: List<Bill>) {
         var expanded by remember { mutableStateOf(false) } // state of the menu
@@ -131,7 +130,6 @@ class PastBillsActivity : ComponentActivity() {
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     fun PaymentEditBillAmounts(bills: List<Bill> = ArrayList(), members: List<Members>) {
-        //Values that listen and update
         var inRentBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.rentBill.toString()) }
         var inElectricBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.energyBill.toString()) }
         var inWaterBill by remember(selectedBill.billId) { mutableStateOf(selectedBill.waterBill.toString()) }
@@ -298,7 +296,6 @@ class PastBillsActivity : ComponentActivity() {
 
             //Total Text
             Row {
-                //If inTotalBill doesn't have data when opening the app, it will start as empty
                 if(inTotalBill == ""){
                     TotalText(0.0)
                 }
@@ -309,7 +306,6 @@ class PastBillsActivity : ComponentActivity() {
 
             //Total Per Person Feature
             Row {
-                //If inDividedBill doesn't have data when opening the app, it will start as empty
                 if (inDividedBill == "") {
                     TotalPerPersonText(0.0)
                 }
@@ -318,24 +314,21 @@ class PastBillsActivity : ComponentActivity() {
                 }
             }
 
+            //Save Button
             Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 13.dp)) {
                 Row{
-                    //Save Button
                     Button(
                         colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
                         onClick = {
                             var message = ""
 
                             if(isFormFilled.value) {
-                                //Gets the total sum of all values
                                 inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
-                                //Gets the total per person dividing the total by the number of members
                                 inDividedBill = (inTotalBill.toDouble()/members.size).toString()
                                 selectedBill.apply {
                                     month = selectedBill.month
-                                    //Relationship between bill and member - Sets a member to a Bill
                                     memberId = firebaseUser?.let {
                                         it.uid
                                     } ?: ""
@@ -347,7 +340,6 @@ class PastBillsActivity : ComponentActivity() {
                                     total = inTotalBill.toDouble()
                                     totalPerson = inDividedBill.toDouble()
                                 }
-                                //Saves the bill in Firebase
                                 viewModel.saveBill(selectedBill)
                                 message = "Saved!"
                             }
@@ -355,7 +347,7 @@ class PastBillsActivity : ComponentActivity() {
                                 message = "Please make sure all boxes have a value."
                             }
                             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                        }, enabled = selectedMonth) //Condition enable the button
+                        }, enabled = selectedMonth)
                     {
                         Icon(
                             imageVector = Icons.Outlined.Save,
@@ -364,12 +356,10 @@ class PastBillsActivity : ComponentActivity() {
                         )
                         Text(text = "Save")
                     }
-                    //Delete Button
                     Button(
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
                         onClick = {
-                            viewModel.delete(selectedBill) //Deletes the bill from Firebase
-                            //Restores the text-fields and labels to their default after the delete
+                            viewModel.delete(selectedBill)
                             billText = "Select month"
                             inRentBill = ""
                             inElectricBill = ""
@@ -378,9 +368,7 @@ class PastBillsActivity : ComponentActivity() {
                             inOtherBill = ""
                             inTotalBill = ""
                             inDividedBill = ""
-                            //Condition to disable or enable the buttons
                             selectedMonth = false
-                            //Toast to show whether the delete action was successful
                             Toast.makeText(context, "Bill Deleted Successfully!", Toast.LENGTH_SHORT).show()
                         }, enabled = selectedMonth)
                     {

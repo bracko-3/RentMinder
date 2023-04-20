@@ -21,7 +21,6 @@ class MainViewModel() : ViewModel() {
         listenToBills()
     }
 
-    //Function to get the bills of the current member
     fun listenToBills() {
         member?.let {
             member ->
@@ -47,7 +46,6 @@ class MainViewModel() : ViewModel() {
         }
     }
 
-    //Function used to get the bills from all members
     fun listenToAllBills() {
         firestore.collection("Members").addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -78,7 +76,6 @@ class MainViewModel() : ViewModel() {
         }
     }
 
-    //Gets the members from Firebase
     fun listenToMembers() {
         firestore.collection("Members").addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -100,7 +97,6 @@ class MainViewModel() : ViewModel() {
         }
     }
 
-    //Saves or Updates the Bill in Firebase
     fun saveBill(selectedBill: Bill) {
         member?.let { member ->
             val collectionRef = firestore.collection("Members").document(member.uid).collection("Payments")
@@ -116,7 +112,6 @@ class MainViewModel() : ViewModel() {
         }
     }
 
-    //Saves the member to Firebase
     fun saveMember(){
         member?.let {
             member ->
@@ -126,7 +121,6 @@ class MainViewModel() : ViewModel() {
         }
     }
 
-    //Deletes a bill from Firebase
     fun delete(bill: Bill) {
         member?.let{
             member ->

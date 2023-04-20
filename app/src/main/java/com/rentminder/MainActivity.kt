@@ -62,13 +62,12 @@ private var selectedBill by mutableStateOf(Bill())
 private var isLoggedIn by mutableStateOf(false)
 
 class MainActivity : ComponentActivity() {
-    private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser //If logged in, gets the current user data
+    private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
     private val viewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Logic for verifying login status
         val prefs = getSharedPreferences("my_prefs", MODE_PRIVATE)
         val uid = prefs.getString("uid", null)
         val displayName = prefs.getString("displayName", null)
@@ -78,8 +77,8 @@ class MainActivity : ComponentActivity() {
             val member = Members(uid, 1, displayName)
             viewModel.member = member
             isLoggedIn = firebaseUser != null
-            viewModel.listenToBills() //Gets the Bills from Firebase
-            viewModel.listenToMembers() //Gets the Members from Firebase
+            viewModel.listenToBills()
+            viewModel.listenToMembers()
         }
 
         setContent {
@@ -153,7 +152,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             bills.forEach { bill ->
                                 if (bill.month == monthName){
-                                    selectedBill = bill //Make sure that the selectedBill is of the current month
+                                    selectedBill = bill
                                 }
                             }
                             MainMenu(members)
@@ -178,7 +177,7 @@ class MainActivity : ComponentActivity() {
                     text = monthName, fontSize = 28.sp, fontWeight = FontWeight.Bold
                 )
             }
-            EditBillAmounts(members) //Sending the members to the function so it is able to get the list size
+            EditBillAmounts(members)
         }
     }
 
@@ -212,7 +211,6 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     fun EditBillAmounts(members: List<Members>) {
-        //Values that listen and update
         var inRentBill by remember(selectedBill.month) { mutableStateOf(selectedBill.rentBill.toString()) }
         val rentBillEdited = remember { mutableStateOf(false) }
         var inElectricBill by remember(selectedBill.month) { mutableStateOf(selectedBill.energyBill.toString()) }
@@ -401,7 +399,6 @@ class MainActivity : ComponentActivity() {
 
             //Total feature
             Row {
-                //If inTotalBill doesn't have data when opening the app, it will start as empty
                 if(inTotalBill == ""){
                     TotalText(0.0)
                 }
@@ -412,7 +409,6 @@ class MainActivity : ComponentActivity() {
 
             //Total Per Person Feature
             Row {
-                //If inDividedBill doesn't have data when opening the app, it will start as empty
                 if (inDividedBill == "") {
                     TotalPerPersonText(0.0)
                 }
@@ -430,13 +426,10 @@ class MainActivity : ComponentActivity() {
                         val message: String
 
                         if (isFormFilled.value) {
-                            //Gets the total sum of all values
                             inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
-                            //Gets the total per person dividing the total by the number of members
                             inDividedBill = (inTotalBill.toDouble()/members.size).toString()
                             selectedBill.apply {
                                 month = monthName
-                                //Relationship between bill and member - Sets a member to a Bill
                                 memberId = firebaseUser?.let {
                                     it.uid
                                 } ?: ""
@@ -448,17 +441,15 @@ class MainActivity : ComponentActivity() {
                                 total = inTotalBill.toDouble()
                                 totalPerson = inDividedBill.toDouble()
                             }
-                            //Save the bill in Firebase
                             viewModel.saveBill(selectedBill)
                             message = "Saved!"
 
-                            //Send Notification after Save Button was clicked
                             val notificationId = 1 // A unique ID for the notification
                             val channelId = "my_channel_id" // A unique ID for the notification channel
                             val notificationBuilder = NotificationCompat.Builder(context, channelId)
                                 .setSmallIcon(R.drawable.outline_notifications_active_24)
-                                .setContentTitle("RentMinder") //Setting notification title
-                                .setContentText("Someone sent you a bill!") //Setting notification text
+                                .setContentTitle("RentMinder")
+                                .setContentText("Someone sent you a bill!")
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -472,12 +463,11 @@ class MainActivity : ComponentActivity() {
                                 notificationManager.createNotificationChannel(channel)
                             }
 
-                            //Show the notification
                             val notificationManager = NotificationManagerCompat.from(context)
                             notificationManager.notify(notificationId, notificationBuilder.build())
                         }
                         else {
-                            message = "Please make sure all boxes have a value." //If there's a text-field with an empty value
+                            message = "Please make sure all boxes have a value."
                         }
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                     })
@@ -498,7 +488,6 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(top = 8.dp),
                             onClick =
                             {
-                                //After button is clicked, Members Screen will show up
                                 val intent = Intent(context, MembersActivity::class.java)
                                 context.startActivity(intent)
                             }
@@ -525,7 +514,6 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(top = 8.dp),
                             onClick =
                             {
-                                //After button is clicked, Past Bills Screen will show up
                                 val intent = Intent(context, PastBillsActivity::class.java)
                                 context.startActivity(intent)
                             }
@@ -543,7 +531,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    //Sign In Logic
     private fun signIn() {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
@@ -566,7 +553,6 @@ class MainActivity : ComponentActivity() {
 
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult){
         val response = result.idpResponse
-        //If SignIn was successful
         if (result.resultCode == RESULT_OK) {
             firebaseUser = FirebaseAuth.getInstance().currentUser
             firebaseUser?.let{
@@ -576,7 +562,7 @@ class MainActivity : ComponentActivity() {
                 viewModel.listenToBills()
                 isLoggedIn = true
 
-                // Store user credentials in SharedPreferences to avoid logging in again after restarting app
+                // Store user credentials in SharedPreferences
                 val prefs = getSharedPreferences("my_prefs", MODE_PRIVATE)
                 with(prefs.edit()) {
                     putString("uid", it.uid)
@@ -585,7 +571,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        //If SignIn wasn't successful
         else {
             Log.e("MainActivity.kt", "Error logging in " + response?.error?.errorCode)
         }
