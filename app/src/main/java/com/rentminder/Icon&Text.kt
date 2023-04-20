@@ -105,8 +105,9 @@ fun OtherIconText() {
 
 @Composable
 fun TotalText(total: Double) {
+    val formattedTotal = String.format("%.1f", total)
     Text(
-        text = "Total: $total",
+        text = "Total: $formattedTotal",
         fontSize = (20.sp),
         modifier = Modifier
             .padding(
@@ -118,8 +119,9 @@ fun TotalText(total: Double) {
 
 @Composable
 fun TotalPerPersonText(total: Double) {
+    val formattedTotal = String.format("%.1f", total)
     Text(
-        text = "Total Per Person: $total",
+        text = "Total Per Person: $formattedTotal",
         fontSize = (20.sp),
         modifier = Modifier
             .padding(
