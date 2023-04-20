@@ -26,4 +26,6 @@
     <string name="membersId">members</string>
     <string name="membersButtonTitle">Members</string>
     <string name="membersBtnDescription">Members</string>
+    <string name="deleteButtonDesc">Delete Button</string>
+    <string name="deleteLabel">Delete</string>
 </resources>

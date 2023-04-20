@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -51,8 +52,8 @@ class PastBillsActivity : ComponentActivity() {
             firebaseUser?.let {
                 val member = Members(it.uid, 1, it.displayName)
                 viewModel.member = member
-                viewModel.listenToBills()
-                viewModel.listenToMembers()
+                viewModel.listenToBills() //Gets bills
+                viewModel.listenToMembers() //Gets members
             }
             val bills by viewModel.bills.observeAsState(initial = emptyList())
             val members by viewModel.members.observeAsState(initial = emptyList())
@@ -88,7 +89,7 @@ class PastBillsActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colors.background
                         ) {
-                            PaymentEditBillAmounts(bills, members)
+                            PaymentEditBillAmounts(bills, members) //Sends the bills and members lists
                         }
                     }
                 }
@@ -96,6 +97,7 @@ class PastBillsActivity : ComponentActivity() {
         }
     }
 
+    //Menu to select the bill for each month
     @Composable
     fun PaymentMenu(bills: List<Bill>) {
         var expanded by remember { mutableStateOf(false) } // state of the menu
@@ -314,18 +316,20 @@ class PastBillsActivity : ComponentActivity() {
                 }
             }
 
-            //Save Button
             Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 13.dp)) {
                 Row{
+                    //Save Button
                     Button(
                         colors = ButtonDefaults.buttonColors(backgroundColor = SoftGreen),
                         onClick = {
                             var message = ""
 
                             if(isFormFilled.value) {
+                                //Gets the total sum of the bills
                                 inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
+                                //Gets the total per person
                                 inDividedBill = (inTotalBill.toDouble()/members.size).toString()
                                 selectedBill.apply {
                                     month = selectedBill.month
@@ -340,6 +344,7 @@ class PastBillsActivity : ComponentActivity() {
                                     total = inTotalBill.toDouble()
                                     totalPerson = inDividedBill.toDouble()
                                 }
+                                //Saves the changes to Firebase
                                 viewModel.saveBill(selectedBill)
                                 message = "Saved!"
                             }
@@ -356,9 +361,11 @@ class PastBillsActivity : ComponentActivity() {
                         )
                         Text(text = "Save")
                     }
+                    //Delete Button
                     Button(
                         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
                         onClick = {
+                            //Deletes the bill from Firebase
                             viewModel.delete(selectedBill)
                             billText = "Select month"
                             inRentBill = ""
@@ -368,16 +375,16 @@ class PastBillsActivity : ComponentActivity() {
                             inOtherBill = ""
                             inTotalBill = ""
                             inDividedBill = ""
-                            selectedMonth = false
+                            selectedMonth = false //Condition for disabling the buttons
                             Toast.makeText(context, "Bill Deleted Successfully!", Toast.LENGTH_SHORT).show()
                         }, enabled = selectedMonth)
                     {
                         Icon(
                             imageVector = Icons.Outlined.Delete,
-                            contentDescription = "Delete Button",
+                            contentDescription = stringResource(R.string.deleteButtonDesc),
                             Modifier.padding(2.dp)
                         )
-                        Text(text = "Delete")
+                        Text(text = stringResource(R.string.deleteLabel))
                     }
                 }
             }

@@ -426,10 +426,13 @@ class MainActivity : ComponentActivity() {
                         val message: String
 
                         if (isFormFilled.value) {
+                            //Gets the total sum of the bills
                             inTotalBill = (inRentBill.toInt() + inElectricBill.toInt() + inWaterBill.toInt() + inWifiBill.toInt() + inOtherBill.toInt()).toString()
+                            //Gets the total per person
                             inDividedBill = (inTotalBill.toDouble()/members.size).toString()
                             selectedBill.apply {
                                 month = monthName
+                                //Assigns a member to the bill
                                 memberId = firebaseUser?.let {
                                     it.uid
                                 } ?: ""
@@ -441,9 +444,11 @@ class MainActivity : ComponentActivity() {
                                 total = inTotalBill.toDouble()
                                 totalPerson = inDividedBill.toDouble()
                             }
+                            //Saves the bill in Firebase
                             viewModel.saveBill(selectedBill)
                             message = "Saved!"
 
+                            //Show notification
                             val notificationId = 1 // A unique ID for the notification
                             val channelId = "my_channel_id" // A unique ID for the notification channel
                             val notificationBuilder = NotificationCompat.Builder(context, channelId)
@@ -488,6 +493,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(top = 8.dp),
                             onClick =
                             {
+                                //Show MembersActivity Screen
                                 val intent = Intent(context, MembersActivity::class.java)
                                 context.startActivity(intent)
                             }
@@ -514,6 +520,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(top = 8.dp),
                             onClick =
                             {
+                                //Shows Past Bills Screen
                                 val intent = Intent(context, PastBillsActivity::class.java)
                                 context.startActivity(intent)
                             }
@@ -531,6 +538,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    //Sign In Logic
     private fun signIn() {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),

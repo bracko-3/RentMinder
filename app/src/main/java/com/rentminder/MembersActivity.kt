@@ -55,8 +55,8 @@ class MembersActivity : ComponentActivity() {
             firebaseUser?.let {
                 val member = Members(it.uid, 1, it.displayName)
                 viewModel.member = member
-                viewModel.listenToAllBills()
-                viewModel.listenToMembers()
+                viewModel.listenToAllBills() //Gets the bills of all members
+                viewModel.listenToMembers() //Gets the members
             }
             val bills by viewModel.allBills.observeAsState(initial = emptyList())
             val members by viewModel.members.observeAsState(initial = emptyList())
@@ -98,7 +98,7 @@ class MembersActivity : ComponentActivity() {
                                     selectedBill = bill
                                 }
                             }
-                            membersPayments(members, bills)
+                            membersPayments(members, bills) //Sends the Members and Bills list
                         }
                     }
                 }
@@ -106,11 +106,13 @@ class MembersActivity : ComponentActivity() {
         }
     }
 
+    //Makes sure it shows the data of the current month
     override fun onResume() {
         super.onResume()
         currentMonth = monthName
     }
 
+    //Menu for selecting a member
     @Composable
     fun MembersMenu(members: List<Members>, onMemberSelected: (Members) -> Unit) {
         var expanded by remember { mutableStateOf(false) } // state of the menu
@@ -332,6 +334,7 @@ class MembersActivity : ComponentActivity() {
                         }
                     }
                 }
+                //Remind Button
                 Button(
                     onClick = {
                         val notificationId = 1 // A unique ID for the notification
