@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MembersActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModel()
+    private var isMemberSelected = false
     private var selectedBill by mutableStateOf(Bill())
     private var selectedMember by mutableStateOf(Members())
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
@@ -79,7 +81,7 @@ class MembersActivity : ComponentActivity() {
                                     )
                                 )
                             }) {
-                                Icon(Icons.Filled.ArrowBack, "backIcon")
+                                Icon(Icons.Filled.ArrowBack, getString(R.string.backIconText))
                             }
                         },
                     )
@@ -134,6 +136,7 @@ class MembersActivity : ComponentActivity() {
                             memberText = member.memberName.toString()
                             selectedMember = member
                             onMemberSelected(member) // invoke callback with selected member
+                            isMemberSelected = true
                         }) {
                             member.memberName?.let { Text(text = it) }
                         }
@@ -183,7 +186,7 @@ class MembersActivity : ComponentActivity() {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Rent", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                        text = stringResource(R.string.rentLabel), fontSize = 28.sp, fontWeight = FontWeight.Bold
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -195,7 +198,7 @@ class MembersActivity : ComponentActivity() {
                                 viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidRent = if (selectedBill.rentPaid) "Paid" else "Not Paid"
-                            },
+                            }, enabled = isMemberSelected,
                             shape = CutCornerShape(10),
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = if (inPaidRent == "Paid") SoftGreen else Color.Red
@@ -215,7 +218,7 @@ class MembersActivity : ComponentActivity() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Text(
-                        text = "Electric", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                        text = stringResource(R.string.electricLabel), fontSize = 28.sp, fontWeight = FontWeight.Bold
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -228,7 +231,7 @@ class MembersActivity : ComponentActivity() {
                                 viewModel.saveBill(selectedBill)
                                 inPaidElectric =
                                     if (selectedBill.electricPaid) "Paid" else "Not Paid"
-                            },
+                            }, enabled = isMemberSelected,
                             shape = CutCornerShape(10),
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = if (inPaidElectric == "Paid") SoftGreen else Color.Red
@@ -248,7 +251,7 @@ class MembersActivity : ComponentActivity() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Text(
-                        text = "Water", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                        text = stringResource(R.string.waterLabel), fontSize = 28.sp, fontWeight = FontWeight.Bold
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -260,7 +263,7 @@ class MembersActivity : ComponentActivity() {
                                 viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidWater = if (selectedBill.waterPaid) "Paid" else "Not Paid"
-                            },
+                            }, enabled = isMemberSelected,
                             shape = CutCornerShape(10),
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = if (inPaidWater == "Paid") SoftGreen else Color.Red
@@ -280,7 +283,7 @@ class MembersActivity : ComponentActivity() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Text(
-                        text = "Wifi", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                        text = stringResource(R.string.wifiLabel), fontSize = 28.sp, fontWeight = FontWeight.Bold
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -292,7 +295,7 @@ class MembersActivity : ComponentActivity() {
                                 viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidWifi = if (selectedBill.wifiPaid) "Paid" else "Not Paid"
-                            },
+                            }, enabled = isMemberSelected,
                             shape = CutCornerShape(10),
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = if (inPaidWifi == "Paid") SoftGreen else Color.Red
@@ -312,7 +315,7 @@ class MembersActivity : ComponentActivity() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Text(
-                        text = "Other", fontSize = 28.sp, fontWeight = FontWeight.Bold
+                        text = stringResource(R.string.otherLabel), fontSize = 28.sp, fontWeight = FontWeight.Bold
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -324,7 +327,7 @@ class MembersActivity : ComponentActivity() {
                                 viewModel.member = selectedMember
                                 viewModel.saveBill(selectedBill)
                                 inPaidOther = if (selectedBill.otherPaid) "Paid" else "Not Paid"
-                            },
+                            }, enabled = isMemberSelected,
                             shape = CutCornerShape(10),
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = if (inPaidOther == "Paid") SoftGreen else Color.Red
@@ -358,13 +361,13 @@ class MembersActivity : ComponentActivity() {
 
                         val notificationManager = NotificationManagerCompat.from(context)
                         notificationManager.notify(notificationId, notificationBuilder.build())
-                    },
+                    }, enabled = isMemberSelected,
                     shape = CutCornerShape(10),
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = SoftGreen
                     )
                 ) {
-                    Text(text = "Remind")
+                    Text(text = stringResource(R.string.remindTextBtn))
                 }
             }
         }

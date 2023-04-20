@@ -28,4 +28,11 @@
     <string name="membersBtnDescription">Members</string>
     <string name="deleteButtonDesc">Delete Button</string>
     <string name="deleteLabel">Delete</string>
+    <string name="remindTextBtn">Remind</string>
+    <string name="otherLabel">Other</string>
+    <string name="wifiLabel">Wifi</string>
+    <string name="waterLabel">Water</string>
+    <string name="electricLabel">Electric</string>
+    <string name="rentLabel">Rent</string>
+    <string name="backIconText">backIcon</string>
 </resources>
